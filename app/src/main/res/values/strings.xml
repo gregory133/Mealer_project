@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">HomepageActivity</string>
+    <string name="register_string"><![CDATA[Don\'t Have An Account Yet?]]></string>
 </resources>
