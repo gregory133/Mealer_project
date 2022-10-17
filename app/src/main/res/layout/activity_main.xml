@@ -42,14 +42,15 @@
             <EditText
                 android:id="@+id/editTextTextMultiLine2"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="0.5"
                 android:ems="10"
                 android:gravity="center|start|top"
-                android:hint="Enter username"
-                android:inputType="textMultiLine" />
+                android:hint="Enter Username"
+                android:inputType="textMultiLine"
+                tools:ignore="TouchTargetSizeCheck" />
 
         </LinearLayout>
 
@@ -62,16 +63,16 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/editTextTextMultiLine3"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:id="@+id/editTextTextPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="0.5"
                 android:ems="10"
-                android:gravity="center|start|top"
-                android:hint="Enter password"
-                android:inputType="textMultiLine" />
+                android:hint="Enter Password"
+                android:inputType="textPassword"
+                tools:ignore="TouchTargetSizeCheck" />
 
         </LinearLayout>
 
