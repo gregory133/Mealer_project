@@ -38,12 +38,30 @@ public class RegistrationActivity extends AppCompatActivity {
         String confirmPassword = (((EditText) findViewById(R.id.confirmPasswordEdit)).getText()).toString();
 
         if (validate(firstName, lastName, email, address, password, confirmPassword)){
+
+            Bundle extras=getIntent().getExtras();
+            String userType=extras.getString("TYPE");
+
             Intent intent=new Intent(this, UserHomepageActivity.class);
+            //Change this to client class
+
+            if(userType == "Cook"){
+                intent=new Intent(this, UserHomepageActivity.class);
+            }
+
+            intent.putExtra("FirstName", firstName);
+            intent.putExtra("LastName", lastName);
+            intent.putExtra("Email", email);
+            intent.putExtra("Address", address);
+            intent.putExtra("Password", password);
+            intent.putExtra("ConfirmPassword", confirmPassword);
+
             startActivity(intent);
         }
         else{
             Toast.makeText(this, "Invalid/Insufficient Information Given", Toast.LENGTH_LONG).show();
         }
+
 
     }
 

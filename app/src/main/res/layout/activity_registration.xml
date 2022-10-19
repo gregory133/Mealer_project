@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:tag="Next"
     tools:context=".RegistrationActivity">
 
     <LinearLayout
@@ -174,13 +175,13 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/Register"
+                android:id="@+id/Next"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:layout_weight="1"
                 android:onClick="onClickRegisterButton"
-                android:text="Register" />
+                android:text="Next" />
         </LinearLayout>
 
     </LinearLayout>
