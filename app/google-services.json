@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "533331654340",
+    "firebase_url": "https://mealer-717ac-default-rtdb.firebaseio.com",
+    "project_id": "mealer-717ac",
+    "storage_bucket": "mealer-717ac.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:533331654340:android:d1de4b6e9764a5dafbfb91",
+        "android_client_info": {
+          "package_name": "com.example.homepageactivity"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "533331654340-kcenei6khi57ejlqckhl3vm6adlqq1ch.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDF-0SB32hR2G9LJWFjtRr5YDB49t0Rms4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "533331654340-kcenei6khi57ejlqckhl3vm6adlqq1ch.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
