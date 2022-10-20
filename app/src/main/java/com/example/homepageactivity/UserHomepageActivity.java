@@ -22,8 +22,6 @@ public class UserHomepageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_homepage);
 
         setupPageSelectSpinner((Spinner) findViewById(R.id.pagesSpinner));
-
-
     }
 
     @Override
@@ -45,10 +43,11 @@ public class UserHomepageActivity extends AppCompatActivity {
         final List<String> pageNames = Arrays.asList("Menu","Logout");
         final List<Class> pageClasses = Arrays.asList(homepageClass, null);
         //final Spinner spinner = findViewById(R.id.pagesSpinner);
+
         ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(),
-                android.R.layout.simple_spinner_item,
+                R.layout.dropdown_layout,
                 pageNames);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(R.layout.dropdown_layout);
         pagesSpinner.setAdapter(adapter);
 
         pagesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -81,18 +80,6 @@ public class UserHomepageActivity extends AppCompatActivity {
         //Logout Operations///////////////////////////////////////////////////////
         finish();
     }
-
-    /**Opens UserAccountActivity*/
-    public void onClickUserAccountButton(View view){
-        Intent intent = new Intent(getApplicationContext(), UserAccountActivity.class);
-        startActivityForResult(intent,0);
-    }
-
-//    /**Opens UserInboxActivity*/
-//    public void onClickNotificationIconButton(View view){
-//        Intent intent = new Intent(getApplicationContext(), UserInboxActivity.class);
-//        startActivityForResult(intent,0);
-//    }
 //
 //    /**Opens MealSearchActivity*/
 //    public void onClickMealSearchButton(View view){
