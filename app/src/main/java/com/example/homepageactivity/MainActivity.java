@@ -3,7 +3,6 @@ package com.example.homepageactivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -16,86 +15,73 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
-
     private EditText emailTextView, passwordTextView;
-    private Button Btn;
-
-    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mAuth = FirebaseAuth.getInstance();
-
         // initialising all views through id defined above
         emailTextView = findViewById(R.id.emailTextEdit);
         passwordTextView = findViewById(R.id.editTextPassword);
-        Btn = findViewById(R.id.loginButton);
+    }
 
-        // Set on Click Listener on Sign-in button
-        Btn.setOnClickListener(new View.OnClickListener() {
+    public void onClickLoginButton(View view){
+        //Check both boxes are filled
+        if(!validateLoginInputs()){
+            //Toast.makeText(this, "Please Enter your Email and Password", Toast.LENGTH_LONG).show();
+            return;
+        }
+        loginUserAttempt();
+    }
+    /**
+     * Clears email and password boxes on login
+     */
+    private void ClearLoginInfoBoxes(){
+        emailTextView.setText("");
+        passwordTextView.setText("");
+    }
+
+    private boolean validateLoginInputs(){
+        String email = emailTextView.getText().toString();
+        String password = passwordTextView.getText().toString();
+        return !email.equals("") && !password.equals("");
+    }
+
+    private void loginUserAttempt()
+    {
+        // Take the value of two edit texts in Strings
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        String email = emailTextView.getText().toString();
+        String password = passwordTextView.getText().toString();
+
+        // signin existing user
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(
+                        new OnCompleteListener<AuthResult>(){
             @Override
-            public void onClick(View v)
+            public void onComplete(
+                    @NonNull Task<AuthResult> task)
             {
-                loginUserAccount();
+                if(task.isSuccessful()){
+                    loginAttemptSuccess();
+                }else{
+                    loginAttemptFailure();
+                }
             }
         });
     }
 
-    private void loginUserAccount()
-    {
-        // Take the value of two edit texts in Strings
-        String email, password;
-        email = emailTextView.getText().toString();
-        password = passwordTextView.getText().toString();
+    private void loginAttemptSuccess(){
+        //Don't want to leave there info sitting around after logging in
+        ClearLoginInfoBoxes();
 
-        // Validations for input email and password
-        if (!validateLoginInputs(email, password)) {
-            Toast.makeText(this, "Invalid/Insufficient Information Given", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        // signin existing user
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(
-                        new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(
-                                    @NonNull Task<AuthResult> task)
-                            {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(getApplicationContext(),
-                                                    "Login successful!!",
-                                                    Toast.LENGTH_LONG)
-                                            .show();
-
-                                    // if sign-in is successful
-                                    // intent to home activity
-                                    Intent intent
-                                            = new Intent(MainActivity.this,
-                                            UserHomepageActivity.class);
-                                    startActivity(intent);
-                                }
-
-                                else {
-
-                                    // sign-in failed
-                                    Toast.makeText(getApplicationContext(),
-                                                    "Login failed!!",
-                                                    Toast.LENGTH_LONG)
-                                            .show();
-                                }
-                            }
-                        });
+        Intent intent = new Intent(getApplicationContext(), UserHomepageActivity.class);
+        startActivity(intent);
     }
 
-    private boolean validateLoginInputs(String email, String password){
-        if (email.equals("") || password.equals("")){
-            return false;
-        }
-        return true;
+    private void loginAttemptFailure(){
+        Toast.makeText(this, "Your Email or Password is Incorrect", Toast.LENGTH_LONG).show();
     }
 
     public void onClickRegister(View view){
