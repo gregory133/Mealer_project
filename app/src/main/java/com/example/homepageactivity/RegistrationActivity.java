@@ -42,11 +42,10 @@ public class RegistrationActivity extends AppCompatActivity {
             Bundle extras=getIntent().getExtras();
             String userType=extras.getString("TYPE");
 
-            Intent intent=new Intent(this, UserHomepageActivity.class);
-            //Change this to client class
+            Intent intent=new Intent(this, ClientPaymentActivity.class);
 
             if(userType == "Cook"){
-                intent=new Intent(this, UserHomepageActivity.class);
+                intent=new Intent(this, CookDescriptionActivity.class);
             }
 
             intent.putExtra("FirstName", firstName);
@@ -76,10 +75,28 @@ public class RegistrationActivity extends AppCompatActivity {
      * @return
      */
     private boolean validate(String firstName, String lastName, String email, String address, String password, String confirmPassword){
-        if (firstName.equals("") || lastName.equals("") || email.equals("") || address.equals("") || password.equals("") || confirmPassword.equals("")){
+        if (firstName.equals("")){
+            Toast.makeText(this, "First Name Field Invalid (Empty)", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (lastName.equals("")){
+            Toast.makeText(this, "Last Name Field Invalid (Empty)", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (email.equals("")){
+            Toast.makeText(this, "Email Field Invalid (Empty)", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (password.equals("")){
+            Toast.makeText(this, "Password Field Invalid (Empty)", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (confirmPassword.equals("")){
+            Toast.makeText(this, "Confirm Password Field Invalid (Empty)", Toast.LENGTH_LONG).show();
             return false;
         }
         if (!password.equals(confirmPassword)){
+            Toast.makeText(this, "Confirm Password does not match Password", Toast.LENGTH_LONG).show();
             return false;
         }
         return true;
