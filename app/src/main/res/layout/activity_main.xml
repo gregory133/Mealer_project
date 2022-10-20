@@ -40,7 +40,7 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/editTextTextMultiLine2"
+                android:id="@+id/emailTextEdit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
@@ -48,7 +48,7 @@
                 android:layout_weight="0.5"
                 android:ems="10"
                 android:gravity="center|start|top"
-                android:hint="Enter Username"
+                android:hint="Enter Email"
                 android:inputType="textMultiLine"
                 tools:ignore="TouchTargetSizeCheck" />
 
@@ -63,7 +63,7 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/editTextTextPassword"
+                android:id="@+id/editTextPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
