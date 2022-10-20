@@ -39,8 +39,7 @@ public class RegistrationActivity extends AppCompatActivity {
         //firebase integration
 
         mAuth = FirebaseAuth.getInstance();
-
-        Btn = findViewById(R.id.Register);
+        Btn = findViewById(R.id.Next);
 
         // Set on Click Listener on Registration button
         Btn.setOnClickListener(new View.OnClickListener() {
@@ -51,6 +50,42 @@ public class RegistrationActivity extends AppCompatActivity {
             }
         });
     }
+    
+    public void onClickRegisterButton(View view){
+        String firstName = (((EditText) findViewById(R.id.firstNameEdit)).getText()).toString();
+        String lastName = (((EditText) findViewById(R.id.lastNameEdit)).getText()).toString();
+        String email = (((EditText) findViewById(R.id.emailEdit)).getText()).toString();
+        String address = (((EditText) findViewById(R.id.addressEdit)).getText()).toString();
+        String password = (((EditText) findViewById(R.id.passwordEdit)).getText()).toString();
+        String confirmPassword = (((EditText) findViewById(R.id.confirmPasswordEdit)).getText()).toString();
+
+        if (validate(firstName, lastName, email, address, password, confirmPassword)){
+
+            Bundle extras=getIntent().getExtras();
+            String userType=extras.getString("TYPE");
+
+            Intent intent=new Intent(this, ClientPaymentActivity.class);
+
+            if(userType == "Cook"){
+                intent=new Intent(this, CookDescriptionActivity.class);
+            }
+
+            intent.putExtra("FirstName", firstName);
+            intent.putExtra("LastName", lastName);
+            intent.putExtra("Email", email);
+            intent.putExtra("Address", address);
+            intent.putExtra("Password", password);
+            intent.putExtra("ConfirmPassword", confirmPassword);
+
+            startActivity(intent);
+        }
+        else{
+            Toast.makeText(this, "Invalid/Insufficient Information Given", Toast.LENGTH_LONG).show();
+        }
+
+
+    }
+    
 
     /**
      * rules for valid data entries given
@@ -63,10 +98,28 @@ public class RegistrationActivity extends AppCompatActivity {
      * @return
      */
     private boolean validate(String firstName, String lastName, String email, String address, String password, String confirmPassword){
-        if (firstName.equals("") || lastName.equals("") || email.equals("") || address.equals("") || password.equals("") || confirmPassword.equals("")){
+        if (firstName.equals("")){
+            Toast.makeText(this, "First Name Field Invalid (Empty)", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (lastName.equals("")){
+            Toast.makeText(this, "Last Name Field Invalid (Empty)", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (email.equals("")){
+            Toast.makeText(this, "Email Field Invalid (Empty)", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (password.equals("")){
+            Toast.makeText(this, "Password Field Invalid (Empty)", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (confirmPassword.equals("")){
+            Toast.makeText(this, "Confirm Password Field Invalid (Empty)", Toast.LENGTH_LONG).show();
             return false;
         }
         if (!password.equals(confirmPassword)){
+            Toast.makeText(this, "Confirm Password does not match Password", Toast.LENGTH_LONG).show();
             return false;
         }
         return true;
