@@ -27,13 +27,13 @@
                 android:layout_weight="0"
                 app:srcCompat="@android:drawable/ic_dialog_alert" />
 
-            <Button
-                android:id="@+id/UserAccountButton"
+            <Spinner
+                android:id="@+id/pagesSpinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:minHeight="60dp"
-                android:onClick="onClickUserAccountButton"
-                android:text="Account" />
+                android:layout_weight="0"
+                android:minHeight="60dp" />
+
         </LinearLayout>
 
         <Space
