@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Arrays;
@@ -22,6 +23,7 @@ public class UserHomepageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_homepage);
 
         setupPageSelectSpinner((Spinner) findViewById(R.id.pagesSpinner));
+        setupWelcomeText();
     }
 
     @Override
@@ -66,6 +68,15 @@ public class UserHomepageActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void setupWelcomeText(){
+        TextView welcomeUserText = findViewById(R.id.welcomeUserText);
+        welcomeUserText.setText("Welcome "+getUserType());
+    }
+
+    private String getUserType(){
+        return "Cook";
     }
 
     public void UserLogoutRequest(){
