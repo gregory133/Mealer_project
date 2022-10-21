@@ -47,7 +47,7 @@ public class CookDescriptionActivity extends AppCompatActivity {
         String password = extras.getString("Password");
         String description = extras.getString("dDescription");
 
-        mAuth.createUserWithEmailAndPassword(email, password)
+        mAuth.createUserWithEmailAndPassword("cook"+email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>()
                 {
                     @Override

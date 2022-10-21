@@ -67,7 +67,7 @@ public class ClientPaymentActivity extends AppCompatActivity {
         String address = extras.getString("Address");
         String password = extras.getString("Password");
 
-        mAuth.createUserWithEmailAndPassword(email, password)
+        mAuth.createUserWithEmailAndPassword("clnt"+email, password)
             .addOnCompleteListener(new OnCompleteListener<AuthResult>()
         {
             @Override
