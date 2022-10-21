@@ -14,6 +14,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class MainActivity extends AppCompatActivity {
     private EditText emailTextView, passwordTextView;
 
@@ -25,6 +28,10 @@ public class MainActivity extends AppCompatActivity {
         // initialising all views through id defined above
         emailTextView = findViewById(R.id.emailTextEdit);
         passwordTextView = findViewById(R.id.editTextPassword);
+
+        //Realtime database testing
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("messages");
+        mDatabase.setValue("Hello, World");
     }
 
     public void onClickLoginButton(View view){
