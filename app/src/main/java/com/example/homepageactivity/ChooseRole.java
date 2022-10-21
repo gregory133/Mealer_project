@@ -19,10 +19,10 @@ public class ChooseRole extends AppCompatActivity {
         Button button=(Button) view;
         String tag=(String)button.getTag();
 
-        Intent intent=new Intent(this, RegistrationActivity.class);
-
+        Intent intent=new Intent(this, MakeUserActivity.class);
         intent.putExtra("TYPE", tag);
 
+        finish();
         startActivity(intent);
 
     }

@@ -37,7 +37,7 @@
             android:name=".ChooseRole"
             android:exported="false" />
         <activity
-            android:name=".RegistrationActivity"
+            android:name=".MakeUserActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

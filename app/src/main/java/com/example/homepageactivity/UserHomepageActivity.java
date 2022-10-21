@@ -42,7 +42,6 @@ public class UserHomepageActivity extends AppCompatActivity {
         Class homepageClass = UserHomepageActivity.class;
         final List<String> pageNames = Arrays.asList("Menu","Logout");
         final List<Class> pageClasses = Arrays.asList(homepageClass, null);
-        //final Spinner spinner = findViewById(R.id.pagesSpinner);
 
         ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(),
                 R.layout.dropdown_layout,
@@ -53,13 +52,13 @@ public class UserHomepageActivity extends AppCompatActivity {
         pagesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String pageSelectedName = pagesSpinner.getSelectedItem().toString();
                 if(pageClasses.get(i) != null){
-                    if(this.getClass().getName().contains(pageClasses.get(i).getName())) return;    //this.getClass() instanceof pageClasses.get(i)
-                    startActivityForResult(new Intent(getApplicationContext(), pageClasses.get(i)),0);
+                    if(this.getClass().getName().contains(pageClasses.get(i).getName())) return;
+                    finish();
+                    startActivity(new Intent(getApplicationContext(), pageClasses.get(i)));
                 }else if(pageNames.get(i) == "Logout"){
                     UserLogoutRequest();
-                }//1234@56.78
+                }
             }
 
             @Override

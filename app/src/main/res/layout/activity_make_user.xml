@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:tag="Next"
-    tools:context=".RegistrationActivity">
+    tools:context=".MakeUserActivity">
 
     <LinearLayout
         android:id="@+id/main"
@@ -175,12 +175,12 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/Next"
+                android:id="@+id/completeCookRegistration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:layout_weight="1"
-                android:onClick="onClickRegisterButton"
+                android:onClick="onClickMakeUserNextButton"
                 android:text="Next" />
         </LinearLayout>
 
