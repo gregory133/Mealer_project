@@ -11,10 +11,15 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.Arrays;
 import java.util.List;
 
 public class UserHomepageActivity extends AppCompatActivity {
+
+    FirebaseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +27,29 @@ public class UserHomepageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_homepage);
 
         setupPageSelectSpinner((Spinner) findViewById(R.id.pagesSpinner));
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            String email = currentUser.getEmail();
+            String userType = "error";
+            switch (email.substring(0,4)) {
+                case "clnt":
+                    userType = "client";
+                    break;
+                case "cook":
+                    userType = "cook";
+                    break;
+                case "admn":
+                    userType = "Admin";
+                    break;
+            }
+            Toast.makeText(this, "Welcome "+userType+"!", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
