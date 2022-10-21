@@ -54,8 +54,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void makeLoginAttempts(){
         clntLoginAttempt();
-        cookLoginAttempt();
-        admnLoginAttempt();
     }//delimWorks@hotmail.com
 
     private void clntLoginAttempt(){
@@ -75,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
             {
                 if(task.isSuccessful()){
                     loginAttemptSuccess2("clnt");
+                }else{
+                    cookLoginAttempt();
                 }
             }
         });
@@ -96,6 +96,8 @@ public class MainActivity extends AppCompatActivity {
                     {
                         if(task.isSuccessful()){
                             loginAttemptSuccess2("cook");
+                        }else{
+                            admnLoginAttempt();
                         }
                     }
                 });
@@ -117,6 +119,8 @@ public class MainActivity extends AppCompatActivity {
                     {
                         if(task.isSuccessful()){
                             loginAttemptSuccess2("admn");
+                        }else{
+                            loginAttemptFailure();
                         }
                     }
                 });
