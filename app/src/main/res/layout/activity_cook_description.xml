@@ -51,14 +51,14 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/Next"
+                android:id="@+id/completeCookRegistration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                android:gravity="center"
                 android:layout_weight="1"
-                android:onClick="onClickRegisterButton"
-                android:text="Next" />
+                android:gravity="center"
+                android:onClick="onClickFinishClientRegButton"
+                android:text="Finish" />
         </LinearLayout>
 
     </LinearLayout>

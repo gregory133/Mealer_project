@@ -27,13 +27,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".UserAccountActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".UserHomepageActivity"
             android:exported="false">
             <meta-data
@@ -44,7 +37,7 @@
             android:name=".ChooseRole"
             android:exported="false" />
         <activity
-            android:name=".RegistrationActivity"
+            android:name=".MakeUserActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
