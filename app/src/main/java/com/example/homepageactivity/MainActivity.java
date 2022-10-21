@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         emailTextView = findViewById(R.id.emailTextEdit);
         passwordTextView = findViewById(R.id.editTextPassword);
 
-        //Realtime database testing
+        //Realtime database testing //trivial comment to test commit
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("messages");
         mDatabase.setValue("Hello, World");
     }
