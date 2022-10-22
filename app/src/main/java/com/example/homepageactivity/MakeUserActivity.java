@@ -93,6 +93,16 @@ public class MakeUserActivity extends AppCompatActivity {
             Toast.makeText(this, "Confirm Password does not match Password", Toast.LENGTH_LONG).show();
             return false;
         }
+        if (password.length()<6){
+            Toast.makeText(this, "Password must be at least 6 characters long", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        int dotCount= email.length() - email.replace(".", "").length();
+        int atCount= email.length() - email.replace("@", "").length();
+        if (dotCount!=1 || atCount!=1){
+            Toast.makeText(this, "Given email address is invalid", Toast.LENGTH_LONG).show();
+            return false;
+        }
         return true;
     }
 }

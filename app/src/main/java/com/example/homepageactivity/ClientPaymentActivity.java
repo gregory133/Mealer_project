@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -67,6 +68,8 @@ public class ClientPaymentActivity extends AppCompatActivity {
         String address = extras.getString("Address");
         String password = extras.getString("Password");
 
+
+
         mAuth.createUserWithEmailAndPassword("clnt"+email, password)
             .addOnCompleteListener(new OnCompleteListener<AuthResult>()
         {
@@ -77,6 +80,7 @@ public class ClientPaymentActivity extends AppCompatActivity {
                     onAccountCreationSuccess();
                 }
                 else {
+                    Log.d("TAG", "failure");
                     onAccountCreationFailure();
                 }
             }
