@@ -124,7 +124,7 @@ public class ClientPaymentActivity extends AppCompatActivity {
         }
 
         if (cardNumber.length() != 16){
-            Toast.makeText(this, "Invalid Credit Card Number", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Invalid Credit Card Number, Must be 16 Digits Long", Toast.LENGTH_LONG).show();
             return false;
         }
         try{ //check if cardNumber is actually a number
@@ -152,13 +152,14 @@ public class ClientPaymentActivity extends AppCompatActivity {
         try{ //check if cardYear is actually a number
             double year = Double.parseDouble(expiryYear);
             if(year < 2022){
+                Toast.makeText(this, "Invalid year given", Toast.LENGTH_LONG).show();
                 return false;
             }
         }catch(NumberFormatException e){
             Toast.makeText(this, "Expiry Year Field Invalid (Not Number)", Toast.LENGTH_LONG).show();
             return false;
         }
-
+        Log.d("TAG", "success");
         return true;
     }
 }
