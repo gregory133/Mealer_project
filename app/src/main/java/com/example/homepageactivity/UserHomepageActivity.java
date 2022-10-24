@@ -1,5 +1,6 @@
 package com.example.homepageactivity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,6 +11,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +31,41 @@ public class UserHomepageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_homepage);
 
         setupPageSelectSpinner((Spinner) findViewById(R.id.pagesSpinner));
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            //Getting user type
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            DocumentReference docRef = db.collection("users").document(user.getUid());
+            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        onSuccessfulDocumentRetrival(document);
+                    } else {
+                        onFailedDocumentRetrival();
+                    }
+                }
+            });
+        } else {
+            Toast.makeText(this, "Error, no user signed in", Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+    private void onSuccessfulDocumentRetrival(DocumentSnapshot document) {
+        if (!document.exists()) {
+            Toast.makeText(this, "Error, user document does not exist", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        String userRole = document.getString("role");
+        Toast.makeText(this, "Welcome "+userRole+"!", Toast.LENGTH_LONG).show();
+    }
+
+    private void onFailedDocumentRetrival() {
+        Toast.makeText(this, "Error, failed to retrieve user document", Toast.LENGTH_LONG).show();
     }
 
     @Override

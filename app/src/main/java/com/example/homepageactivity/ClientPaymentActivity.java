@@ -13,6 +13,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ClientPaymentActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -35,6 +39,12 @@ public class ClientPaymentActivity extends AppCompatActivity {
 
 
         if (!validate(cardholderName, cardNumber, expiryMonth, expiryYear, cvvString)) return;
+
+        getIntent().putExtra("cardholderName", cardholderName);
+        getIntent().putExtra("cardNumber", cardNumber);
+        getIntent().putExtra("expiryMonth", expiryMonth);
+        getIntent().putExtra("expiryYear", expiryYear);
+        getIntent().putExtra("cvvString", cvvString);
 
 //        Bundle extras=getIntent().getExtras();
 //        Intent intent = new Intent(this, UserHomepageActivity.class);
@@ -61,26 +71,49 @@ public class ClientPaymentActivity extends AppCompatActivity {
 
     private void createClientAccount(){
         Bundle extras=getIntent().getExtras();
-        String firstName = extras.getString("FirstName");
-        String lastName = extras.getString("LastName");
-        String email = extras.getString("Email");
-        String address = extras.getString("Address");
-        String password = extras.getString("Password");
 
-        mAuth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(new OnCompleteListener<AuthResult>()
-        {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task)
-            {
-                if (task.isSuccessful()) {
-                    onAccountCreationSuccess();
-                }
-                else {
-                    onAccountCreationFailure();
-                }
-            }
-        });
+        //Transfers the user's details to a Map to be later transferred into the Cloud Firestore
+        // userDetails excludes the email and password since those are stored in Authentication
+        Map<String, Object> userDetails = new HashMap<>();
+        userDetails.put("role", "Client");
+        userDetails.put("firstName", extras.getString("FirstName"));
+        userDetails.put("lastName", extras.getString("LastName"));
+        userDetails.put("address", extras.getString("Address"));
+        userDetails.put("cardholderName", extras.getString("cardholderName"));
+        userDetails.put("cardNumber", extras.getString("cardNumber"));
+        userDetails.put("expiryMonth", extras.getString("expiryMonth"));
+        userDetails.put("expiryYear", extras.getString("expiryYear"));
+        userDetails.put("cvvString", extras.getString("cvvString"));
+
+        mAuth.createUserWithEmailAndPassword(extras.getString("Email"), extras.getString("Password"))
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>()
+                {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task)
+                    {
+                        if (task.isSuccessful()) {
+                            //adds the user's details to the Cloud Firestore
+                            String uid = mAuth.getCurrentUser().getUid();
+                            FirebaseFirestore db = FirebaseFirestore.getInstance();
+                            db.collection("users").document(uid).set(userDetails);
+                            /* For some reason it doesn't like addOnSuccessListener(new OnSuccessListener<DocumentReference>(), which worked in the MainActivity test case
+                                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                        @Override
+                                        public void onSuccess(DocumentReference documentReference) {
+                                            onAccountCreationSuccess();
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            onDetailAdditionFailure();                                        }
+                                    });*/
+                            onAccountCreationSuccess();
+                        }
+                        else {
+                            onAccountCreationFailure();
+                        }
+                    }
+                });
     }
 
     private void onAccountCreationSuccess(){
@@ -88,15 +121,13 @@ public class ClientPaymentActivity extends AppCompatActivity {
                         "Registration successful!",
                         Toast.LENGTH_LONG)
                 .show();
-
         finish();
     }
 
     private void onAccountCreationFailure(){
         Toast.makeText(
                         getApplicationContext(),
-                        "Problem Making Account"
-                                + " Please try again later",
+                        "Problem Registering User \n Please try again later",
                         Toast.LENGTH_LONG)
                 .show();
     }
