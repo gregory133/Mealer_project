@@ -67,8 +67,10 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Please Enter your Email and Password", Toast.LENGTH_LONG).show();
             return;
         }
-        loginUserAttempt();
+        makeLoginAttempts();
+        //loginUserAttempt();
     }
+
     /**
      * Clears email and password boxes on login
      */
@@ -81,6 +83,81 @@ public class MainActivity extends AppCompatActivity {
         String email = emailTextView.getText().toString();
         String password = passwordTextView.getText().toString();
         return !email.equals("") && !password.equals("");
+    }
+
+
+    private void makeLoginAttempts(){
+        clntLoginAttempt();
+    }//delimWorks@hotmail.com
+
+    private void clntLoginAttempt(){
+        // Take the value of two edit texts in Strings
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        String email = ("clnt" + emailTextView.getText().toString());
+        String password = passwordTextView.getText().toString();
+
+        System.out.println("try: "+email);
+
+        // signin existing user
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(
+                new OnCompleteListener<AuthResult>(){
+            @Override
+            public void onComplete(
+                    @NonNull Task<AuthResult> task)
+            {
+                if(task.isSuccessful()){
+                    loginAttemptSuccess2("clnt");
+                }else{
+                    cookLoginAttempt();
+                }
+            }
+        });
+    }
+    private void cookLoginAttempt(){
+        // Take the value of two edit texts in Strings
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        String email = ("cook" + emailTextView.getText().toString());
+        String password = passwordTextView.getText().toString();
+
+        System.out.println("try: "+email);
+
+        // signin existing user
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(
+                new OnCompleteListener<AuthResult>(){
+                    @Override
+                    public void onComplete(
+                            @NonNull Task<AuthResult> task)
+                    {
+                        if(task.isSuccessful()){
+                            loginAttemptSuccess2("cook");
+                        }else{
+                            admnLoginAttempt();
+                        }
+                    }
+                });
+    }
+    private void admnLoginAttempt(){
+        // Take the value of two edit texts in Strings
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        String email = ("admn" + emailTextView.getText().toString());
+        String password = passwordTextView.getText().toString();
+
+        System.out.println("try: "+email);
+
+        // signin existing user
+        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(
+                new OnCompleteListener<AuthResult>(){
+                    @Override
+                    public void onComplete(
+                            @NonNull Task<AuthResult> task)
+                    {
+                        if(task.isSuccessful()){
+                            loginAttemptSuccess2("admn");
+                        }else{
+                            loginAttemptFailure();
+                        }
+                    }
+                });
     }
 
     private void loginUserAttempt()
@@ -111,6 +188,15 @@ public class MainActivity extends AppCompatActivity {
         ClearLoginInfoBoxes();
 
         Intent intent = new Intent(getApplicationContext(), UserHomepageActivity.class);
+        startActivity(intent);
+    }
+
+    private void loginAttemptSuccess2(String userPrefix){
+        //Don't want to leave there info sitting around after logging in
+        ClearLoginInfoBoxes();
+
+        Intent intent = new Intent(getApplicationContext(), UserHomepageActivity.class);
+        intent.putExtra("UserType", userPrefix);
         startActivity(intent);
     }
 

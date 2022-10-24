@@ -1,8 +1,8 @@
 public class Client extends User{
 
-    private Payment payment;
+    private CreditCardInformation payment;
 
-    public Client(String f, String l, String a, String e, String p, Payment payment1){
+    public Client(String f, String l, String a, String e, String p, CreditCardInformation payment1){
         firstName = f;
         lastName = l;
         address = a;

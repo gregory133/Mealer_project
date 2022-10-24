@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -134,14 +135,14 @@ public class ClientPaymentActivity extends AppCompatActivity {
 
     private boolean validate(String cardholderName, String cardNumber, String expiryMonth, String expiryYear, String cvvString) {
         //Double isNum;
-        if (cvvString.equals("")) {
-            Toast.makeText(this, "CVV Field Invalid (Empty)", Toast.LENGTH_LONG).show();
+        if (cvvString.length() != 3) {
+            Toast.makeText(this, "Invalid CVV", Toast.LENGTH_LONG).show();
             return false;
         }
         try{ //check if CVV is actually a number
             Double.parseDouble(cvvString);
         }catch(NumberFormatException e){
-            Toast.makeText(this, "CVV Field Invalid (Not Number)", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "CVV Field Invalid (Not a Number)", Toast.LENGTH_LONG).show();
             return false;
         }
 
@@ -150,8 +151,8 @@ public class ClientPaymentActivity extends AppCompatActivity {
             return false;
         }
 
-        if (cardNumber.equals("")){
-            Toast.makeText(this, "Cardholder Number Field Invalid (Empty)", Toast.LENGTH_LONG).show();
+        if (cardNumber.length() != 16){
+            Toast.makeText(this, "Invalid Credit Card Number, Must be 16 Digits Long", Toast.LENGTH_LONG).show();
             return false;
         }
         try{ //check if cardNumber is actually a number
@@ -161,7 +162,7 @@ public class ClientPaymentActivity extends AppCompatActivity {
             return false;
         }
 
-        if (expiryMonth.equals("")){
+        if (expiryMonth.length() != 2 && expiryMonth.length() != 1){
             Toast.makeText(this, "Expiry Month Field Invalid (Empty)", Toast.LENGTH_LONG).show();
             return false;
         }
@@ -172,17 +173,21 @@ public class ClientPaymentActivity extends AppCompatActivity {
             return false;
         }
 
-        if (expiryYear.equals("")){
+        if (expiryYear.length() != 4){
             Toast.makeText(this, "Expiry Year Field Invalid (Empty)", Toast.LENGTH_LONG).show();
             return false;
         }
         try{ //check if cardYear is actually a number
-            Double.parseDouble(expiryYear);
+            double year = Double.parseDouble(expiryYear);
+            if(year < 2022){
+                Toast.makeText(this, "Invalid year given", Toast.LENGTH_LONG).show();
+                return false;
+            }
         }catch(NumberFormatException e){
             Toast.makeText(this, "Expiry Year Field Invalid (Not Number)", Toast.LENGTH_LONG).show();
             return false;
         }
-
+        Log.d("TAG", "success");
         return true;
     }
 }
