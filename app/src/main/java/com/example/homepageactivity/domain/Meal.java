@@ -1,3 +1,5 @@
+package com.example.homepageactivity.domain;
+
 import android.media.Image;
 
 public class Meal {

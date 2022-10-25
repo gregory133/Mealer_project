@@ -1,3 +1,5 @@
+package com.example.homepageactivity.domain;
+
 /**
  * implements the Singleton pattern
  */

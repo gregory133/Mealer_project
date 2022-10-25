@@ -32,7 +32,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
-                android:minHeight="60dp" />
+                android:minHeight="60dp"
+                tools:ignore="SpeakableTextPresentCheck" />
 
 
         </LinearLayout>
@@ -75,28 +76,28 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Meal" />
+                    android:text="meal" />
 
                 <Button
                     android:id="@+id/mealReccomendationButton8"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Meal" />
+                    android:text="meal" />
 
                 <Button
                     android:id="@+id/mealReccomendationButton7"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Meal" />
+                    android:text="meal" />
 
                 <Button
                     android:id="@+id/mealReccomendationButton20"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Meal" />
+                    android:text="meal" />
             </LinearLayout>
 
             <LinearLayout
@@ -110,28 +111,28 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Meal" />
+                    android:text="meal" />
 
                 <Button
                     android:id="@+id/mealReccomendationButton10"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Meal" />
+                    android:text="meal" />
 
                 <Button
                     android:id="@+id/mealReccomendationButton11"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Meal" />
+                    android:text="meal" />
 
                 <Button
                     android:id="@+id/mealReccomendationButton18"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Meal" />
+                    android:text="meal" />
 
             </LinearLayout>
 
@@ -146,28 +147,28 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Meal" />
+                    android:text="meal" />
 
                 <Button
                     android:id="@+id/MealReccomendationButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Meal" />
+                    android:text="meal" />
 
                 <Button
                     android:id="@+id/mealReccomendationButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Meal" />
+                    android:text="meal" />
 
                 <Button
                     android:id="@+id/mealReccomendationButton19"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Meal" />
+                    android:text="meal" />
             </LinearLayout>
 
             <LinearLayout
@@ -181,28 +182,28 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Meal" />
+                    android:text="meal" />
 
                 <Button
                     android:id="@+id/mealReccomendationButton24"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Meal" />
+                    android:text="meal" />
 
                 <Button
                     android:id="@+id/mealReccomendationButton23"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Meal" />
+                    android:text="meal" />
 
                 <Button
                     android:id="@+id/mealReccomendationButton21"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Meal" />
+                    android:text="meal" />
             </LinearLayout>
 
         </LinearLayout>

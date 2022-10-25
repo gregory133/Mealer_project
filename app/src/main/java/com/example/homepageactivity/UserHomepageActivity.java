@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -27,6 +28,7 @@ import java.util.List;
 public class UserHomepageActivity extends AppCompatActivity {
 
     FirebaseUser currentUser;
+    private String userRole;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +65,7 @@ public class UserHomepageActivity extends AppCompatActivity {
             return;
         }
 
-        String userRole = document.getString("role");
+        userRole = document.getString("role");
         Toast.makeText(this, "Welcome "+userRole+"!", Toast.LENGTH_LONG).show();
     }
 
@@ -87,8 +89,10 @@ public class UserHomepageActivity extends AppCompatActivity {
 
     public void setupPageSelectSpinner(Spinner pagesSpinner){
         Class homepageClass = UserHomepageActivity.class;
-        final List<String> pageNames = Arrays.asList("Menu","Logout");
-        final List<Class> pageClasses = Arrays.asList(homepageClass, null);
+        //names needs to correspond to the classes
+        final List<String> pageNames = Arrays.asList("Settings", "Menu", "Logout", "Inbox");
+        final List<Class> pageClasses = Arrays.asList(null, homepageClass, null, InboxActivity.class);
+
 
         ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(),
                 R.layout.dropdown_layout,
@@ -99,14 +103,17 @@ public class UserHomepageActivity extends AppCompatActivity {
         pagesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(pageClasses.get(i) != null){
-                    if(this.getClass().getName().contains(pageClasses.get(i).getName())) return;
+                if (pageClasses.get(i) != null) {
+                    if (this.getClass().getName().contains(pageClasses.get(i).getName())) return;
                     finish();
-                    startActivity(new Intent(getApplicationContext(), pageClasses.get(i)));
-                }else if(pageNames.get(i) == "Logout"){
+                    Intent intent=new Intent(getApplicationContext(), pageClasses.get(i));
+                    intent.putExtra("userRole", userRole);
+                    startActivity(intent);
+                } else if (pageNames.get(i).equals("Logout")) {
                     UserLogoutRequest();
                 }
             }
+
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {

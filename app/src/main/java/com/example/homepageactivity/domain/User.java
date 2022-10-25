@@ -1,3 +1,5 @@
+package com.example.homepageactivity.domain;
+
 public class User {
 
     String firstName;
@@ -5,5 +7,4 @@ public class User {
     String address;
     String email;
     String password;
-
 }

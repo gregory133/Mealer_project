@@ -101,7 +101,7 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:gravity="start|top"
-                android:hint="Email Address"
+                android:hint="Email com.example.homepageactivity.domain.Address"
                 android:inputType="textMultiLine"
                 tools:ignore="TouchTargetSizeCheck" />
         </LinearLayout>
@@ -122,7 +122,7 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:gravity="start|top"
-                android:hint="Address"
+                android:hint="com.example.homepageactivity.domain.Address"
                 android:inputType="textMultiLine"
                 tools:ignore="TouchTargetSizeCheck" />
         </LinearLayout>

@@ -1,3 +1,5 @@
+package com.example.homepageactivity.domain;
+
 import android.media.Image;
 
 import java.util.ArrayList;

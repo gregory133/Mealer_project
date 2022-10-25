@@ -1,3 +1,5 @@
+package com.example.homepageactivity.domain;
+
 public class CreditCardInformation {
 
     private int cardNumber;

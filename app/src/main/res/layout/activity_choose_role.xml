@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
                 android:gravity="center"
-                android:text="Choose Between Register As Cook Or Client"
+                android:text="Choose Between Register As com.example.homepageactivity.domain.Cook Or com.example.homepageactivity.domain.Client"
                 android:textSize="30dp" />
         </LinearLayout>
 
@@ -45,8 +45,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="84dp"
                     android:onClick="onClickButton"
-                    android:tag="Client"
-                    android:text="Client" />
+                    android:tag="com.example.homepageactivity.domain.Client"
+                    android:text="com.example.homepageactivity.domain.Client" />
 
                 <Button
                     android:id="@+id/cookButton"
@@ -54,8 +54,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
                     android:onClick="onClickButton"
-                    android:tag="Cook"
-                    android:text="Cook" />
+                    android:tag="com.example.homepageactivity.domain.Cook"
+                    android:text="com.example.homepageactivity.domain.Cook" />
             </LinearLayout>
 
         </LinearLayout>

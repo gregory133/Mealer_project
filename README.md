@@ -13,6 +13,6 @@ Link to the github repository:
 https://github.com/gregory133/Mealer_project
 
 
-to log in as Admin:
+to log in as com.example.homepageactivity.domain.Admin:
 delimWorksa@hotmail.com
 delimWorks
