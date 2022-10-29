@@ -5,4 +5,11 @@ public abstract class Message {
     String recipientEmail;
     String subject;
     String bodyText;
+
+    public Message(String sender, String recipient, String subject, String body){
+        senderEmail = sender;
+        recipientEmail = recipient;
+        this.subject = subject;
+        bodyText = body;
+    }
 }
