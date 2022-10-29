@@ -1,15 +1,33 @@
 package com.example.homepageactivity.domain;
 
 public abstract class Message {
-    String senderEmail;
-    String recipientEmail;
-    String subject;
-    String bodyText;
+    private User sender;
+    private String recipientEmail;
+    private String subject;
+    private String bodyText;
 
-    public Message(String sender, String recipient, String subject, String body){
-        senderEmail = sender;
+    public Message() {}
+
+    public Message(User sender, String recipient, String subject, String body){
+        this.sender = sender;
         recipientEmail = recipient;
         this.subject = subject;
         bodyText = body;
+    }
+
+    public User getSender() {
+        return sender;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public String getBodyText() {
+        return bodyText;
+    }
+
+    public String getRecipientEmail() {
+        return recipientEmail;
     }
 }
