@@ -37,11 +37,11 @@ public class UserHomepageActivity extends AppCompatActivity {
 
         setupPageSelectSpinner((Spinner) findViewById(R.id.pagesSpinner));
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
             //Getting user type
             FirebaseFirestore db = FirebaseFirestore.getInstance();
-            DocumentReference docRef = db.collection("users").document(user.getUid());
+            DocumentReference docRef = db.collection("users").document(currentUser.getUid());
             docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -131,6 +131,7 @@ public class UserHomepageActivity extends AppCompatActivity {
 
     private void HomepageLogout(){
         //Logout Operations///////////////////////////////////////////////////////
+        FirebaseAuth.getInstance().signOut();
         finish();
     }
 //
