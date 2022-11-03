@@ -11,12 +11,12 @@ import com.example.homepageactivity.R;
 
 import java.util.ArrayList;
 
-public class ItemListAdapter extends ArrayAdapter<ListItem> {
+public class ItemListAdapter extends ArrayAdapter<Message> {
 
     private Context context;
     private int res;
 
-    public ItemListAdapter(Context context, int res, ArrayList<ListItem> list){
+    public ItemListAdapter(Context context, int res, ArrayList<Message> list){
         super(context, res, list);
         this.context=context;
         this.res=res;
