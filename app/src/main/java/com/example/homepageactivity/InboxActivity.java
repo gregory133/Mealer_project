@@ -25,7 +25,7 @@ public class InboxActivity extends AppCompatActivity {
     Spinner spinner;
     ListView listView;
 
-    ArrayList<ListItem> items=new ArrayList<ListItem>();
+    ArrayList<Message> items=new ArrayList<Message>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +76,7 @@ public class InboxActivity extends AppCompatActivity {
         finish();
     }
     private void hookList(){
-        items.add(new ListItem("Rat in my soup", "I send this complaint to inform you that there was a rat in my soup"));
+        items.add(new ComplaintMessage(null, null, "Rat in my soup", "I send this complaint to inform you that there was a rat in my soup", null));
         ItemListAdapter adapter=new ItemListAdapter(this, R.layout.inbox_list_item, items);
         listView.setAdapter(adapter);
 
@@ -86,7 +86,7 @@ public class InboxActivity extends AppCompatActivity {
                 Log.d("TAG", "onItemSelected:");
                 Intent intent=new Intent(getApplicationContext(), InboxDescriptionActivity.class);
                 intent.putExtra("subject", items.get(i).getSubject());
-                intent.putExtra("description", items.get(i).getDescription());
+                intent.putExtra("description", items.get(i).getBodyText());
                 startActivity(intent);
             }
         });
