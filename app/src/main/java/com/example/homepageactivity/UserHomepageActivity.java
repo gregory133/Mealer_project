@@ -1,19 +1,20 @@
 package com.example.homepageactivity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.homepageactivity.domain.Admin;
+import com.example.homepageactivity.domain.Client;
+import com.example.homepageactivity.domain.Cook;
+import com.example.homepageactivity.domain.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,11 +24,13 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class UserHomepageActivity extends AppCompatActivity {
 
-    FirebaseUser currentUser;
+    private FirebaseUser currentUser;
+    private User currentAccount;
     private String userRole;
 
     @Override
@@ -66,7 +69,26 @@ public class UserHomepageActivity extends AppCompatActivity {
         }
 
         userRole = document.getString("role");
-        Toast.makeText(this, "Welcome "+userRole+"!", Toast.LENGTH_LONG).show();
+        switch (userRole) {
+            case "Cook":
+                currentAccount = document.toObject(Cook.class);
+                break;
+            case "Client":
+                currentAccount = document.toObject(Client.class);
+                break;
+            case "Admin":
+                currentAccount = document.toObject(Admin.class);
+                break;
+        }
+        if (currentAccount.isBanned()) {
+            Toast.makeText(this, "This user is banned permanently.", Toast.LENGTH_LONG).show();
+            UserLogoutRequest();
+        } else if (currentAccount.getBannedUntil().after(new Date())) {
+            Toast.makeText(this, "This user is banned until " + currentAccount.getBannedUntil().toString(), Toast.LENGTH_LONG).show();
+            UserLogoutRequest();
+        } else {
+            Toast.makeText(this, "Welcome " + userRole + "!", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void onFailedDocumentRetrival() {
@@ -132,6 +154,7 @@ public class UserHomepageActivity extends AppCompatActivity {
     private void HomepageLogout(){
         //Logout Operations///////////////////////////////////////////////////////
         FirebaseAuth.getInstance().signOut();
+        currentAccount = null;
         finish();
     }
 //
