@@ -11,7 +11,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class InboxActivity extends AppCompatActivity {
 
@@ -37,7 +40,9 @@ public class InboxActivity extends AppCompatActivity {
     FirebaseFirestore db;
     private static final String TAG = "InboxActivity";
 
-    ArrayList<Message> items;
+    ArrayList<QueryDocumentSnapshot> items;
+    private Dialog currentMessage;
+    private QueryDocumentSnapshot docRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +71,7 @@ public class InboxActivity extends AppCompatActivity {
 
                             items = new ArrayList<>();
                             for (QueryDocumentSnapshot msg : value) {
-                                items.add(msg.toObject(Message.class));
+                                items.add(msg);
                             }
                             hookList();
                         }
@@ -119,11 +124,40 @@ public class InboxActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Log.d(TAG, "onItemSelected:");
-                Intent intent=new Intent(getApplicationContext(), InboxDescriptionActivity.class);
-                intent.putExtra("subject", items.get(i).getSubject());
-                intent.putExtra("description", items.get(i).getBodyText());
-                startActivity(intent);
+                docRef = items.get(i);
+                showMessage();
             }
         });
+    }
+
+    private void showMessage() {
+        currentMessage = new Dialog(this);
+        currentMessage.setContentView(R.layout.inbox_description);
+        Message selectedMessage = docRef.toObject(Message.class);
+        TextView subjectText=currentMessage.findViewById(R.id.subject);
+        TextView descText=currentMessage.findViewById(R.id.description);
+        subjectText.setText(selectedMessage.getSubject());
+        descText.setText(selectedMessage.getBodyText());
+        currentMessage.show();
+    }
+
+    public void onClickSuspend(View view) {
+        String cookUID = docRef.toObject(ComplaintMessage.class).getCookUID();
+        if (cookUID != null) {
+            Map<String, Boolean> change = new HashMap<>(1);
+            change.put("banned", true);
+            db.collection("users").document(cookUID).set(change, SetOptions.merge());
+            onClickDismiss(view);
+        } else {
+            Toast.makeText(this, "Error, no cook UID found", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void onClickDismiss(View view) {
+        Map<String, Boolean> change = new HashMap<>(1);
+        change.put("archived", true);
+        String msgID = docRef.getId();
+        db.collection("messages").document(msgID).set(change, SetOptions.merge());
+        currentMessage.dismiss();
     }
 }
