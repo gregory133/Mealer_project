@@ -5,13 +5,12 @@ import android.media.Image;
 import com.google.firebase.Timestamp;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Cook extends User{
 
     private Image voidChequePicture;
     private String shortDescription;
-    private int bannedUntil;
-    private boolean banned;
     private ArrayList<Meal> menu;
 
     public Cook() {}
@@ -20,8 +19,6 @@ public class Cook extends User{
         super(firstName, lastName, address);
         this.voidChequePicture = voidChequePicture;
         this.shortDescription = shortDescription;
-        bannedUntil = 0;
-        banned = false;
         menu = new ArrayList<Meal>();
     }
 
@@ -31,14 +28,6 @@ public class Cook extends User{
 
     public String getShortDescription() {
         return shortDescription;
-    }
-
-    public int getBannedUntil() {
-        return bannedUntil;
-    }
-
-    public boolean isBanned() {
-        return banned;
     }
 
     public ArrayList<Meal> getMenu() {
