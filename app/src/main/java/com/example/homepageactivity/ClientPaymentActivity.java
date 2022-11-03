@@ -11,11 +11,15 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.homepageactivity.domain.Validator;
+import com.example.homepageactivity.domain.Client;
+import com.example.homepageactivity.domain.Cook;
+import com.example.homepageactivity.domain.CreditCardInformation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -74,18 +78,20 @@ public class ClientPaymentActivity extends AppCompatActivity {
     private void createClientAccount(){
         Bundle extras=getIntent().getExtras();
 
-        //Transfers the user's details to a Map to be later transferred into the Cloud Firestore
-        // userDetails excludes the email and password since those are stored in Authentication
-        Map<String, Object> userDetails = new HashMap<>();
-        userDetails.put("role", "Client");
-        userDetails.put("firstName", extras.getString("FirstName"));
-        userDetails.put("lastName", extras.getString("LastName"));
-        userDetails.put("address", extras.getString("Address"));
-        userDetails.put("cardholderName", extras.getString("cardholderName"));
-        userDetails.put("cardNumber", extras.getString("cardNumber"));
-        userDetails.put("expiryMonth", extras.getString("expiryMonth"));
-        userDetails.put("expiryYear", extras.getString("expiryYear"));
-        userDetails.put("cvvString", extras.getString("cvvString"));
+        CreditCardInformation newCard = new CreditCardInformation(
+                Long.parseLong(extras.getString("cardNumber")),
+                Integer.parseInt(extras.getString("cvvString")),
+                Integer.parseInt(extras.getString("expiryMonth")),
+                Integer.parseInt(extras.getString("expiryYear")),
+                extras.getString("cardholderName")
+        );
+
+        Client newClient = new Client(
+                extras.getString("FirstName"),
+                extras.getString("LastName"),
+                extras.getString("Address"),
+                newCard
+        );
 
         mAuth.createUserWithEmailAndPassword(extras.getString("Email"), extras.getString("Password"))
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>()
@@ -97,7 +103,10 @@ public class ClientPaymentActivity extends AppCompatActivity {
                             //adds the user's details to the Cloud Firestore
                             String uid = mAuth.getCurrentUser().getUid();
                             FirebaseFirestore db = FirebaseFirestore.getInstance();
-                            db.collection("users").document(uid).set(userDetails);
+                            db.collection("users").document(uid).set(newClient);
+                            Map<String, Object> temp = new HashMap<>(1);
+                            temp.put("role","Client");
+                            db.collection("users").document(uid).set(temp, SetOptions.merge());
                             /* For some reason it doesn't like addOnSuccessListener(new OnSuccessListener<DocumentReference>(), which worked in the MainActivity test case
                                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                         @Override
