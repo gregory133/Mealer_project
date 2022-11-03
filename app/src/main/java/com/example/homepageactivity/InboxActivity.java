@@ -54,7 +54,7 @@ public class InboxActivity extends AppCompatActivity {
         if (currentUser != null) {
             db = FirebaseFirestore.getInstance();
             db.collection("messages")
-                    .whereEqualTo("recipientUID", currentUser.getUid())
+                    .whereEqualTo("recipientUID", currentUser.getUid()).whereEqualTo("archived", false)
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
                         public void onEvent(@Nullable QuerySnapshot value,

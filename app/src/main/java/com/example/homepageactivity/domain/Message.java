@@ -8,6 +8,11 @@ public class Message {
     private String subject;
     private String bodyText;
 
+    //a message is considered archived once some sort of action has been taken on it
+    //It is still stored in the database for future reference but it will no longer
+    //be displayed in the list of message.
+    private boolean archived;
+
     public Message() {}
 
     public Message(String senderUID, String recipientUID, String subject, String bodyText){
@@ -15,6 +20,7 @@ public class Message {
         this.recipientUID = recipientUID;
         this.subject = subject;
         this.bodyText = bodyText;
+        archived = false;
     }
 
     public String getSenderUID() {
@@ -31,5 +37,9 @@ public class Message {
 
     public String getRecipientUID() {
         return recipientUID;
+    }
+
+    public boolean isArchived() {
+        return archived;
     }
 }
