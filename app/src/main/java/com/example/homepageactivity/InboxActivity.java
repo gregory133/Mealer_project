@@ -1,17 +1,24 @@
 package com.example.homepageactivity;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.homepageactivity.domain.*;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.firestore.Source;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -27,6 +34,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,32 +62,105 @@ public class InboxActivity extends AppCompatActivity {
         listView=findViewById(R.id.list);
         setTitle();
         hookDropDown();
-
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser != null) {
-            db = FirebaseFirestore.getInstance();
-            db.collection("messages")
-                    .whereEqualTo("recipientUID", currentUser.getUid()).whereEqualTo("archived", false)
-                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                        @Override
-                        public void onEvent(@Nullable QuerySnapshot value,
-                                            @Nullable FirebaseFirestoreException e) {
-                            if (e != null) {
-                                Log.w(TAG, "Listen failed.", e);
-                                return;
-                            }
-
-                            items = new ArrayList<>();
-                            for (QueryDocumentSnapshot msg : value) {
-                                items.add(msg);
-                            }
-                            hookList();
-                        }
-                    });
-        } else {
-            Toast.makeText(this, "Error, no user signed in", Toast.LENGTH_LONG).show();
-        }
+//        populateMessages();
     }
+
+    private void populateMessages(){
+        CollectionReference colRef = getCollection("users");
+        DocumentReference docRef = getDocument(colRef, "BShaMMSVKIYn8tDFy5eKokv5ubE3");
+        Object firstName = getField(docRef, "firstName");
+
+        String name = firstName.toString();
+        titleText.setText(name);
+
+//        hookDropDown();
+//        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+//        if (currentUser != null) {
+//            db = FirebaseFirestore.getInstance();
+//            db.collection("messages")
+//                    .whereEqualTo("recipientUID", currentUser.getUid()).whereEqualTo("archived", false)
+//                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+//                        @Override
+//                        public void onEvent(@Nullable QuerySnapshot value,
+//                                            @Nullable FirebaseFirestoreException e) {
+//                            if (e != null) {
+//                                Log.w(TAG, "Listen failed.", e);
+//                                return;
+//                            }
+//
+//                            items = new ArrayList<>();
+//                            for (QueryDocumentSnapshot msg : value) {
+//                                items.add(msg);
+//                            }
+//                            hookList();
+//                        }
+//                    });
+//        } else {
+//            Toast.makeText(this, "Error, no user signed in", Toast.LENGTH_LONG).show();
+//        }
+    }
+
+
+
+
+
+    /**
+     Refs
+     Inbox activity - onClickSuspend
+     */
+    public Object getField(DocumentReference docRef, String fieldName){		//fieldName is a string of the field's name
+
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        onSuccessfulUserRetrival(document);
+                    }
+                    else{
+                        //no doc error
+                    }
+                } else {
+                    //failed error
+                }
+            }
+        });
+
+        Task<DocumentSnapshot> docSnapshot = docRef.get();
+        //(Source.valueOf(fieldName))
+        return docSnapshot;
+    }
+
+    private void onSuccessfulUserRetrival(DocumentSnapshot docSnapshot){
+        User thisUser = getUserFromDocumentSnapshot(docSnapshot);
+        thisUser.getBannedUntil()
+    }
+
+    public CollectionReference getCollection(String collectionName){
+        db = FirebaseFirestore.getInstance();		//FirebaseFirestore is the Object of the database
+        return db.collection(collectionName);
+    }
+
+    public DocumentReference getDocument(CollectionReference colletionRef, String docID){	//docID is the UID or message ID String mesa
+        return colletionRef.document(docID);
+    }
+
+    /**
+     import java.util.Map
+     import java.util.HashMap
+     */
+    public void setField(DocumentReference docRef, String fieldName, Object newValue){
+        Map<String, Object> changeField = new HashMap<>(1);
+        changeField.put(fieldName, newValue);
+        docRef.set(changeField, SetOptions.merge());
+    }
+
+    private User getUserFromDocumentSnapshot(DocumentSnapshot docSnapshot) {
+        return docSnapshot.toObject(User.class);
+    }
+
+
 
     private void hookDropDown(){
         final List<String> options = Arrays.asList("Settings", "Logout");
