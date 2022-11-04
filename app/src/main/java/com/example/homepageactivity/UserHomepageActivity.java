@@ -98,20 +98,6 @@ public class UserHomepageActivity extends AppCompatActivity {
         Toast.makeText(this, "Error, failed to retrieve user document", Toast.LENGTH_LONG).show();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        data.getIntExtra("Logout", 0);
-
-        switch (data.getIntExtra("Logout", 0)) {
-            case 1:
-                HomepageLogout();
-                break;
-            default:
-                break;
-        }
-    }
-
     public void setupPageSelectSpinner(Spinner pagesSpinner){
         Class homepageClass = UserHomepageActivity.class;
         //names needs to correspond to the classes
@@ -147,16 +133,14 @@ public class UserHomepageActivity extends AppCompatActivity {
     }
 
     public void UserLogoutRequest(){
-        Intent returnIntent = new Intent();
+        /*Intent returnIntent = new Intent();
         returnIntent.putExtra("Logout", 1);
-        setResult(RESULT_OK, returnIntent);
-        finish();
-    }
+        setResult(RESULT_OK, returnIntent);*/
 
-    private void HomepageLogout(){
-        //Logout Operations///////////////////////////////////////////////////////
         FirebaseAuth.getInstance().signOut();
         currentAccount = null;
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
         finish();
     }
 //
