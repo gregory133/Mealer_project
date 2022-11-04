@@ -8,15 +8,17 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.homepageactivity.R;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 
-public class ItemListAdapter extends ArrayAdapter<Message> {
+public class ItemListAdapter extends ArrayAdapter<QueryDocumentSnapshot> {
+
 
     private Context context;
     private int res;
 
-    public ItemListAdapter(Context context, int res, ArrayList<Message> list){
+    public ItemListAdapter(Context context, int res, ArrayList<QueryDocumentSnapshot> list){
         super(context, res, list);
         this.context=context;
         this.res=res;
@@ -28,7 +30,7 @@ public class ItemListAdapter extends ArrayAdapter<Message> {
         LayoutInflater inflater=LayoutInflater.from(context);
         convertView=inflater.inflate(res, parent, false);
         TextView textView=convertView.findViewById(R.id.textView);
-        textView.setText(getItem(pos).getSubject());
+        textView.setText(getItem(pos).toObject(Message.class).getSubject());
 
         return convertView;
     }

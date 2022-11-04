@@ -16,9 +16,6 @@
         android:theme="@style/Theme.HomepageActivity"
         tools:targetApi="31">
         <activity
-            android:name=".InboxDescriptionActivity"
-            android:exported="false" />
-        <activity
             android:name=".InboxActivity"
             android:exported="false" />
         <activity

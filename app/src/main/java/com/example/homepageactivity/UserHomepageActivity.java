@@ -79,6 +79,9 @@ public class UserHomepageActivity extends AppCompatActivity {
             case "Admin":
                 currentAccount = document.toObject(Admin.class);
                 break;
+            default:
+                Toast.makeText(this, "Error, account doesn't exist/doesn't have a type", Toast.LENGTH_LONG).show();
+                return;
         }
         if (currentAccount.isBanned()) {
             Toast.makeText(this, "This user is banned permanently.", Toast.LENGTH_LONG).show();
