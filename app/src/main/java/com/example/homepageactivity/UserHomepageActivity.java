@@ -130,7 +130,6 @@ public class UserHomepageActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (pageClasses.get(i) != null) {
                     if (this.getClass().getName().contains(pageClasses.get(i).getName())) return;
-                    finish();
                     Intent intent=new Intent(getApplicationContext(), pageClasses.get(i));
                     intent.putExtra("userRole", userRole);
                     startActivity(intent);
