@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
     private void loginAttemptSuccess(){
         //Don't want to leave there info sitting around after logging in
         ClearLoginInfoBoxes();
-
+        finish();
         Intent intent = new Intent(getApplicationContext(), UserHomepageActivity.class);
         startActivity(intent);
     }
