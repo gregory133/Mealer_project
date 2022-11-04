@@ -10,11 +10,16 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.homepageactivity.domain.Validator;
+import com.example.homepageactivity.domain.Client;
+import com.example.homepageactivity.domain.Cook;
+import com.example.homepageactivity.domain.CreditCardInformation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -73,18 +78,20 @@ public class ClientPaymentActivity extends AppCompatActivity {
     private void createClientAccount(){
         Bundle extras=getIntent().getExtras();
 
-        //Transfers the user's details to a Map to be later transferred into the Cloud Firestore
-        // userDetails excludes the email and password since those are stored in Authentication
-        Map<String, Object> userDetails = new HashMap<>();
-        userDetails.put("role", "Client");
-        userDetails.put("firstName", extras.getString("FirstName"));
-        userDetails.put("lastName", extras.getString("LastName"));
-        userDetails.put("address", extras.getString("Address"));
-        userDetails.put("cardholderName", extras.getString("cardholderName"));
-        userDetails.put("cardNumber", extras.getString("cardNumber"));
-        userDetails.put("expiryMonth", extras.getString("expiryMonth"));
-        userDetails.put("expiryYear", extras.getString("expiryYear"));
-        userDetails.put("cvvString", extras.getString("cvvString"));
+        CreditCardInformation newCard = new CreditCardInformation(
+                Long.parseLong(extras.getString("cardNumber")),
+                Integer.parseInt(extras.getString("cvvString")),
+                Integer.parseInt(extras.getString("expiryMonth")),
+                Integer.parseInt(extras.getString("expiryYear")),
+                extras.getString("cardholderName")
+        );
+
+        Client newClient = new Client(
+                extras.getString("FirstName"),
+                extras.getString("LastName"),
+                extras.getString("Address"),
+                newCard
+        );
 
         mAuth.createUserWithEmailAndPassword(extras.getString("Email"), extras.getString("Password"))
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>()
@@ -96,7 +103,10 @@ public class ClientPaymentActivity extends AppCompatActivity {
                             //adds the user's details to the Cloud Firestore
                             String uid = mAuth.getCurrentUser().getUid();
                             FirebaseFirestore db = FirebaseFirestore.getInstance();
-                            db.collection("users").document(uid).set(userDetails);
+                            db.collection("users").document(uid).set(newClient);
+                            Map<String, Object> temp = new HashMap<>(1);
+                            temp.put("role","Client");
+                            db.collection("users").document(uid).set(temp, SetOptions.merge());
                             /* For some reason it doesn't like addOnSuccessListener(new OnSuccessListener<DocumentReference>(), which worked in the MainActivity test case
                                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                         @Override
@@ -134,59 +144,58 @@ public class ClientPaymentActivity extends AppCompatActivity {
     }
 
     private boolean validate(String cardholderName, String cardNumber, String expiryMonth, String expiryYear, String cvvString) {
-        //Double isNum;
-        if (cvvString.length() != 3) {
-            Toast.makeText(this, "Invalid CVV", Toast.LENGTH_LONG).show();
-            return false;
-        }
-        try{ //check if CVV is actually a number
-            Double.parseDouble(cvvString);
+        Validator val = new Validator();
+        int cvv;
+        long cardNum;
+        int month;
+        int year;
+
+        try{
+            cvv = Integer.parseInt(cvvString);
         }catch(NumberFormatException e){
             Toast.makeText(this, "CVV Field Invalid (Not a Number)", Toast.LENGTH_LONG).show();
             return false;
         }
+        try{
+            cardNum = Long.parseLong(cardNumber);
+        }catch(NumberFormatException e){
+            Toast.makeText(this, "Credit Card Number Field Invalid (Not a Number)", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        try{
+            month = Integer.parseInt(expiryMonth);
+        }catch(NumberFormatException e){
+            Toast.makeText(this, "Expiry Month Field Invalid (Not a Number)", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        try{
+            year = Integer.parseInt(expiryYear);
+        }catch(NumberFormatException e){
+            Toast.makeText(this, "Expiry Year Field Invalid (Not a Number)", Toast.LENGTH_LONG).show();
+            return false;
+        }
 
+        if (val.getIntLength(cvv) != 3) {
+            Toast.makeText(this, "Invalid CVV", Toast.LENGTH_LONG).show();
+            return false;
+        }
         if (cardholderName.equals("")){
             Toast.makeText(this, "Cardholder Name Field Invalid (Empty)", Toast.LENGTH_LONG).show();
             return false;
         }
-
-        if (cardNumber.length() != 16){
-            Toast.makeText(this, "Invalid Credit Card Number, Must be 16 Digits Long", Toast.LENGTH_LONG).show();
+        if (val.getLongLength(cardNum) != 16) {
+            Toast.makeText(this, "Invalid Credit Card Number", Toast.LENGTH_LONG).show();
             return false;
         }
-        try{ //check if cardNumber is actually a number
-            Double.parseDouble(cardNumber);
-        }catch(NumberFormatException e){
-            Toast.makeText(this, "Cardholder Number Field Invalid (Not Number)", Toast.LENGTH_LONG).show();
+        if (month > 12){
+            Toast.makeText(this, "Invalid Expiry Month", Toast.LENGTH_LONG).show();
             return false;
         }
-
-        if (expiryMonth.length() != 2 && expiryMonth.length() != 1){
-            Toast.makeText(this, "Expiry Month Field Invalid (Empty)", Toast.LENGTH_LONG).show();
-            return false;
-        }
-        try{ //check if expiryMonth is actually a number
-            Double.parseDouble(expiryMonth);
-        }catch(NumberFormatException e){
-            Toast.makeText(this, "Expiry Month Field Invalid (Not Number)", Toast.LENGTH_LONG).show();
+        if (year < 1910 || 2030 < year){
+            Toast.makeText(this, "Invalid Expiry Year", Toast.LENGTH_LONG).show();
             return false;
         }
 
-        if (expiryYear.length() != 4){
-            Toast.makeText(this, "Expiry Year Field Invalid (Empty)", Toast.LENGTH_LONG).show();
-            return false;
-        }
-        try{ //check if cardYear is actually a number
-            double year = Double.parseDouble(expiryYear);
-            if(year < 2022){
-                Toast.makeText(this, "Invalid year given", Toast.LENGTH_LONG).show();
-                return false;
-            }
-        }catch(NumberFormatException e){
-            Toast.makeText(this, "Expiry Year Field Invalid (Not Number)", Toast.LENGTH_LONG).show();
-            return false;
-        }
         Log.d("TAG", "success");
         return true;
     }

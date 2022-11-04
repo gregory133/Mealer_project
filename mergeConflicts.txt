@@ -1,0 +1,35 @@
+	Branch: ee_makeTestsAndUpdateValidation
+	Date: 11/3/2022
+	File \n\n Conflict: 
+.idea/deploymentTargetDropDown.xml
+
+<<<<<<< ee_makeTestsAndUpdateValidation
+            <value value="C:\Users\Wring\.android\avd\Pixel_2_Edited_API_22.avd" />
+          </Key>
+        </deviceKey>
+      </Target>
+    </runningDeviceTargetSelectedWithDropDown>
+    <timeTargetWasSelectedWithDropDown value="2022-11-03T05:43:56.048847100Z" />
+=======
+            <value value="C:\Users\User\.android\avd\Pixel_3a_API_33_x86_64.avd" />
+          </Key>
+        </deviceKey>
+      </Target>
+    </targetSelectedWithDropDown>
+    <timeTargetWasSelectedWithDropDown value="2022-11-02T22:52:10.014922700Z" />
+>>>>>>> main
+
+
+
+app/src/main/java/com/example/homepageactivity/ClientPaymentActivity.java
+
+<<<<<<< ee_makeTestsAndUpdateValidation
+import com.example.homepageactivity.domain.Validator;
+=======
+import com.example.homepageactivity.domain.Client;
+import com.example.homepageactivity.domain.Cook;
+import com.example.homepageactivity.domain.CreditCardInformation;
+>>>>>>> main
+
+
+#########################################################################################
