@@ -14,4 +14,5 @@ public class ComplaintMessage extends Message {
     public String getCookUID() {
         return cookUID;
     }
+
 }

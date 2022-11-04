@@ -16,6 +16,9 @@ public class CreditCardInformation {
         cardHolderName = cHN;
     }
 
+    public CreditCardInformation(){
+    }
+
     public long getCardNumber() {
         return cardNumber;
     }

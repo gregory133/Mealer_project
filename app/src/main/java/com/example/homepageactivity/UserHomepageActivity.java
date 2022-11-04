@@ -115,8 +115,8 @@ public class UserHomepageActivity extends AppCompatActivity {
     public void setupPageSelectSpinner(Spinner pagesSpinner){
         Class homepageClass = UserHomepageActivity.class;
         //names needs to correspond to the classes
-        final List<String> pageNames = Arrays.asList("Settings", "Menu", "Logout", "Inbox");
-        final List<Class> pageClasses = Arrays.asList(null, homepageClass, null, InboxActivity.class);
+        final List<String> pageNames = Arrays.asList("Settings", "Logout", "Inbox");
+        final List<Class> pageClasses = Arrays.asList(null, null, InboxActivity.class);
 
 
         ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(),

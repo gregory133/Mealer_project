@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.homepageactivity.domain.Validator;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MakeUserActivity extends AppCompatActivity {
@@ -69,19 +70,20 @@ public class MakeUserActivity extends AppCompatActivity {
      * @return
      */
     private boolean validate(String firstName, String lastName, String email, String address, String password, String confirmPassword){
-        if (firstName.equals("")){
+        Validator val = new Validator();
+        if (!val.isAlphabetic(firstName)){
             Toast.makeText(this, "First Name Field Invalid (Empty)", Toast.LENGTH_LONG).show();
             return false;
         }
-        if (lastName.equals("")){
+        if (!val.isAlphabetic(lastName)){
             Toast.makeText(this, "Last Name Field Invalid (Empty)", Toast.LENGTH_LONG).show();
             return false;
         }
-        if (email.equals("")){
+        if (!val.checkValidEmail(email)){
             Toast.makeText(this, "Email Field Invalid (Empty)", Toast.LENGTH_LONG).show();
             return false;
         }
-        if (password.equals("")){
+        if (!val.checkValidPassword(password)){
             Toast.makeText(this, "Password Field Invalid (Empty)", Toast.LENGTH_LONG).show();
             return false;
         }
@@ -97,12 +99,13 @@ public class MakeUserActivity extends AppCompatActivity {
             Toast.makeText(this, "Password must be at least 6 characters long", Toast.LENGTH_LONG).show();
             return false;
         }
-        int dotCount= email.length() - email.replace(".", "").length();
-        int atCount= email.length() - email.replace("@", "").length();
-        if (dotCount!=1 || atCount!=1){
-            Toast.makeText(this, "Given email address is invalid", Toast.LENGTH_LONG).show();
-            return false;
-        }
+        /*replaced by val.checkValidEmail(emial)*/
+//        int dotCount= email.length() - email.replace(".", "").length();
+//        int atCount= email.length() - email.replace("@", "").length();
+//        if (dotCount!=1 || atCount!=1){
+//            Toast.makeText(this, "Given email address is invalid", Toast.LENGTH_LONG).show();
+//            return false;
+//        }
         return true;
     }
 }

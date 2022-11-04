@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 public class ItemListAdapter extends ArrayAdapter<QueryDocumentSnapshot> {
 
+
     private Context context;
     private int res;
 
