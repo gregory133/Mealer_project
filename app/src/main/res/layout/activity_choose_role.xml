@@ -45,7 +45,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="84dp"
                     android:onClick="onClickButton"
-                    android:tag="com.example.homepageactivity.domain.Client"
+                    android:tag="Client"
                     android:text="Client" />
 
                 <Button
@@ -54,7 +54,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="40dp"
                     android:onClick="onClickButton"
-                    android:tag="com.example.homepageactivity.domain.Cook"
+                    android:tag="Cook"
                     android:text="Cook" />
             </LinearLayout>
 
