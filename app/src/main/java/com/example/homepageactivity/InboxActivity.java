@@ -86,7 +86,7 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
     }
 
     private void hookDropDown(){
-        final List<String> options = Arrays.asList("Settings", "Logout");
+        final List<String> options = Arrays.asList("Settings", "Return");
         ArrayAdapter adapter=new ArrayAdapter(this, R.layout.dropdown_layout, options);
         adapter.setDropDownViewResource(R.layout.dropdown_layout);
         spinner.setAdapter(adapter);
@@ -94,7 +94,7 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (options.get(i).equals("Logout")){
+                if (options.get(i).equals("Return")){
                     logout();
                 }
             }
