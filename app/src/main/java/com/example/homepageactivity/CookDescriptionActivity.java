@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.homepageactivity.domain.ComplaintMessage;
 import com.example.homepageactivity.domain.Cook;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -97,6 +98,17 @@ public class CookDescriptionActivity extends AppCompatActivity {
                         "Registration successful!",
                         Toast.LENGTH_LONG)
                 .show();
+
+        ////////////////////Complaint generator////////////////////////////////
+        Bundle extras = getIntent().getExtras();
+        ComplaintMessage complaint = new ComplaintMessage(
+                "3qjGFvqH4KRehQnBo2xQ2tFKWZT2",
+                "Complaint against "+extras.getString("Email"),
+                "This cook scammed me",
+                mAuth.getCurrentUser().getUid());
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("messages").add(complaint);
+        ///////////////////////////////////////////////////////////////////////
         finish();
     }
 

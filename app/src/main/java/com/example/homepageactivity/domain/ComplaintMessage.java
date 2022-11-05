@@ -6,8 +6,8 @@ public class ComplaintMessage extends Message {
     public ComplaintMessage() {}
 
     public ComplaintMessage(String senderUID, String subject, String body, String cookUID){
-        //The recipient is the admin, and this will be non-null once admin selects it
-        super(senderUID, null, subject, body);
+        //The recipient is the admin
+        super(senderUID, "BShaMMSVKIYn8tDFy5eKokv5ubE3", subject, body);
         this.cookUID = cookUID;
     }
 
