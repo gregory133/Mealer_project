@@ -14,5 +14,22 @@ https://github.com/gregory133/Mealer_project
 
 
 Admin creditials:
+
 email: admin@mealer.ca
+
 password: password
+
+
+Some testers:
+
+emails
+
+test1@mealer.ca7
+
+test2@mealer.ca7
+
+test3@mealer.ca7
+
+password: all their passwords are "password"
+
+Note: creating a cook automatically creates a complaint associated to them if you'd like to generate more
