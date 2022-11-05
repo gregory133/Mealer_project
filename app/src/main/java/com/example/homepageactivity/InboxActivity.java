@@ -62,13 +62,17 @@ public class InboxActivity extends AppCompatActivity {
         listView=findViewById(R.id.list);
         setTitle();
         hookDropDown();
-//        populateMessages();
+        populateMessages();
     }
 
     private void populateMessages(){
+        System.out.println("1");
         CollectionReference colRef = getCollection("users");
+        System.out.println("11");
         DocumentReference docRef = getDocument(colRef, "BShaMMSVKIYn8tDFy5eKokv5ubE3");
-        Object firstName = getField(docRef, "firstName");
+        System.out.println("12");
+        Object firstName = getField(docRef, "inbox");
+        System.out.println("13");
 
         String name = firstName.toString();
         titleText.setText(name);
@@ -110,31 +114,46 @@ public class InboxActivity extends AppCompatActivity {
      */
     public Object getField(DocumentReference docRef, String fieldName){		//fieldName is a string of the field's name
 
+        System.out.println("14");
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                System.out.println("15");
                 if (task.isSuccessful()) {
+                    System.out.println("16");
                     DocumentSnapshot document = task.getResult();
+                    System.out.println("17");
                     if (document.exists()) {
+                        System.out.println("18");
                         onSuccessfulUserRetrival(document);
                     }
                     else{
+                        System.out.println("19");
                         //no doc error
                     }
                 } else {
+                    System.out.println("20");
                     //failed error
                 }
             }
         });
 
+        System.out.println("21");
         Task<DocumentSnapshot> docSnapshot = docRef.get();
+        System.out.println("22");
         //(Source.valueOf(fieldName))
         return docSnapshot;
     }
 
     private void onSuccessfulUserRetrival(DocumentSnapshot docSnapshot){
+        System.out.println("23");
         User thisUser = getUserFromDocumentSnapshot(docSnapshot);
-        thisUser.getBannedUntil()
+        if(thisUser == null){
+            return;
+        }
+        System.out.println("24");
+        titleText.setText(thisUser.getBannedUntil().toString());
+        System.out.println("26");
     }
 
     public CollectionReference getCollection(String collectionName){
@@ -157,7 +176,22 @@ public class InboxActivity extends AppCompatActivity {
     }
 
     private User getUserFromDocumentSnapshot(DocumentSnapshot docSnapshot) {
-        return docSnapshot.toObject(User.class);
+        try{
+            return docSnapshot.toObject(Client.class);
+        }catch (Exception e){
+            //notAClient
+        }
+        try{
+            return docSnapshot.toObject(Cook.class);
+        }catch (Exception e){
+            //notACook
+        }
+        try{
+            return docSnapshot.toObject(Admin.class);
+        }catch (Exception e){
+            //notAnAdmin
+            return null;
+        }
     }
 
 
