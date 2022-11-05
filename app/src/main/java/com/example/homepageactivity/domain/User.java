@@ -1,5 +1,6 @@
 package com.example.homepageactivity.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public abstract class User {
@@ -8,7 +9,7 @@ public abstract class User {
     private String lastName;
     private String address;
     private boolean banned; //True if banned permanently. This is false if the user is not banned or is banned temporarily
-    private String[] inbox;     //array of Message UIDs
+    private ArrayList<String> inbox;     //array of Message UIDs
 
     //Initially, this variable will be the date (to the millisecond) the account was created.
     //As the checker only checks to see if this is AFTER the current date the user signs in, there
@@ -45,7 +46,7 @@ public abstract class User {
         return banned;
     }
 
-    public String[] getInbox() {
+    public ArrayList<String> getInbox() {
         return inbox;
     }
 }

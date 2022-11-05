@@ -152,8 +152,18 @@ public class InboxActivity extends AppCompatActivity {
             return;
         }
         System.out.println("24");
-        titleText.setText(thisUser.getBannedUntil().toString());
+        titleText.setText(thisUser.getInbox().get(0).toString());
+        System.out.println("Message[0]: "+thisUser.getInbox().get(0).toString());
         System.out.println("26");
+
+        ArrayList<String> inboxMessageIDs = thisUser.getInbox();
+
+        items = new ArrayList<>();
+
+        for(int i=0;i<inboxMessageIDs.size();i++){
+            msg =
+            items.add(msg);
+        }
     }
 
     public CollectionReference getCollection(String collectionName){
