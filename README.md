@@ -22,9 +22,9 @@ password: password
 ## Some testers
 
 emails:
-- test1@mealer.ca7
-- test2@mealer.ca7
-- test3@mealer.ca7
+- test1@mealer.ca
+- test2@mealer.ca
+- test3@mealer.ca
 
 password: all their passwords are "password"
 
