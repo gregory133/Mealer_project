@@ -52,25 +52,39 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:orientation="horizontal">
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/banUser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:contentDescription="banButton"
+                android:minHeight="60dp"
+                android:onClick="onClickBanCook"
+                android:text="Ban User" />
 
             <Button
                 android:id="@+id/suspend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:onClick="onClickSuspend"
+                android:contentDescription="suspend button"
+                android:minHeight="60dp"
+                android:onClick="onClickSuspendCook"
                 android:text="Suspend " />
 
             <Button
                 android:id="@+id/dismiss"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
                 android:layout_weight="1"
+                android:contentDescription="dismiss button"
+                android:minHeight="60dp"
                 android:onClick="onClickDismiss"
                 android:text="Dismiss" />
+
         </LinearLayout>
 
     </LinearLayout>

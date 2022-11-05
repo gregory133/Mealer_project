@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.homepageactivity.domain.*;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.EventListener;
@@ -13,13 +14,14 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -27,11 +29,13 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class InboxActivity extends AppCompatActivity {
+public class InboxActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     String userRole; //client, admin or cook
     TextView titleText;
@@ -141,19 +145,48 @@ public class InboxActivity extends AppCompatActivity {
         currentMessage.show();
     }
 
-    public void onClickSuspend(View view) {
+    public void onClickBanCook(View view) {
         String cookUID = docRef.toObject(ComplaintMessage.class).getCookUID();
         if (cookUID != null) {
             Map<String, Boolean> change = new HashMap<>(1);
             change.put("banned", true);
             db.collection("users").document(cookUID).set(change, SetOptions.merge());
-            onClickDismiss(view);
         } else {
             Toast.makeText(this, "Error, no cook UID found", Toast.LENGTH_LONG).show();
         }
+        archiveMessage();
+    }
+
+    public void onClickSuspendCook(View view) {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+                this,
+                Calendar.getInstance().get(Calendar.YEAR),
+                Calendar.getInstance().get(Calendar.MONTH),
+                Calendar.getInstance().get(Calendar.DATE));
+        datePickerDialog.show();
+    }
+
+    @Override
+    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+
+        Timestamp timestamp = new Timestamp(new Date(year, month, day));
+
+        String cookUID = docRef.toObject(ComplaintMessage.class).getCookUID();
+        if (cookUID != null) {
+            Map<String, Timestamp> change = new HashMap<>(1);
+            change.put("bannedUntil", timestamp);
+            db.collection("users").document(cookUID).set(change, SetOptions.merge());
+        } else {
+            Toast.makeText(this, "Error, no cook UID found", Toast.LENGTH_LONG).show();
+        }
+        archiveMessage();
     }
 
     public void onClickDismiss(View view) {
+        archiveMessage();
+    }
+
+    private void archiveMessage(){
         Map<String, Boolean> change = new HashMap<>(1);
         change.put("archived", true);
         String msgID = docRef.getId();
