@@ -1,6 +1,6 @@
-#Mealer project
+# Mealer project
 
-##Names
+## Names
 Last, 	  First, 	StudentNumber
 
 Eaton,	  Eric, 	300260795
@@ -13,13 +13,13 @@ Link to the github repository:
 https://github.com/gregory133/Mealer_project
 
 
-##Admin creditials:
+## Admin creditials:
 
 email: admin@mealer.ca
 
 password: password
 
-##Some testers:
+## Some testers:
 
 emails:
 - test1@mealer.ca7
