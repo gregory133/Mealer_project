@@ -1,21 +1,35 @@
 package com.example.homepageactivity;
 
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
+import com.example.homepageactivity.domain.StyleApplyer;
 import com.example.homepageactivity.domain.Validator;
 import com.google.firebase.auth.FirebaseAuth;
+import com.larvalabs.svgandroid.SVG;
+import com.larvalabs.svgandroid.SVGParser;
 
 public class MakeUserActivity extends AppCompatActivity {
 
     private TextView titleText;
+    private ImageView background;
+    private Button nextButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,12 +37,15 @@ public class MakeUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_make_user);
 
         titleText=findViewById(R.id.title);
+        background=findViewById(R.id.background);
+        nextButton=findViewById(R.id.completeCookRegistration);
 
         Bundle extras=getIntent().getExtras();
         String mode=extras.getString("TYPE");
 
         String titleString=(String)titleText.getText();
         titleText.setText(titleString+" "+mode);
+        setThemeColors(mode);
     }
     
     public void onClickMakeUserNextButton(View view){
@@ -57,6 +74,21 @@ public class MakeUserActivity extends AppCompatActivity {
 
         finish();
         startActivity(intent);
+    }
+
+    private void setThemeColors(String mode){
+
+        ContextWrapper wrapper=null;
+        if (mode.equals("Cook")){
+            wrapper=new ContextThemeWrapper(this, R.style.cook_style);
+
+        }
+        else if (mode.equals("Client")){
+            wrapper=new ContextThemeWrapper(this, R.style.client_style);
+        }
+        background.setImageDrawable(StyleApplyer.applyTheme(getApplicationContext(), wrapper,R.drawable.ic_wave));
+        nextButton.setBackground(StyleApplyer.applyTheme(getApplicationContext(), wrapper,R.drawable.ic_button_1));
+
     }
 
     /**

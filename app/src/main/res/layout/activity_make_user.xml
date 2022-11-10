@@ -4,8 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/off_grey"
     android:tag="Next"
     tools:context=".MakeUserActivity">
+
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_wave" />
 
     <LinearLayout
         android:id="@+id/main"
@@ -25,10 +37,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:fontFamily="@font/lucida_handwriting_italic"
                 android:gravity="center"
                 android:shadowColor="#000000"
                 android:text="Register As"
-                android:textColor="#000000"
+                android:textColor="@color/off_black"
                 android:textSize="24dp" />
         </LinearLayout>
 
@@ -51,12 +64,13 @@
                 <EditText
                     android:id="@+id/firstNameEdit"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_weight="1"
+                    android:background="@drawable/edittext_custom_2"
                     android:ems="10"
-                    android:gravity="start|top"
+                    android:gravity="center"
                     android:hint="First Name"
                     android:inputType="textMultiLine"
                     tools:ignore="TouchTargetSizeCheck" />
@@ -73,12 +87,13 @@
                 <EditText
                     android:id="@+id/lastNameEdit"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_weight="1"
+                    android:background="@drawable/edittext_custom_2"
                     android:ems="10"
-                    android:gravity="start|top"
+                    android:gravity="center"
                     android:hint="Last Name"
                     android:inputType="textMultiLine"
                     tools:ignore="TouchTargetSizeCheck" />
@@ -95,12 +110,13 @@
             <EditText
                 android:id="@+id/emailEdit"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
+                android:background="@drawable/edittext_custom_1"
                 android:ems="10"
-                android:gravity="start|top"
+                android:gravity="center"
                 android:hint="Email Address"
                 android:inputType="textMultiLine"
                 tools:ignore="TouchTargetSizeCheck" />
@@ -116,12 +132,13 @@
             <EditText
                 android:id="@+id/addressEdit"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
+                android:background="@drawable/edittext_custom_1"
                 android:ems="10"
-                android:gravity="start|top"
+                android:gravity="center"
                 android:hint="Address"
                 android:inputType="textMultiLine"
                 tools:ignore="TouchTargetSizeCheck" />
@@ -137,11 +154,13 @@
             <EditText
                 android:id="@+id/passwordEdit"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
+                android:background="@drawable/edittext_custom_1"
                 android:ems="10"
+                android:gravity="center"
                 android:hint="Enter Password"
                 android:inputType="textPassword"
                 tools:ignore="TouchTargetSizeCheck" />
@@ -157,11 +176,13 @@
             <EditText
                 android:id="@+id/confirmPasswordEdit"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
+                android:background="@drawable/edittext_custom_1"
                 android:ems="10"
+                android:gravity="center"
                 android:hint="Confirm Password"
                 android:inputType="textPassword"
                 tools:ignore="TouchTargetSizeCheck" />
@@ -172,16 +193,19 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/completeCookRegistration"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="200dp"
+                android:layout_height="80dp"
                 android:layout_margin="20dp"
-                android:layout_weight="1"
+                android:background="@drawable/ic_button_1"
+                android:fontFamily="@font/lucida_handwriting_italic"
                 android:onClick="onClickMakeUserNextButton"
-                android:text="Next" />
+                android:text="Next"
+                android:textSize="40dp" />
         </LinearLayout>
 
     </LinearLayout>

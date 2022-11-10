@@ -4,14 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/off_grey"
     tools:context=".ClientPaymentActivity">
 
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="@+id/main"
+        app:layout_constraintEnd_toEndOf="@+id/main"
+        app:layout_constraintStart_toStartOf="@+id/main"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_wave" />
+
     <LinearLayout
+        android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/row1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -22,13 +36,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:fontFamily="@font/lucida_handwriting_italic"
                 android:gravity="center"
-                android:text="Enter your payment information"
+                android:text="Payment Information"
                 android:textColor="@color/black"
                 android:textSize="24dp" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/row2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -37,16 +53,19 @@
             <EditText
                 android:id="@+id/cardholderName"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
+                android:background="@drawable/edittext_custom_1"
                 android:ems="10"
+                android:gravity="center"
                 android:hint="Enter Cardholder Name"
                 android:inputType="textPersonName" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/row3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -55,16 +74,19 @@
             <EditText
                 android:id="@+id/cardNumber"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
+                android:background="@drawable/edittext_custom_1"
                 android:ems="10"
+                android:gravity="center"
                 android:hint="Enter card number"
                 android:inputType="textPersonName" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/row4"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -73,28 +95,33 @@
             <EditText
                 android:id="@+id/expiryMonth"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
+                android:background="@drawable/edittext_custom_2"
                 android:ems="10"
+                android:gravity="center"
                 android:hint="Expiry Month (XX)"
                 android:inputType="textPersonName" />
 
             <EditText
                 android:id="@+id/expiryYear"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
+                android:background="@drawable/edittext_custom_2"
                 android:ems="10"
+                android:gravity="center"
                 android:hint="Expiry Year (XXXX)"
                 android:inputType="textPersonName" />
 
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/row5"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -103,29 +130,35 @@
             <EditText
                 android:id="@+id/CVV"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
+                android:background="@drawable/edittext_custom_1"
                 android:ems="10"
+                android:gravity="center"
                 android:hint="CVV"
                 android:inputType="textPersonName" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/row6"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/completeClientRegistration"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="200dp"
+                android:layout_height="80dp"
                 android:layout_margin="20dp"
-                android:layout_weight="1"
+                android:background="@drawable/ic_button_1"
+                android:fontFamily="@font/lucida_handwriting_italic"
                 android:onClick="onClickFinishClientRegButton"
-                android:text="Finish" />
+                android:text="Next"
+                android:textSize="40dp" />
         </LinearLayout>
 
     </LinearLayout>
