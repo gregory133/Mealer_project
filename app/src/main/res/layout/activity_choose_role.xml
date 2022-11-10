@@ -4,14 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/cook_light"
     tools:context=".ChooseRole">
 
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/choose_activity_bg" />
+
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/row1"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -19,45 +33,53 @@
 
             <TextView
                 android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="300dp"
+                android:layout_height="100dp"
+                android:layout_margin="50dp"
                 android:layout_marginTop="50dp"
+                android:background="@drawable/edittext_custom_2"
+                android:fontFamily="@font/lucida_handwriting_italic"
                 android:gravity="center"
-                android:text="Choose Between Register As Cook Or Client"
+                android:text="What Kind of User are You?"
                 android:textSize="30dp" />
+
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/row2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:orientation="vertical">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
+                android:layout_height="match_parent">
 
                 <Button
-                    android:id="@+id/clientButton"
+                    android:id="@+id/button3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="84dp"
+                    android:layout_marginStart="28dp"
+                    android:layout_marginTop="268dp"
+                    android:background="@drawable/client_button"
                     android:onClick="onClickButton"
                     android:tag="Client"
-                    android:text="Client" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
-                    android:id="@+id/cookButton"
+                    android:id="@+id/button4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="28dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/cook_button"
                     android:onClick="onClickButton"
                     android:tag="Cook"
-                    android:text="Cook" />
-            </LinearLayout>
-
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
 
     </LinearLayout>
