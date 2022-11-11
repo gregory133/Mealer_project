@@ -157,11 +157,13 @@ public class InboxActivity extends AppCompatActivity {
         System.out.println("26");
 
         ArrayList<String> inboxMessageIDs = thisUser.getInbox();
-
-        items = new ArrayList<>();
+        Message[] inbox = new Message[inboxMessageIDs.size()];
+        CollectionReference messagesColRef = getCollection("messages");
+        DocumentReference messageDocRef;
 
         for(int i=0;i<inboxMessageIDs.size();i++){
-            msg =
+            messageDocRef = getDocument(messagesColRef, inboxMessageIDs.get(i));
+            inbox[i] = getField(messageDocRef, )
             items.add(msg);
         }
     }
