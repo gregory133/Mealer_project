@@ -141,7 +141,12 @@ public class UserHomepageActivity extends AppCompatActivity {
         TextView noticeText = notice.findViewById(R.id.userSuspensionNoticeText);
         String noticeString = (String)noticeText.getText();
         noticeText.setText(noticeString+addon);
+        notice.setCancelable(false);
+        notice.setCanceledOnTouchOutside(false);
+        //NOTE: technically this dialogue never gets dismissed but the activity changes so it shouldn't be a problem
         notice.show();
+
+        //this makes it so that the dialog window fits nicely within the screen
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         int width = metrics.widthPixels;
         WindowManager.LayoutParams params = notice.getWindow().getAttributes();
