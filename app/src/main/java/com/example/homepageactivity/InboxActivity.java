@@ -16,12 +16,15 @@ import com.google.firebase.firestore.SetOptions;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.ContextWrapper;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -33,17 +36,19 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class InboxActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     String userRole; //client, admin or cook
     TextView titleText;
-    Spinner spinner;
     ListView listView;
     FirebaseFirestore db;
     private static final String TAG = "InboxActivity";
 
+    private ImageView background;
+    private
     ArrayList<QueryDocumentSnapshot> items;
     private Dialog currentMessage;
     private QueryDocumentSnapshot docRef;
@@ -52,12 +57,13 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inbox);
+        background=findViewById(R.id.background);
         userRole = getIntent().getStringExtra("userRole");
         titleText=findViewById(R.id.title);
-        spinner=findViewById(R.id.spinner);
         listView=findViewById(R.id.list);
-        setTitle();
-        hookDropDown();
+        setThemeColors(userRole);
+//        setTitle();
+//        hookDropDown();
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
@@ -85,26 +91,45 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
         }
     }
 
-    private void hookDropDown(){
-        final List<String> options = Arrays.asList("Settings", "Logout");
-        ArrayAdapter adapter=new ArrayAdapter(this, R.layout.dropdown_layout, options);
-        adapter.setDropDownViewResource(R.layout.dropdown_layout);
-        spinner.setAdapter(adapter);
+    private void setThemeColors(String mode){
+        mode=mode.substring(0, 1).toUpperCase() + mode.substring(1);
+        ContextWrapper wrapper=null;
+        if (mode.equals("Cook")){
+            wrapper=new ContextThemeWrapper(this, R.style.cook_style);
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (options.get(i).equals("Logout")){
-                    logout();
-                }
-            }
+        }
+        else if (mode.equals("Client")){
+            wrapper=new ContextThemeWrapper(this, R.style.client_style);
+        }
+        else{
+            wrapper=new ContextThemeWrapper(this, R.style.client_style);
+        }
+        background.setImageDrawable(StyleApplyer.applyTheme(getApplicationContext(), wrapper,R.drawable.ic_wave));
+//        nextButton.setBackground(StyleApplyer.applyTheme(getApplicationContext(), wrapper,R.drawable.ic_button_1));
 
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
     }
+
+//    private void hookDropDown(){
+//        final List<String> options = Arrays.asList("Settings", "Logout");
+//        ArrayAdapter adapter=new ArrayAdapter(this, R.layout.dropdown_layout, options);
+//        adapter.setDropDownViewResource(R.layout.dropdown_layout);
+//        spinner.setAdapter(adapter);
+//
+//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                if (options.get(i).equals("Logout")){
+//                    logout();
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
+//    }
+
     private void setTitle(){
         HashMap<String, String> titleDict=new HashMap<String, String>(){{
             put("Admin", "User Complaints");
@@ -114,7 +139,7 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
         titleText.setText(titleDict.get(userRole));
 
     }
-    private void logout(){
+    private void returnHomepage(){
 //        Intent returnIntent = new Intent();
 //        returnIntent.putExtra("Logout", 1);
 //        setResult(RESULT_OK, returnIntent);
@@ -193,4 +218,15 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
         db.collection("messages").document(msgID).set(change, SetOptions.merge());
         currentMessage.dismiss();
     }
+
+    public void onClickLogout(View view){
+        returnHomepage();
+    }
+    public void onClickMessage(View view){
+        Toast.makeText(this, "not yet implemented", Toast.LENGTH_LONG).show();
+    }
+    public void onClickMealer(View view){
+        Toast.makeText(this, "not yet implemented", Toast.LENGTH_LONG).show();
+    }
+
 }

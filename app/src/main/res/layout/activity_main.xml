@@ -99,7 +99,7 @@
                 android:layout_height="50dp"
                 android:layout_margin="20dp"
 
-                android:background="@drawable/edittext_custom_1"
+                android:background="@drawable/edittext_custom_2"
                 android:fontFamily="@font/mistral2"
                 android:onClick="onClickLoginButton"
                 android:text="Login"
