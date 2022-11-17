@@ -45,7 +45,7 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
     String userRole; //client, admin or cook
     TextView titleText;
     ListView listView;
-    FirebaseFirestore db;
+    FirebaseFirestore firestoreDB;
     private static final String TAG = "InboxActivity";
 
     private ImageView background;
@@ -69,8 +69,8 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
-            db = FirebaseFirestore.getInstance();
-            db.collection("messages")
+            firestoreDB = FirebaseFirestore.getInstance();
+            firestoreDB.collection("messages")
                     .whereEqualTo("recipientUID", currentUser.getUid()).whereEqualTo("archived", false)
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
@@ -208,7 +208,7 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
         if (cookUID != null) {
             Map<String, Boolean> change = new HashMap<>(1);
             change.put("banned", true);
-            db.collection("users").document(cookUID).set(change, SetOptions.merge());
+            firestoreDB.collection("users").document(cookUID).set(change, SetOptions.merge());
         } else {
             Toast.makeText(this, "Error, no cook UID found", Toast.LENGTH_LONG).show();
         }
@@ -233,7 +233,7 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
         if (cookUID != null) {
             Map<String, Timestamp> change = new HashMap<>(1);
             change.put("bannedUntil", timestamp);
-            db.collection("users").document(cookUID).set(change, SetOptions.merge());
+            firestoreDB.collection("users").document(cookUID).set(change, SetOptions.merge());
         } else {
             Toast.makeText(this, "Error, no cook UID found", Toast.LENGTH_LONG).show();
         }
@@ -248,7 +248,7 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
         Map<String, Boolean> change = new HashMap<>(1);
         change.put("archived", true);
         String msgID = docRef.getId();
-        db.collection("messages").document(msgID).set(change, SetOptions.merge());
+        firestoreDB.collection("messages").document(msgID).set(change, SetOptions.merge());
         currentMessage.dismiss();
     }
 
