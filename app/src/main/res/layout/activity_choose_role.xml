@@ -32,17 +32,32 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="300dp"
-                android:layout_height="100dp"
-                android:layout_margin="50dp"
-                android:layout_marginTop="50dp"
-                android:background="@drawable/edittext_custom_2"
-                android:fontFamily="@font/lucida_handwriting_italic"
-                android:gravity="center"
-                android:text="What Kind of User are You?"
-                android:textSize="30dp" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:translationX="4dp"
+                android:translationY="-4dp"
+                android:layout_margin="30dp"
+                android:clipToOutline="true"
+                android:background="@drawable/mealer_shadow">
+
+                <TextView
+                    android:id="@+id/title"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="0dp"
+                    android:translationX="-4dp"
+                    android:translationY="4dp"
+                    android:background="@drawable/mealer_text_field_bg"
+
+                    android:layout_marginTop="50dp"
+                    android:fontFamily="@font/lucida_handwriting_italic"
+                    android:gravity="center"
+                    android:text="What Kind of User are You?"
+                    android:textSize="30dp" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
 

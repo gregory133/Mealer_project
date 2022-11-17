@@ -37,7 +37,7 @@
                 android:layout_width="350dp"
                 android:layout_height="50dp"
                 android:layout_margin="10dp"
-                android:background="@drawable/edittext_custom_1"
+                android:background="@drawable/mealer_text_field_bg"
                 android:drawableLeft="@drawable/custom_message_icon"
                 android:fontFamily="@font/lucida_handwriting_italic"
                 android:paddingLeft="10dp"
