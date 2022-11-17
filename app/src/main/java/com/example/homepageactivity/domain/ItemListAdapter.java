@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.homepageactivity.R;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -37,13 +39,21 @@ public class ItemListAdapter extends ArrayAdapter<QueryDocumentSnapshot> {
         TextView firstWordText=convertView.findViewById(R.id.firstWordText);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentSnapshot document = db.collection("users").document(getItem(pos).toObject(Message.class).getSenderUID()).get().getResult();
-        String firstName = document.getString("firstName");
-        String lastName = document.getString("lastName");
-
-        senderText.setText(getItem(pos).toObject(Message.class).getSenderUID());
-        subjectText.setText(firstName+" "+lastName);
-//        subjectText.setText(getItem(pos).toObject(Message.class).getSenderUID());
+        Task<DocumentSnapshot> taskDoc = db.collection("users").document(getItem(pos).toObject(Message.class).getSenderUID()).get();
+        while (true) {
+            if (taskDoc.isComplete()) {
+                break;
+            }
+        }
+        String firstName = "ERROR";
+        String lastName = "ERROR";
+        if (taskDoc.isSuccessful()) {
+            DocumentSnapshot document = taskDoc.getResult();
+            firstName = document.getString("firstName");
+            lastName = document.getString("lastName");
+        }
+        senderText.setText("From: "+firstName+" "+lastName);
+        subjectText.setText(getItem(pos).toObject(Message.class).getSubject());
         firstWordText.setText(getItem(pos).toObject(Message.class).getBodyText());
 
         return convertView;
