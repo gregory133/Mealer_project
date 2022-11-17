@@ -33,7 +33,7 @@ public class ItemListAdapter extends ArrayAdapter<QueryDocumentSnapshot> {
         convertView=inflater.inflate(res, parent, false);
 
         TextView senderText=convertView.findViewById(R.id.senderText);
-        TextView subjectText=convertView.findViewById(R.id.subjectText);
+        TextView subjectText=convertView.findViewById(R.id.subject);
         TextView firstWordText=convertView.findViewById(R.id.firstWordText);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
