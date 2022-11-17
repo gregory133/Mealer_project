@@ -36,14 +36,14 @@ public class ItemListAdapter extends ArrayAdapter<QueryDocumentSnapshot> {
         TextView subjectText=convertView.findViewById(R.id.subjectText);
         TextView firstWordText=convertView.findViewById(R.id.firstWordText);
 
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        DocumentSnapshot document = db.collection("users").document(getItem(pos).toObject(Message.class).getSenderUID()).get();
-//        String firstName = document.get("firstName");
-//        String lastName = document.get("lastName");
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentSnapshot document = db.collection("users").document(getItem(pos).toObject(Message.class).getSenderUID()).get().getResult();
+        String firstName = document.getString("firstName");
+        String lastName = document.getString("lastName");
 
         senderText.setText(getItem(pos).toObject(Message.class).getSenderUID());
-//        subjectText.setText(firstName+" "+lastName);
-        subjectText.setText(getItem(pos).toObject(Message.class).getSenderUID());
+        subjectText.setText(firstName+" "+lastName);
+//        subjectText.setText(getItem(pos).toObject(Message.class).getSenderUID());
         firstWordText.setText(getItem(pos).toObject(Message.class).getBodyText());
 
         return convertView;
