@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="cook_style">
+        <item name="primary">@color/cook_light</item>
+        <item name="secondary">@color/client_light</item>
+    </style>
+
+    <style name="client_style">
+        <item name="primary">@color/client_light</item>
+        <item name="secondary">@color/cook_light</item>
+    </style>
+
+</resources>

@@ -3,13 +3,18 @@ package com.example.homepageactivity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.homepageactivity.domain.StyleApplyer;
 import com.example.homepageactivity.domain.Validator;
 import com.example.homepageactivity.domain.Client;
 import com.example.homepageactivity.domain.Cook;
@@ -26,14 +31,28 @@ import java.util.Map;
 
 public class ClientPaymentActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
+    private ImageView background;
+    private Button nextButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_payment);
+        nextButton=findViewById(R.id.completeClientRegistration);
+        background=findViewById(R.id.background);
+        setThemeColors();
 
         //firebase integration
         mAuth = FirebaseAuth.getInstance();
+    }
+
+    private void setThemeColors(){
+
+        ContextWrapper wrapper=new ContextThemeWrapper(this, R.style.client_style);
+
+        background.setImageDrawable(StyleApplyer.applyTheme(getApplicationContext(), wrapper,R.drawable.ic_wave));
+        nextButton.setBackground(StyleApplyer.applyTheme(getApplicationContext(), wrapper,R.drawable.ic_button_1));
+
     }
 
     public void onClickFinishClientRegButton(View view){

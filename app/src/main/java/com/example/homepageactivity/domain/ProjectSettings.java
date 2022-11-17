@@ -1,24 +1,16 @@
 package com.example.homepageactivity.domain;
 
-/**
- * implements the Singleton pattern
- */
+import java.util.HashMap;
+
 public class ProjectSettings {
 
-    private ProjectSettings instance;
+    private static HashMap<Color, String> colorDict=new HashMap<Color, String>(){{
 
-    private String[] admins;
-    private String[] mealTypes;
-    private String cuisineTypes;
+    }};
 
 
-    private ProjectSettings(){}
-
-
-    public ProjectSettings getInstance(){
-        if (instance==null){
-            instance=new ProjectSettings();
-        }
-        return instance;
+    public String getColor(Color color){
+        return colorDict.get(color);
     }
+
 }

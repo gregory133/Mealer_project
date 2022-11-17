@@ -3,15 +3,20 @@ package com.example.homepageactivity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.homepageactivity.domain.ComplaintMessage;
 import com.example.homepageactivity.domain.Cook;
+import com.example.homepageactivity.domain.StyleApplyer;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -27,14 +32,29 @@ import java.util.Map;
 
 public class CookDescriptionActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
+    private Button nextButton;
+    private ImageView background;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cook_description);
 
+        background=findViewById(R.id.background);
+        nextButton=findViewById(R.id.completeCookRegistration);
+        setThemeColors();
+
         //firebase integration
         mAuth = FirebaseAuth.getInstance();
+    }
+
+    private void setThemeColors(){
+
+        ContextWrapper wrapper=new ContextThemeWrapper(this, R.style.cook_style);
+
+        background.setImageDrawable(StyleApplyer.applyTheme(getApplicationContext(), wrapper,R.drawable.ic_wave));
+        nextButton.setBackground(StyleApplyer.applyTheme(getApplicationContext(), wrapper,R.drawable.ic_button_1));
+
     }
 
 
