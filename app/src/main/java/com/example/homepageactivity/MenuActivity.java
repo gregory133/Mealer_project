@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.homepageactivity.domain.MealsGridAdapter;
 import com.example.homepageactivity.domain.PageIconInfo;
 import com.example.homepageactivity.domain.PageIconsAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -110,7 +111,7 @@ public class MenuActivity extends AppCompatActivity {
 
     protected void setUpMealsGrid() {
         mealsGrid = (GridView) findViewById(R.id.mealsGrid);
-        PageIconsAdapter iconsAdapter = new PageIconsAdapter(getApplicationContext(), pageIconOptions);
+        MealsGridAdapter iconsAdapter = new MealsGridAdapter(getApplicationContext(), items);
         mealsGrid.setAdapter(iconsAdapter);
 
         mealsGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -120,7 +121,6 @@ public class MenuActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), EditMealActivity.class);
                 intent.putExtra("mealID", items.get(position).getId());
                 startActivity(intent);
-                finish();
             }
         });
     }
