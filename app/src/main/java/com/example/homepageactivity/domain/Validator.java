@@ -2,6 +2,10 @@ package com.example.homepageactivity.domain;
 
 import static java.sql.DriverManager.println;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 //String firstName, String lastName, String email, String address, String password, String confirmPassword
 public class Validator {
     public static int getIntLength(int i){
@@ -110,4 +114,43 @@ public class Validator {
         return true;
     }
 
+    public int getStringLength(String str){
+        return str.length();
+    }
+
+    public boolean isPhrase(String phrase){
+        if(phrase.length() <= 0){return false;}
+        char[] chars = phrase.toCharArray();
+        int i = 0;
+
+        while(i < chars.length){
+            if("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz ',".indexOf(chars[i]) >= 0){
+                i++;
+                continue;
+            }else{
+                return false;       //not a valid pre-@ character
+            }
+        }
+        return true;
+    }
+
+    public boolean isAlphanumericPhrase(String phrase){
+        if(phrase.length() <= 0){return false;}
+        char[] chars = phrase.toCharArray();
+        int i = 0;
+
+        while(i < chars.length){
+            if("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,' #".indexOf(chars[i]) >= 0){
+                i++;
+                continue;
+            }else{
+                return false;       //not a valid pre-@ character
+            }
+        }
+        return true;
+    }
+
+    public int getStringIndex(List<String> options, String selection){
+        return options.indexOf(selection);
+    }
 }

@@ -56,7 +56,7 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
         background=findViewById(R.id.background);
         userRole = getIntent().getStringExtra("userRole");
         titleText=findViewById(R.id.title);
-        listView=findViewById(R.id.pagesList);
+        listView=findViewById(R.id.pagesGrid);
         collapseAdminButtons();
         setThemeColors(userRole);
 //        setTitle();

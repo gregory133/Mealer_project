@@ -31,13 +31,14 @@
 
         </GridView>
 
-        <ListView
-            android:id="@+id/pagesList"
+        <GridView
+            android:id="@+id/pagesGrid"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="10dp"
-            android:layout_weight="0.1"
-            android:scrollbars="horizontal"></ListView>
+            android:numColumns="3"
+            android:layout_weight="0.1">
+        </GridView>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.homepageactivity.domain.Meal;
+import com.example.homepageactivity.domain.Validator;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -139,10 +141,17 @@ public class EditMealActivity extends AppCompatActivity {
 
         String mealName = (((EditText) findViewById(R.id.mealNameEdit)).getText()).toString();
         String description = (((EditText) findViewById(R.id.descriptionEdit)).getText()).toString();
-        double price = Double.parseDouble(((EditText) findViewById(R.id.priceEdit)).getText().toString());
+        String priceStr = ((EditText) findViewById(R.id.priceEdit)).getText().toString();
         String ingredients = (((EditText) findViewById(R.id.listOfIngredientsEdit)).getText()).toString();
         String allergens = (((EditText) findViewById(R.id.allergensEdit)).getText()).toString();
         boolean offered = ((CheckBox)findViewById(R.id.offerMealCheckbox)).isChecked();
+
+        if(!validateMeal(mealName, description, chosenCuisine, chosenMealType,
+                ingredients, allergens, priceStr)){return;}
+
+        double price = Double.parseDouble(priceStr);
+
+
 
         Meal updatedMeal = new Meal(mealName, description, chosenCuisine, chosenMealType,
                 ingredients, allergens, price, currentUser.getUid(), offered);
@@ -171,4 +180,55 @@ public class EditMealActivity extends AppCompatActivity {
         docRef.delete();
         finish();
     }
+
+
+    private boolean validateMeal(String mealName, String description, String chosenCuisine, String chosenMealType,
+                                 String ingredients, String allergens, String price) {
+        Validator val = new Validator();
+        double mealPrice;
+
+        try{
+            mealPrice = Double.parseDouble(price);
+        }catch(NumberFormatException e){
+            Toast.makeText(this, "Meal Price Invalid (Not a Number)", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if (mealName.equals("")){
+            Toast.makeText(this, "Your Meal Must Have A Name", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (!val.isPhrase(mealName)){
+            Toast.makeText(this, "Meal Names May Only Contain Alphanumeric Characters, Apostrophes, and Spaces", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (val.getStringLength(description) > 300) {
+            Toast.makeText(this, "Your Meal Description is "+(val.getStringLength(description)-300)+" Characters Too Long", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if(val.getStringIndex(cuisineOptions, chosenCuisine) < 0){
+            Toast.makeText(this, "Please Select a Cuisine For This Meal", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if(val.getStringIndex(mealTypeOptions, chosenMealType) < 0){
+            Toast.makeText(this, "Please Select a Meal Type For This Meal", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (ingredients.equals("")){
+            Toast.makeText(this, "Please Enter Your Meal's Ingredients", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (!val.isAlphanumericPhrase(ingredients)){
+            Toast.makeText(this, "Ingredients May Only Contain Alphanumeric Characters", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if (!val.isAlphanumericPhrase(allergens)){
+            Toast.makeText(this, "Allergens May Only Contain Alphanumeric Characters", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        Log.d("TAG", "success");
+        return true;
+    }
+
 }

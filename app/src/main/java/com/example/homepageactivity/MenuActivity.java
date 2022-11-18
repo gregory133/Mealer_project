@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.homepageactivity.domain.MealsGridAdapter;
 import com.example.homepageactivity.domain.PageIconInfo;
 import com.example.homepageactivity.domain.PageIconsAdapter;
+import com.example.homepageactivity.domain.Validator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.EventListener;
@@ -28,13 +29,18 @@ import java.util.ArrayList;
 
 
 public class MenuActivity extends AppCompatActivity {
-    GridView mealsGrid;
-    int meals[];
-    FirebaseFirestore db;
+    private GridView mealsGrid;
+    private int meals[];
+    private FirebaseFirestore db;
     private static final String TAG = "MenuActivity";
     private ArrayList<QueryDocumentSnapshot> items;
     private QueryDocumentSnapshot docRef;
-    ArrayList<PageIconInfo> pageIconOptions;
+    private static final String logoutText = "Logout";
+    private static final ArrayList<PageIconInfo> pageIconOptions = new ArrayList<PageIconInfo>() {{
+        add(new PageIconInfo("Menu", MenuActivity.class));
+        add(new PageIconInfo("Inbox", InboxActivity.class));
+        add(new PageIconInfo(logoutText, null));
+    }};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,38 +48,35 @@ public class MenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
 
         meals = new int[0];
-        pageIconOptions = new ArrayList<>();
 
-        //setupUserPages(R.id.pagesList);
+        setupUserPages(R.id.pagesGrid);
         getMealsForMealGrid();
     }
 
     //DOES NOT WORK. FINAL ARRAYLIST MUST BE INITIALIZED
     private void setupUserPages(int viewID){
-        pageIconOptions.add(new PageIconInfo("menu", MenuActivity.class));
-        pageIconOptions.add(new PageIconInfo("inbox", InboxActivity.class));
-        pageIconOptions.add(new PageIconInfo("logout", null));        //logout MUST be last
-        final ArrayList<PageIconInfo> finalPageIconOptions = new ArrayList<>();
-        //finalPageIconOptions = pageIconOptions;
+        mealsGrid = (GridView) findViewById(viewID);
+        mealsGrid.setNumColumns(pageIconOptions.size());
+        PageIconsAdapter adapter=new PageIconsAdapter(getApplicationContext(), pageIconOptions);
+        mealsGrid.setAdapter(adapter);
 
-        PageIconsAdapter adapter=new PageIconsAdapter(getApplicationContext(), finalPageIconOptions);
-        ListView listView=findViewById(viewID);
-        listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mealsGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Log.d(TAG, "onPageSelected:");
 
-                if (i == pageIconOptions.size()-1) {        //logout MUST be last
+                if (pageIconOptions.get(i).getIconName() == logoutText) {        //logout MUST be last
                     LogoutRequest();
+                    Toast.makeText(getApplicationContext(), "logout at "+i+"", Toast.LENGTH_LONG).show();
                     return;
                 }
-                if (this.getClass().getName().contains(pageIconOptions.get(i).getClass().getName())) return;    //Don't reload this page
-
-                Intent intent=new Intent(getApplicationContext(), pageIconOptions.get(i).getClass());
-                //intent.putExtra("userRole", userRole);
+                if (this.getClass().getName().contains(pageIconOptions.get(i).getPage().getName())){
+                    return;
+                }    //Don't reload this page
+                Intent intent=new Intent(getApplicationContext(), pageIconOptions.get(i).getPage());
+                intent.putExtra("userRole",  getIntent().getStringExtra("userRole"));
                 startActivity(intent);
+                finish();
             }
         });
     }

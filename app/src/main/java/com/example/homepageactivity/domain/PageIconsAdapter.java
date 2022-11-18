@@ -16,7 +16,7 @@ public class PageIconsAdapter extends BaseAdapter {
     ArrayList<PageIconInfo> iconInfos;
     LayoutInflater inflter;
 
-    public PageIconsAdapter(Context applicationContext, ArrayList<PageIconInfo> conInfos) {
+    public PageIconsAdapter(Context applicationContext, ArrayList<PageIconInfo> iconInfos) {
         this.context = applicationContext;
         this.iconInfos = iconInfos;
         inflter = (LayoutInflater.from(applicationContext));
