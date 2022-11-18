@@ -29,12 +29,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class EditMealActivity extends AppCompatActivity {
-    final List<String> cuisineOptions = Arrays.asList("Chinese", "Other");      //Also hardcoded in AddMealActivity
-    final List<String> mealTypeOptions = Arrays.asList("Appetizer", "Entree", "Dessert", "Other");      //Also hardcoded in AddMealActivity
-    String chosenCuisine;
-    String chosenMealType;
-    DocumentReference docRef;
-    DocumentSnapshot document;
+    private final List<String> cuisineOptions = Arrays.asList("Mexican", "Chinese", "Other");      //Also hardcoded in AddMealActivity
+    private final List<String> mealTypeOptions = Arrays.asList("Appetizer", "Entree", "Dessert", "Other");      //Also hardcoded in AddMealActivity
+    private String chosenCuisine;
+    private String chosenMealType;
+    private DocumentReference docRef;
+    private DocumentSnapshot document;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,8 +125,16 @@ public class EditMealActivity extends AppCompatActivity {
         ((EditText) findViewById(R.id.listOfIngredientsEdit)).setText(document.getString("ingredients"));
         ((EditText) findViewById(R.id.allergensEdit)).setText(document.getString("allergens"));
         ((CheckBox)findViewById(R.id.offerMealCheckbox)).setChecked(document.getBoolean("offered"));
-        ((Spinner) findViewById(R.id.cuisineTypeSpinner)).setPrompt(document.getString("cuisineType"));
-        ((Spinner) findViewById(R.id.mealTypeSpinner)).setPrompt(document.getString("mealType"));
+
+        //Finds and display current cuisine type
+        Spinner spinny = (Spinner) findViewById(R.id.cuisineTypeSpinner);
+        ArrayAdapter myAdap = (ArrayAdapter) spinny.getAdapter();
+        spinny.setSelection(myAdap.getPosition(document.getString("cuisineType")));
+
+        //Finds and display current meal type
+        spinny = (Spinner) findViewById(R.id.mealTypeSpinner);
+        myAdap = (ArrayAdapter) spinny.getAdapter();
+        spinny.setSelection(myAdap.getPosition(document.getString("mealType")));
     }
 
     public void onClickApplyChangesButton(View view) {
