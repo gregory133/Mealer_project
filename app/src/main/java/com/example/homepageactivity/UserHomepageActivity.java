@@ -47,8 +47,8 @@ public class UserHomepageActivity extends AppCompatActivity {
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
             //Getting user type
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            DocumentReference docRef = db.collection("users").document(currentUser.getUid());
+            FirebaseFirestore firestoreDB = FirebaseFirestore.getInstance();
+            DocumentReference docRef = firestoreDB.collection("users").document(currentUser.getUid());
             docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {

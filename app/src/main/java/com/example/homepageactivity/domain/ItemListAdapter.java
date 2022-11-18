@@ -38,8 +38,8 @@ public class ItemListAdapter extends ArrayAdapter<QueryDocumentSnapshot> {
         TextView subjectText=convertView.findViewById(R.id.subject);
         TextView firstWordText=convertView.findViewById(R.id.firstWordText);
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        Task<DocumentSnapshot> taskDoc = db.collection("users").document(getItem(pos).toObject(Message.class).getSenderUID()).get();
+        FirebaseFirestore firestoreDB = FirebaseFirestore.getInstance();
+        Task<DocumentSnapshot> taskDoc = firestoreDB.collection("users").document(getItem(pos).toObject(Message.class).getSenderUID()).get();
         while (true) {
             if (taskDoc.isComplete()) {
                 break;

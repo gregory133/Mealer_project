@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Firestore Database testing
         /*
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseFirestore firestoreDB = FirebaseFirestore.getInstance();
         // Create a new user with a first and last name
         Map<String, Object> user = new HashMap<>();
         user.put("first", "Bonk");
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         user.put("born", 1919);
 
         // Add a new document with a generated ID
-        db.collection("users")
+        firestoreDB.collection("users")
                 .add(user)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override

@@ -88,11 +88,11 @@ public class CookDescriptionActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             //adds the user's details to the Cloud Firestore
                             String uid = mAuth.getCurrentUser().getUid();
-                            FirebaseFirestore db = FirebaseFirestore.getInstance();
-                            db.collection("users").document(uid).set(newCook);
+                            FirebaseFirestore firestoreDB = FirebaseFirestore.getInstance();
+                            firestoreDB.collection("users").document(uid).set(newCook);
                             Map<String, Object> temp = new HashMap<>(1);
                             temp.put("role","Cook");
-                            db.collection("users").document(uid).set(temp, SetOptions.merge());
+                            firestoreDB.collection("users").document(uid).set(temp, SetOptions.merge());
                             /* For some reason it doesn't like addOnSuccessListener(new OnSuccessListener<DocumentReference>(), which worked in the MainActivity test case
                                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                         @Override
@@ -126,8 +126,8 @@ public class CookDescriptionActivity extends AppCompatActivity {
                 "Complaint against "+extras.getString("Email"),
                 "This cook scammed me",
                 mAuth.getCurrentUser().getUid());
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("messages").add(complaint);
+        FirebaseFirestore firestoreDB = FirebaseFirestore.getInstance();
+        firestoreDB.collection("messages").add(complaint);
         ///////////////////////////////////////////////////////////////////////
         finish();
     }

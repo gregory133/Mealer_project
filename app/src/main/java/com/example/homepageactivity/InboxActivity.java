@@ -17,6 +17,7 @@ import com.google.firebase.firestore.SetOptions;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.ContextWrapper;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -42,10 +43,10 @@ import java.util.Map;
 
 public class InboxActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
-    String userRole; //client, admin or cook
+    String userRole; //Client, Admin or Cook
     TextView titleText;
     ListView listView;
-    FirebaseFirestore db;
+    FirebaseFirestore firestoreDB;
     private static final String TAG = "InboxActivity";
 
     private ImageView background;
@@ -61,15 +62,14 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
         userRole = getIntent().getStringExtra("userRole");
         titleText=findViewById(R.id.title);
         listView=findViewById(R.id.list);
-        collapseAdminButtons();
         setThemeColors(userRole);
 //        setTitle();
 //        hookDropDown();
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
-            db = FirebaseFirestore.getInstance();
-            db.collection("messages")
+            firestoreDB = FirebaseFirestore.getInstance();
+            firestoreDB.collection("messages")
                     .whereEqualTo("recipientUID", currentUser.getUid()).whereEqualTo("archived", false)
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
                         @Override
@@ -114,16 +114,8 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
             LinearLayout adminRow=findViewById(R.id.row4);
             LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
 
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    0,
-                    1.0f
-            );
-            adminRow.setLayoutParams(param);
-        }
-    }
 
     private void setThemeColors(String mode){
-        mode=mode.substring(0, 1).toUpperCase() + mode.substring(1);
         ContextWrapper wrapper=null;
         if (mode.equals("Cook")){
             wrapper=new ContextThemeWrapper(this, R.style.cook_style);
@@ -136,8 +128,6 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
             wrapper=new ContextThemeWrapper(this, R.style.client_style);
         }
         background.setImageDrawable(StyleApplyer.applyTheme(getApplicationContext(), wrapper,R.drawable.ic_wave));
-//        nextButton.setBackground(StyleApplyer.applyTheme(getApplicationContext(), wrapper,R.drawable.ic_button_1));
-
 
     }
 
@@ -192,14 +182,25 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
     }
 
     private void showMessage() {
-        currentMessage = new Dialog(this);
-        currentMessage.setContentView(R.layout.inbox_description);
+//        currentMessage = new Dialog(this);
+//        currentMessage.setContentView(R.layout.inbox_description);
+
         Message selectedMessage = docRef.toObject(Message.class);
-        TextView subjectText=currentMessage.findViewById(R.id.subject);
-        TextView descText=currentMessage.findViewById(R.id.description);
-        subjectText.setText(selectedMessage.getSubject());
-        descText.setText(selectedMessage.getBodyText());
-        currentMessage.show();
+//        TextView subjectText=currentMessage.findViewById(R.id.subject);
+//        TextView descText=currentMessage.findViewById(R.id.description);
+//        subjectText.setText(selectedMessage.getSubject());
+//        descText.setText(selectedMessage.getBodyText());
+//        currentMessage.show();
+
+        Intent intent=new Intent(this, InboxMessageActivity.class);
+        intent.putExtra("userRole", userRole);
+        intent.putExtra("subjectText", selectedMessage.getSubject());
+        intent.putExtra("descText", selectedMessage.getBodyText());
+//        intent.putExtra("userRole", userRole);
+
+        int requestCode=1;
+        startActivityForResult(intent, requestCode);
+
     }
 
     public void onClickBanCook(View view) {
@@ -207,7 +208,7 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
         if (cookUID != null) {
             Map<String, Boolean> change = new HashMap<>(1);
             change.put("banned", true);
-            db.collection("users").document(cookUID).set(change, SetOptions.merge());
+            firestoreDB.collection("users").document(cookUID).set(change, SetOptions.merge());
         } else {
             Toast.makeText(this, "Error, no cook UID found", Toast.LENGTH_LONG).show();
         }
@@ -232,7 +233,7 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
         if (cookUID != null) {
             Map<String, Timestamp> change = new HashMap<>(1);
             change.put("bannedUntil", timestamp);
-            db.collection("users").document(cookUID).set(change, SetOptions.merge());
+            firestoreDB.collection("users").document(cookUID).set(change, SetOptions.merge());
         } else {
             Toast.makeText(this, "Error, no cook UID found", Toast.LENGTH_LONG).show();
         }
@@ -247,7 +248,7 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
         Map<String, Boolean> change = new HashMap<>(1);
         change.put("archived", true);
         String msgID = docRef.getId();
-        db.collection("messages").document(msgID).set(change, SetOptions.merge());
+        firestoreDB.collection("messages").document(msgID).set(change, SetOptions.merge());
         currentMessage.dismiss();
     }
 
