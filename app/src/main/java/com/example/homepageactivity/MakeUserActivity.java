@@ -29,7 +29,7 @@ public class MakeUserActivity extends AppCompatActivity {
 
         titleText=findViewById(R.id.title);
         background=findViewById(R.id.background);
-        nextButton=findViewById(R.id.continueRegistration); //this exists - no clue why it things it doesn't
+        nextButton=findViewById(R.id.continueRegistration);
 
         Bundle extras=getIntent().getExtras();
         String mode=extras.getString("TYPE");
