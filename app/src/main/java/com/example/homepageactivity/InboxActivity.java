@@ -62,6 +62,7 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
         userRole = getIntent().getStringExtra("userRole");
         titleText=findViewById(R.id.title);
         listView=findViewById(R.id.list);
+        collapseAdminButtons();
         setThemeColors(userRole);
 //        setTitle();
 //        hookDropDown();
@@ -113,6 +114,14 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
         if (!userRole.equals("Admin")){
             LinearLayout adminRow=findViewById(R.id.row4);
             LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
+
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    0,
+                    1.0f
+            );
+            adminRow.setLayoutParams(param);
+        }
+    }
 
 
     private void setThemeColors(String mode){
