@@ -13,11 +13,12 @@ public class Meal {
     private double price;
     private String description;
     private String cookUID;
+    private boolean offered;
 
     public Meal(){};
 
     public Meal(String mealName, String mealType, String cuisineType, String[] ingredients,
-                String[] allergens, double price, String description, String cookUID){
+                String[] allergens, double price, String description, String cookUID, boolean offered){
         this.mealName = mealName;
         this.mealType = mealType;
         this.cuisineType = cuisineType;
@@ -26,6 +27,7 @@ public class Meal {
         this.price = price;
         this.description = description;
         this.cookUID = cookUID;
+        this.offered = offered;
     }
 
     public String getMealName(){ return mealName; }
@@ -36,5 +38,8 @@ public class Meal {
     public double getPrice() { return price; }
     public String getDescription() { return description; }
     public String getCookUID() { return cookUID; }
+    public boolean getOffered() {return offered; }
+
+    public void setOffered(boolean offered){ this.offered = offered; }
 
 }

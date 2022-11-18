@@ -49,8 +49,7 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
     private static final String TAG = "InboxActivity";
 
     private ImageView background;
-    private
-    ArrayList<QueryDocumentSnapshot> items;
+    private ArrayList<QueryDocumentSnapshot> items;
     private Dialog currentMessage;
     private QueryDocumentSnapshot docRef;
 
