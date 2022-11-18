@@ -29,7 +29,7 @@ public class MakeUserActivity extends AppCompatActivity {
 
         titleText=findViewById(R.id.title);
         background=findViewById(R.id.background);
-        nextButton=findViewById(R.id.completeCookRegistration);
+        nextButton=findViewById(R.id.finishCreateNewMeal);
 
         Bundle extras=getIntent().getExtras();
         String mode=extras.getString("TYPE");
@@ -40,7 +40,7 @@ public class MakeUserActivity extends AppCompatActivity {
     }
     
     public void onClickMakeUserNextButton(View view){
-        String firstName = (((EditText) findViewById(R.id.MealNameTextfield)).getText()).toString();
+        String firstName = (((EditText) findViewById(R.id.firstNameEdit)).getText()).toString();
         String lastName = (((EditText) findViewById(R.id.lastNameEdit)).getText()).toString();
         String email = (((EditText) findViewById(R.id.emailEdit)).getText()).toString();
         String address = (((EditText) findViewById(R.id.addressEdit)).getText()).toString();

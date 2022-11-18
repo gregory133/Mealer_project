@@ -76,6 +76,10 @@ public class UserHomepageActivity extends AppCompatActivity {
         switch (userRole) {
             case "Cook":
                 currentAccount = document.toObject(Cook.class);
+                /////////// TEMP - FOR TESTING PURPOSES ///////////
+                Intent intent = new Intent(getApplicationContext(), AddMealActivity.class);
+                startActivity(intent);
+                ///////////////////////////////////////////////////
                 break;
             case "Client":
                 currentAccount = document.toObject(Client.class);
