@@ -9,6 +9,10 @@
         android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/main"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_wave" />
 
     <LinearLayout
@@ -190,7 +194,7 @@
                 android:layout_weight="0.1" />
 
             <ImageView
-                android:id="@+id/mealerButton3"
+                android:id="@+id/messageButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -199,7 +203,7 @@
                 app:srcCompat="@drawable/ic_message_icon_2" />
 
             <ImageView
-                android:id="@+id/imageView6"
+                android:id="@+id/mealerButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -208,7 +212,7 @@
                 app:srcCompat="@drawable/m_icon" />
 
             <ImageView
-                android:id="@+id/logoutButton3"
+                android:id="@+id/logoutButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
