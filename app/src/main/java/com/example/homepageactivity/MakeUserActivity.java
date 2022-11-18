@@ -1,13 +1,8 @@
 package com.example.homepageactivity;
 
-import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.Button;
@@ -17,13 +12,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
 
 import com.example.homepageactivity.domain.StyleApplyer;
 import com.example.homepageactivity.domain.Validator;
-import com.google.firebase.auth.FirebaseAuth;
-import com.larvalabs.svgandroid.SVG;
-import com.larvalabs.svgandroid.SVGParser;
 
 public class MakeUserActivity extends AppCompatActivity {
 
@@ -49,7 +40,7 @@ public class MakeUserActivity extends AppCompatActivity {
     }
     
     public void onClickMakeUserNextButton(View view){
-        String firstName = (((EditText) findViewById(R.id.firstNameEdit)).getText()).toString();
+        String firstName = (((EditText) findViewById(R.id.MealNameTextfield)).getText()).toString();
         String lastName = (((EditText) findViewById(R.id.lastNameEdit)).getText()).toString();
         String email = (((EditText) findViewById(R.id.emailEdit)).getText()).toString();
         String address = (((EditText) findViewById(R.id.addressEdit)).getText()).toString();

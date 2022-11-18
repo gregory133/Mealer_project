@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/off_grey"
-    android:tag="Next"
-    tools:context=".MakeUserActivity">
+    tools:context=".AddMealActivity">
 
     <ImageView
         android:id="@+id/background"
@@ -40,7 +38,7 @@
                 android:fontFamily="@font/lucida_handwriting_italic"
                 android:gravity="center"
                 android:shadowColor="#000000"
-                android:text="Register As"
+                android:text="Add New Meal"
                 android:textColor="@color/off_black"
                 android:textSize="24dp" />
         </LinearLayout>
@@ -49,7 +47,6 @@
             android:id="@+id/nameRow"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginBottom="50dp"
             android:layout_weight="0.7"
             android:orientation="horizontal">
 
@@ -71,34 +68,19 @@
                     android:background="@drawable/edittext_custom_2"
                     android:ems="10"
                     android:gravity="center"
-                    android:hint="First Name"
+                    android:hint="Meal Name"
                     android:inputType="textMultiLine"
                     tools:ignore="TouchTargetSizeCheck" />
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/lastNameCol"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/lastNameEdit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/edittext_custom_2"
-                    android:ems="10"
-                    android:gravity="center"
-                    android:hint="Last Name"
-                    android:inputType="textMultiLine"
-                    tools:ignore="TouchTargetSizeCheck" />
-            </LinearLayout>
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/typeRow"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.7"
+            android:orientation="horizontal"></LinearLayout>
 
         <LinearLayout
             android:id="@+id/emailRow"
@@ -207,6 +189,5 @@
                 android:text="Next"
                 android:textSize="40dp" />
         </LinearLayout>
-
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
