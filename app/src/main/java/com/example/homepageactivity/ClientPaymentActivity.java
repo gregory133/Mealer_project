@@ -1,10 +1,6 @@
 package com.example.homepageactivity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.ContextWrapper;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -14,11 +10,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.homepageactivity.domain.Client;
+import com.example.homepageactivity.domain.CreditCardInformation;
 import com.example.homepageactivity.domain.StyleApplyer;
 import com.example.homepageactivity.domain.Validator;
-import com.example.homepageactivity.domain.Client;
-import com.example.homepageactivity.domain.Cook;
-import com.example.homepageactivity.domain.CreditCardInformation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -70,10 +68,6 @@ public class ClientPaymentActivity extends AppCompatActivity {
         getIntent().putExtra("expiryMonth", expiryMonth);
         getIntent().putExtra("expiryYear", expiryYear);
         getIntent().putExtra("cvvString", cvvString);
-
-//        Bundle extras=getIntent().getExtras();
-//        Intent intent = new Intent(this, UserHomepageActivity.class);
-//        intent.putExtras(extras);
 
         createClientAccount();
 

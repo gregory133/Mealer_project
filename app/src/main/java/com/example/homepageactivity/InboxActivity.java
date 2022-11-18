@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,6 +57,7 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
         userRole = getIntent().getStringExtra("userRole");
         titleText=findViewById(R.id.title);
         listView=findViewById(R.id.pagesList);
+        collapseAdminButtons();
         setThemeColors(userRole);
 //        setTitle();
 //        hookDropDown();
@@ -83,6 +85,19 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
                     });
         } else {
             Toast.makeText(this, "Error, no user signed in", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void collapseAdminButtons(){
+        if (!userRole.equals("Admin")){
+            LinearLayout adminRow=findViewById(R.id.row4);
+            LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
+
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    0,
+                    1.0f
+            );
+            adminRow.setLayoutParams(param);
         }
     }
 
