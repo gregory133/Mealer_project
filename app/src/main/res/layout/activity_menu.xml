@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FF0000"
     tools:context=".MenuActivity">
 
     <LinearLayout
@@ -17,7 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.1"
-            android:text="Button" />
+            android:onClick="onClickAddMealButton"
+            android:text="Add Meal" />
 
 
         <GridView
@@ -27,34 +27,17 @@
             android:layout_weight="0.8"
             android:footerDividersEnabled="false"
             android:numColumns="3"
-            android:padding="1dp" />
+            android:padding="1dp" >
 
-        <LinearLayout
+        </GridView>
+
+        <ListView
+            android:id="@+id/pagesList"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_margin="10dp"
             android:layout_weight="0.1"
-            android:orientation="horizontal">
+            android:scrollbars="horizontal"></ListView>
 
-            <Button
-                android:id="@+id/button8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Button" />
-
-            <Button
-                android:id="@+id/button9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Button" />
-
-            <Button
-                android:id="@+id/button10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Button" />
-        </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,16 +9,16 @@ public class Meal {
     private String description;
     private String cuisineType;
     private String mealType;
-    private String[] ingredients;
-    private String[] allergens;
+    private String ingredients;
+    private String allergens;
     private double price;
     private boolean offered;
     private String cookUID;
 
     public Meal() {}
 
-    public Meal(String mealName, String description, String cuisineType, String mealType, String[] ingredients,
-                String[] allergens, double price, String cookUID, boolean offered){
+    public Meal(String mealName, String description, String cuisineType, String mealType, String ingredients,
+                String allergens, double price, String cookUID, boolean offered){
         this.mealName = mealName;
         this.description = description;
         this.cuisineType = cuisineType;
@@ -34,11 +34,15 @@ public class Meal {
     public String getDescription() { return description; }
     public String getCuisineType() { return cuisineType; }
     public String getMealType(){ return mealType; }
-    public String[] getIngredients() { return ingredients; }
-    public String[] getAllergens() {return allergens; }
+    public String getIngredients() { return ingredients; }
+    public String getAllergens() {return allergens; }
     public double getPrice() { return price; }
     public String getCookUID() { return cookUID; }
     public boolean getOffered() {return offered; }
 
     public void setOffered(boolean offered){ this.offered = offered; }
+
+    public String toString(){
+        return mealName+", "+description+", "+cuisineType+", "+mealName+", "+ingredients+", "+allergens+", "+price+", "+cookUID+", "+offered;
+    }
 }

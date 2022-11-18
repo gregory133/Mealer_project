@@ -1,4 +1,4 @@
-package com.example.homepageactivity;
+package com.example.homepageactivity.domain;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.example.homepageactivity.R;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class MealsGridAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         view = inflter.inflate(R.layout.meal_menu_icon, null); // inflate the layout
         Button icon = (Button) view.findViewById(R.id.mealDisplay); // get the reference of Button
-        //icon.setImageResource(meals[i]); // set logo images
+        icon.setText(meals.get(i).getString("mealName")); // set logo images
         return view;
     }
 }

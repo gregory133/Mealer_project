@@ -165,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
         String temp = document.getString("role");
         switch (temp){
             case "Cook":
-                intent = new Intent(getApplicationContext(), CookLandingPage.class);
+                intent = new Intent(getApplicationContext(), MenuActivity.class);
                 intent.putExtra("userRole","Cook");
                 startActivity(intent);
                 break;

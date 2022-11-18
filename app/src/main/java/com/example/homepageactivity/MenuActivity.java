@@ -10,9 +10,11 @@ import android.util.Log;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.homepageactivity.domain.ItemListAdapter;
+import com.example.homepageactivity.domain.PageIconInfo;
+import com.example.homepageactivity.domain.PageIconsAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.EventListener;
@@ -31,6 +33,7 @@ public class MenuActivity extends AppCompatActivity {
     private static final String TAG = "MenuActivity";
     private ArrayList<QueryDocumentSnapshot> items;
     private QueryDocumentSnapshot docRef;
+    ArrayList<PageIconInfo> pageIconOptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +41,45 @@ public class MenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
 
         meals = new int[0];
+        pageIconOptions = new ArrayList<>();
 
+        //setupUserPages(R.id.pagesList);
         getMealsForMealGrid();
+    }
+
+    //DOES NOT WORK. FINAL ARRAYLIST MUST BE INITIALIZED
+    private void setupUserPages(int viewID){
+        pageIconOptions.add(new PageIconInfo("menu", MenuActivity.class));
+        pageIconOptions.add(new PageIconInfo("inbox", InboxActivity.class));
+        pageIconOptions.add(new PageIconInfo("logout", null));        //logout MUST be last
+        final ArrayList<PageIconInfo> finalPageIconOptions = new ArrayList<>();
+        //finalPageIconOptions = pageIconOptions;
+
+        PageIconsAdapter adapter=new PageIconsAdapter(getApplicationContext(), finalPageIconOptions);
+        ListView listView=findViewById(viewID);
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.d(TAG, "onPageSelected:");
+
+                if (i == pageIconOptions.size()-1) {        //logout MUST be last
+                    LogoutRequest();
+                    return;
+                }
+                if (this.getClass().getName().contains(pageIconOptions.get(i).getClass().getName())) return;    //Don't reload this page
+
+                Intent intent=new Intent(getApplicationContext(), pageIconOptions.get(i).getClass());
+                //intent.putExtra("userRole", userRole);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void LogoutRequest(){
+        FirebaseAuth.getInstance().signOut();
+        finish();
     }
 
     private void getMealsForMealGrid(){
@@ -48,8 +88,8 @@ public class MenuActivity extends AppCompatActivity {
             loginAttemptFailure("Could not load menu");
         }
         db = FirebaseFirestore.getInstance();
-        db.collection("messages")
-                .whereEqualTo("recipientUID", currentUser.getUid()).whereEqualTo("archived", false)
+        db.collection("meals")
+                .whereEqualTo("cookUID", currentUser.getUid())
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value,
@@ -68,21 +108,19 @@ public class MenuActivity extends AppCompatActivity {
                 });
     }
 
-    private void setUpMealsGrid(){
+    protected void setUpMealsGrid() {
         mealsGrid = (GridView) findViewById(R.id.mealsGrid);
-        MealsGridAdapter customAdapter = new MealsGridAdapter(getApplicationContext(), items);
-        mealsGrid.setAdapter(customAdapter);
-        // implement setOnItemClickListener event on GridView
+        PageIconsAdapter iconsAdapter = new PageIconsAdapter(getApplicationContext(), pageIconOptions);
+        mealsGrid.setAdapter(iconsAdapter);
+
         mealsGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int i, long l) {
-                Log.d(TAG, "onItemSelected:");
-                // set an Intent to Another Activity
-                Toast.makeText(getApplicationContext(), "Error, no user signed in", Toast.LENGTH_LONG).show();
-                //Intent intent = new Intent(MenuActivity.this, MealActivity.class);
-                //intent.putExtra("image", items.get(i).getId()); // put image data in Intent
-                //startActivity(intent); // start Intent
-                //docRef = items.get(i);
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d(TAG, "MealIconSelected:");
+                Intent intent = new Intent(getApplicationContext(), EditMealActivity.class);
+                intent.putExtra("mealID", items.get(position).getId());
+                startActivity(intent);
+                finish();
             }
         });
     }
@@ -91,8 +129,8 @@ public class MenuActivity extends AppCompatActivity {
         Toast.makeText(this, failureReason, Toast.LENGTH_LONG).show();
     }
 
-
-//    public onClickLogin(){
-//        //Intent intent =
-//    }
+    public void onClickAddMealButton(View view){
+        Intent intent = new Intent(getApplicationContext(), AddMealActivity.class);
+        startActivity(intent);
+    }
 }

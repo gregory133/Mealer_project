@@ -23,22 +23,16 @@ import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 public class InboxActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
@@ -61,7 +55,7 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
         background=findViewById(R.id.background);
         userRole = getIntent().getStringExtra("userRole");
         titleText=findViewById(R.id.title);
-        listView=findViewById(R.id.list);
+        listView=findViewById(R.id.pagesList);
         setThemeColors(userRole);
 //        setTitle();
 //        hookDropDown();
@@ -92,29 +86,6 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
         }
     }
 
-
-//    private void hookDropDown(){
-//        final List<String> options = Arrays.asList("Settings", "Return");
-//        ArrayAdapter adapter=new ArrayAdapter(this, R.layout.dropdown_layout, options);
-//        adapter.setDropDownViewResource(R.layout.dropdown_layout);
-//        spinner.setAdapter(adapter);
-//
-//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                if (options.get(i).equals("Return")) {
-//                    logout();
-//                }
-//            }
-//        }
-//    }
-
-    private void collapseAdminButtons(){
-        if (!userRole.equals("Admin")){
-            LinearLayout adminRow=findViewById(R.id.row4);
-            LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
-
-
     private void setThemeColors(String mode){
         ContextWrapper wrapper=null;
         if (mode.equals("Cook")){
@@ -130,27 +101,6 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
         background.setImageDrawable(StyleApplyer.applyTheme(getApplicationContext(), wrapper,R.drawable.ic_wave));
 
     }
-
-//    private void hookDropDown(){
-//        final List<String> options = Arrays.asList("Settings", "Logout");
-//        ArrayAdapter adapter=new ArrayAdapter(this, R.layout.dropdown_layout, options);
-//        adapter.setDropDownViewResource(R.layout.dropdown_layout);
-//        spinner.setAdapter(adapter);
-//
-//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                if (options.get(i).equals("Logout")){
-//                    logout();
-//                }
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//            }
-//        });
-//    }
 
     private void setTitle(){
         HashMap<String, String> titleDict=new HashMap<String, String>(){{

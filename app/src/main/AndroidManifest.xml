@@ -16,6 +16,13 @@
         android:theme="@style/Theme.HomepageActivity"
         tools:targetApi="31">
         <activity
+            android:name=".EditMealActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".MenuActivity"
             android:exported="false">
             <meta-data

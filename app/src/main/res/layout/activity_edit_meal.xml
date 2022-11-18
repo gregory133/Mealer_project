@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddMealActivity">
+    tools:context=".EditMealActivity">
 
     <ImageView
         android:id="@+id/background"
@@ -39,7 +39,7 @@
                 android:fontFamily="@font/lucida_handwriting_italic"
                 android:gravity="center"
                 android:shadowColor="#000000"
-                android:text="Add New Meal"
+                android:text="Edit Meal"
                 android:textColor="@color/off_black"
                 android:textSize="24dp" />
         </LinearLayout>
@@ -209,15 +209,27 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/finishCreateNewMeal"
-                android:layout_width="match_parent"
+                android:id="@+id/applyChangesButton"
+                android:layout_width="wrap_content"
                 android:layout_height="80dp"
                 android:layout_margin="20dp"
                 android:background="@drawable/ic_button_1"
                 android:fontFamily="@font/lucida_handwriting_italic"
-                android:onClick="onClickAddMealButton"
-                android:text="Add Meal"
-                android:textSize="40dp" />
+                android:onClick="onClickApplyChangesButton"
+                android:text="Apply \n Changes"
+                android:textSize="25dp" />
+
+            <Button
+                android:id="@+id/deleteMealButton"
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:layout_margin="20dp"
+                android:background="@drawable/ic_button_1"
+                android:fontFamily="@font/lucida_handwriting_italic"
+                android:onClick="onClickDeleteMealButton"
+                android:text="Delete Meal"
+                android:textSize="25dp" />
         </LinearLayout>
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
