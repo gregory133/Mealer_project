@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
 
-        DocumentReference docRef = db.collection("user").document(currentUser.getUid());
+        DocumentReference docRef = db.collection("users").document(currentUser.getUid());
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -162,23 +162,28 @@ public class MainActivity extends AppCompatActivity {
 
     private void openHomePage(DocumentSnapshot document){
         Intent intent;
-
-        switch (document.getString("type")){
+        String temp = document.getString("role");
+        switch (temp){
             case "Cook":
                 intent = new Intent(getApplicationContext(), CookLandingPage.class);
+                intent.putExtra("userRole","Cook");
                 startActivity(intent);
+                break;
             case "Admin":
                 intent = new Intent(getApplicationContext(), InboxActivity.class);
+                intent.putExtra("userRole","Admin");
                 startActivity(intent);
+                break;
             case "Client":
                 intent = new Intent(getApplicationContext(), UserHomepageActivity.class);
+                intent.putExtra("userRole","Client");
                 startActivity(intent);
+                break;
             default:
                 loginAttemptFailure("switch failed");
-                return;
         }
-
-
+        finish();
+        return;
     }
 
 
