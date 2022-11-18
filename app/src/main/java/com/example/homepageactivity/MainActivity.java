@@ -121,67 +121,69 @@ public class MainActivity extends AppCompatActivity {
 
     private void loginAttemptSuccess(){
         //Don't want to leave there info sitting around after logging in
-        Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+//        startActivity(intent);
         ClearLoginInfoBoxes();
         //finish();
         //return;
 
-//        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-//
-//        if (currentUser == null) {
-//            Toast.makeText(this, "Error, no user signed in", Toast.LENGTH_LONG).show();
-//            return;
-//        }
-//
-//        db = FirebaseFirestore.getInstance();
-//
-//        DocumentReference docRef = db.collection("users").document(currentUser.getUid());
-//        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                if (task.isSuccessful()) {
-//                    DocumentSnapshot document = task.getResult();
-//                    if (document.exists()) {
-//                        Map userData = document.getData(); //This return the data in the form of a Map or Dictionary by default (see next section about converting to a custom Java Object).
-//                        openHomePage(document);
-//                        //what you want it to do with the data - remember, this is a new method so it can't directly talk to the method that created it and vice-versa
-//                    } else {
-//                        loginAttemptFailure("Document doesn't exist");
-//                        return;
-//                    }
-//                } else {
-//                    loginAttemptFailure("on complete failed");
-//                    return;
-//                }
-//            }
-//        });
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
+        if (currentUser == null) {
+            Toast.makeText(this, "Error, no user signed in", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        db = FirebaseFirestore.getInstance();
+
+        DocumentReference docRef = db.collection("users").document(currentUser.getUid());
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Map userData = document.getData(); //This return the data in the form of a Map or Dictionary by default (see next section about converting to a custom Java Object).
+                        openHomePage(document);
+                        //what you want it to do with the data - remember, this is a new method so it can't directly talk to the method that created it and vice-versa
+                    } else {
+                        loginAttemptFailure("Document doesn't exist");
+                        return;
+                    }
+                } else {
+                    loginAttemptFailure("on complete failed");
+                    return;
+                }
+            }
+        });
 
     }
 
     private void openHomePage(DocumentSnapshot document){
         Intent intent;
 
-        switch (document.getString("role")){
+        String temp = document.getString("role");
+        switch (temp){
             case "Cook":
-                intent = new Intent(getApplicationContext(), MenuActivity.class);
+                intent = new Intent(getApplicationContext(), CookLandingPage.class);
+                intent.putExtra("userRole","Cook");
                 startActivity(intent);
                 break;
             case "Admin":
                 intent = new Intent(getApplicationContext(), InboxActivity.class);
+                intent.putExtra("userRole","Admin");
                 startActivity(intent);
                 break;
             case "Client":
                 intent = new Intent(getApplicationContext(), UserHomepageActivity.class);
+                intent.putExtra("userRole","Client");
                 startActivity(intent);
                 break;
             default:
                 loginAttemptFailure("switch failed");
-                return;
         }
-
-
+        finish();
+        return;
     }
 
 

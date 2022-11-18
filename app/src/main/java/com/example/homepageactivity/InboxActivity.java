@@ -110,7 +110,7 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
 //    }
 
     private void collapseAdminButtons(){
-        if (!userRole.equals("admin")){
+        if (!userRole.equals("Admin")){
             LinearLayout adminRow=findViewById(R.id.row4);
             LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
 
