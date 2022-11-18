@@ -11,6 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.homepageactivity.domain.Admin;
+import com.example.homepageactivity.domain.Client;
+import com.example.homepageactivity.domain.Cook;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -26,6 +29,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
@@ -109,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
                 if(task.isSuccessful()){
                     loginAttemptSuccess();
                 }else{
-                    loginAttemptFailure();
+                    loginAttemptFailure("Invalid login information");
                 }
             }
         });
@@ -117,8 +121,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void loginAttemptSuccess(){
         //Don't want to leave there info sitting around after logging in
+        //Intent intent = new Intent(getApplicationContext(), CookLandingPage.class);
+        //startActivity(intent);
         ClearLoginInfoBoxes();
-        finish();
+        //finish();
+        //return;
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -137,14 +144,14 @@ public class MainActivity extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         Map userData = document.getData(); //This return the data in the form of a Map or Dictionary by default (see next section about converting to a custom Java Object).
-                        openHomePage(userData);
+                        openHomePage(document);
                         //what you want it to do with the data - remember, this is a new method so it can't directly talk to the method that created it and vice-versa
                     } else {
-                        loginAttemptFailure();
+                        loginAttemptFailure("Document doesn't exist");
                         return;
                     }
                 } else {
-                    loginAttemptFailure();
+                    loginAttemptFailure("on complete failed");
                     return;
                 }
             }
@@ -153,9 +160,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void openHomePage(Map userData){
+    private void openHomePage(DocumentSnapshot document){
         Intent intent;
-        switch ((String) userData.get("role")){
+
+        switch (document.getString("type")){
             case "Cook":
                 intent = new Intent(getApplicationContext(), CookLandingPage.class);
                 startActivity(intent);
@@ -166,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
                 intent = new Intent(getApplicationContext(), UserHomepageActivity.class);
                 startActivity(intent);
             default:
-                loginAttemptFailure();
+                loginAttemptFailure("switch failed");
                 return;
         }
 
@@ -174,8 +182,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void loginAttemptFailure(){
-        Toast.makeText(this, "Your Email or Password is Incorrect", Toast.LENGTH_LONG).show();
+    private void loginAttemptFailure(String failureReason){
+        Toast.makeText(this, failureReason, Toast.LENGTH_LONG).show();
     }
 
     public void onClickRegister(View view){
