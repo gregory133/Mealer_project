@@ -30,7 +30,7 @@ public class AddMealActivity extends AppCompatActivity {
 
     private FirebaseFirestore firestoreDB;
     private FirebaseUser currentUser;
-    final List<String> cuisineOptions = Arrays.asList("Chinese", "Other");      //Also hardcoded in EditMealActivity
+    final List<String> cuisineOptions = Arrays.asList("American", "Mexican", "Chinese", "Other");      //Also hardcoded in EditMealActivity
     final List<String> mealTypeOptions = Arrays.asList("Appetizer", "Entree", "Dessert", "Other");      //Also hardcoded in EditMealActivity
     String chosenCuisine;
     String chosenMealType;
@@ -165,11 +165,11 @@ public class AddMealActivity extends AppCompatActivity {
             Toast.makeText(this, "Please Enter Your Meal's Ingredients", Toast.LENGTH_LONG).show();
             return false;
         }
-        if (!val.isAlphanumeric(ingredients)){
+        if (!val.isAlphanumericPhrase(ingredients)){
             Toast.makeText(this, "Ingredients May Only Contain Alphanumeric Characters", Toast.LENGTH_LONG).show();
             return false;
         }
-        if (!val.isAlphanumeric(allergens)){
+        if (!val.isAlphanumericPhrase(allergens)){
             Toast.makeText(this, "Allergens May Only Contain Alphanumeric Characters", Toast.LENGTH_LONG).show();
             return false;
         }

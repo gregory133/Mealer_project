@@ -29,7 +29,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class EditMealActivity extends AppCompatActivity {
-    private final List<String> cuisineOptions = Arrays.asList("Mexican", "Chinese", "Other");      //Also hardcoded in AddMealActivity
+    private final List<String> cuisineOptions = Arrays.asList("American", "Mexican", "Chinese", "Other");      //Also hardcoded in AddMealActivity
     private final List<String> mealTypeOptions = Arrays.asList("Appetizer", "Entree", "Dessert", "Other");      //Also hardcoded in AddMealActivity
     private String chosenCuisine;
     private String chosenMealType;
