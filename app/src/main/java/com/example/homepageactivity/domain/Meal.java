@@ -4,7 +4,8 @@ import android.media.Image;
 
 public class Meal {
 
-    private String name;
+    //Image picture;
+    private String mealName;
     private String description;
     private String cuisineType;
     private String mealType;
@@ -16,9 +17,9 @@ public class Meal {
 
     public Meal() {}
 
-    public Meal(String name, String description, String cuisineType, String mealType, String[] ingredients,
+    public Meal(String mealName, String description, String cuisineType, String mealType, String[] ingredients,
                 String[] allergens, double price, String cookUID, boolean offered){
-        this.name = name;
+        this.mealName = mealName;
         this.description = description;
         this.cuisineType = cuisineType;
         this.mealType = mealType;
@@ -29,39 +30,15 @@ public class Meal {
         this.offered = offered;
     }
 
-    public String getName() {
-        return name;
-    }
+    public String getMealName(){ return mealName; }
+    public String getDescription() { return description; }
+    public String getCuisineType() { return cuisineType; }
+    public String getMealType(){ return mealType; }
+    public String[] getIngredients() { return ingredients; }
+    public String[] getAllergens() {return allergens; }
+    public double getPrice() { return price; }
+    public String getCookUID() { return cookUID; }
+    public boolean getOffered() {return offered; }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public String getCuisineType() {
-        return cuisineType;
-    }
-
-    public String getMealType() {
-        return mealType;
-    }
-
-    public String[] getIngredients() {
-        return ingredients;
-    }
-
-    public String[] getAllergens() {
-        return allergens;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public String getCookUID() {
-        return cookUID;
-    }
-
-    public boolean isOffered() {
-        return offered;
-    }
+    public void setOffered(boolean offered){ this.offered = offered; }
 }

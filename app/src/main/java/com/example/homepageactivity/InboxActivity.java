@@ -50,8 +50,7 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
     private static final String TAG = "InboxActivity";
 
     private ImageView background;
-    private
-    ArrayList<QueryDocumentSnapshot> items;
+    private ArrayList<QueryDocumentSnapshot> items;
     private Dialog currentMessage;
     private QueryDocumentSnapshot docRef;
 
@@ -110,6 +109,10 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
 //        }
 //    }
 
+    private void collapseAdminButtons(){
+        if (!userRole.equals("Admin")){
+            LinearLayout adminRow=findViewById(R.id.row4);
+            LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
 
 
     private void setThemeColors(String mode){
