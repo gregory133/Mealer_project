@@ -4,20 +4,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/off_grey"
     tools:context=".MenuActivity">
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_wave" />
+
+    <ImageView
+        android:id="@+id/midground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:translationY="20dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_wave"
+        app:tint="@color/cook_light" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
         android:orientation="vertical">
 
         <Button
             android:id="@+id/button2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="320dp"
+            android:layout_height="0dp"
+            android:layout_margin="20dp"
             android:layout_weight="0.1"
+            android:background="@drawable/outline_off_white"
             android:onClick="onClickAddMealButton"
             android:text="Add Meal" />
+
 
 
         <GridView
@@ -27,7 +57,7 @@
             android:layout_weight="0.8"
             android:footerDividersEnabled="false"
             android:numColumns="3"
-            android:padding="1dp" >
+            android:padding="1dp">
 
         </GridView>
 
@@ -36,9 +66,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="10dp"
-            android:numColumns="3"
-            android:layout_weight="0.1">
-        </GridView>
+            android:layout_weight="0.1"
+            android:numColumns="3"></GridView>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

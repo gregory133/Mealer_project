@@ -45,7 +45,6 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
     FirebaseFirestore firestoreDB;
     private static final String TAG = "InboxActivity";
 
-    private ImageView background;
     private ArrayList<QueryDocumentSnapshot> items;
     private Dialog currentMessage;
     private QueryDocumentSnapshot docRef;
@@ -69,7 +68,6 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inbox);
-        background=findViewById(R.id.background);
         userRole = getIntent().getStringExtra("userRole");
         titleText=findViewById(R.id.title);
         listView=findViewById(R.id.messagesList);
@@ -164,19 +162,12 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
     }
 
     private void setThemeColors(String mode){
-        ContextWrapper wrapper=null;
         if (mode.equals("Cook")){
-            wrapper=new ContextThemeWrapper(this, R.style.cook_style);
-
-        }
-        else if (mode.equals("Client")){
-            wrapper=new ContextThemeWrapper(this, R.style.client_style);
+            ((ImageView) findViewById(R.id.midground)).setColorFilter(getResources().getColor(R.color.cook_light));
         }
         else{
-            wrapper=new ContextThemeWrapper(this, R.style.client_style);
+            ((ImageView) findViewById(R.id.midground)).setColorFilter(getResources().getColor(R.color.client_light));
         }
-        background.setImageDrawable(StyleApplyer.applyTheme(getApplicationContext(), wrapper,R.drawable.ic_wave));
-
     }
 
     private void setTitle(){

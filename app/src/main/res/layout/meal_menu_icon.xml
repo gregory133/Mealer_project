@@ -8,14 +8,16 @@
     <Button
         android:id="@+id/mealDisplay"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-
-        android:layout_gravity="center_horizontal"
+        android:layout_height="140dp"
 
         android:backgroundTint="@color/off_grey"
+        android:layout_gravity="center_horizontal"
         android:clickable="false"
-        android:textSize="30dp"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp" />
+        android:textSize="16dp"
+        android:onClick="onClickAddMealButton"
+        android:background="@drawable/outline_off_white"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp"
+        android:text="Add Meal" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,7 +3,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/off_grey"
     android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_wave" />
+
+    <ImageView
+        android:id="@+id/midground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:translationY="20dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_wave"
+        app:tint="@color/cook_light" />
 
     <!--This works regardless of the error-->
     <LinearLayout
@@ -29,6 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="suspendedUserLogout"
+            android:background="@drawable/outline_off_white"
             android:text="Logout"
             android:textSize="24sp"
             android:padding="20dp"/>

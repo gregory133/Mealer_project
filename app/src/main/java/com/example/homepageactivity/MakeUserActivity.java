@@ -19,7 +19,6 @@ import com.example.homepageactivity.domain.Validator;
 public class MakeUserActivity extends AppCompatActivity {
 
     private TextView titleText;
-    private ImageView background;
     private Button nextButton;
 
     @Override
@@ -28,7 +27,6 @@ public class MakeUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_make_user);
 
         titleText=findViewById(R.id.title);
-        background=findViewById(R.id.background);
         nextButton=findViewById(R.id.continueRegistration);
 
         Bundle extras=getIntent().getExtras();
@@ -68,18 +66,12 @@ public class MakeUserActivity extends AppCompatActivity {
     }
 
     private void setThemeColors(String mode){
-
-        ContextWrapper wrapper=null;
         if (mode.equals("Cook")){
-            wrapper=new ContextThemeWrapper(this, R.style.cook_style);
-
+            ((ImageView) findViewById(R.id.midground)).setColorFilter(getResources().getColor(R.color.cook_light));
         }
-        else if (mode.equals("Client")){
-            wrapper=new ContextThemeWrapper(this, R.style.client_style);
+        else{
+            ((ImageView) findViewById(R.id.midground)).setColorFilter(getResources().getColor(R.color.client_light));
         }
-        background.setImageDrawable(StyleApplyer.applyTheme(getApplicationContext(), wrapper,R.drawable.ic_wave));
-        nextButton.setBackground(StyleApplyer.applyTheme(getApplicationContext(), wrapper,R.drawable.ic_button_1));
-
     }
 
     /**
