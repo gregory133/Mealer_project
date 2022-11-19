@@ -24,6 +24,7 @@ import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -49,6 +50,21 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
     private Dialog currentMessage;
     private QueryDocumentSnapshot docRef;
 
+    private static final String logoutText = "Logout";
+    private static final ArrayList<PageIconInfo> clientPageIconOptions = new ArrayList<PageIconInfo>() {{
+        add(new PageIconInfo("Inbox", InboxActivity.class));
+        add(new PageIconInfo(logoutText, null));
+    }};
+    private static final ArrayList<PageIconInfo> cookPageIconOptions = new ArrayList<PageIconInfo>() {{
+        add(new PageIconInfo("Menu", MenuActivity.class));
+        add(new PageIconInfo("Inbox", InboxActivity.class));
+        add(new PageIconInfo(logoutText, null));
+    }};
+    private static final ArrayList<PageIconInfo> adminPageIconOptions = new ArrayList<PageIconInfo>() {{
+        add(new PageIconInfo("Inbox", InboxActivity.class));
+        add(new PageIconInfo(logoutText, null));
+    }};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,11 +72,10 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
         background=findViewById(R.id.background);
         userRole = getIntent().getStringExtra("userRole");
         titleText=findViewById(R.id.title);
-        listView=findViewById(R.id.pagesGrid);
+        listView=findViewById(R.id.messagesList);
         collapseAdminButtons();
         setThemeColors(userRole);
-//        setTitle();
-//        hookDropDown();
+        setupUserPages(R.id.pagesGrid);
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser != null) {
@@ -87,6 +102,53 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
             Toast.makeText(this, "Error, no user signed in", Toast.LENGTH_LONG).show();
         }
     }
+
+    private void setupUserPages(int viewID){
+        GridView pagesGrid;
+        pagesGrid = (GridView) findViewById(viewID);
+        pagesGrid.setNumColumns(getUserPagesOptions().size());
+        PageIconsAdapter adapter=new PageIconsAdapter(getApplicationContext(), getUserPagesOptions());
+        pagesGrid.setAdapter(adapter);
+
+        pagesGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.d(TAG, "onPageSelected:");
+
+                if (getUserPagesOptions().get(i).getIconName() == logoutText) {        //logout MUST be last
+                    LogoutRequest();
+                    Toast.makeText(getApplicationContext(), "logout at "+i+"", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if (this.getClass().getName().contains(getUserPagesOptions().get(i).getPage().getName())){
+                    return;
+                }    //Don't reload this page
+                Intent intent=new Intent(getApplicationContext(), getUserPagesOptions().get(i).getPage());
+                intent.putExtra("userRole",  getIntent().getStringExtra("userRole"));
+                startActivity(intent);
+                finish();
+            }
+        });
+    }
+
+    private final ArrayList<PageIconInfo> getUserPagesOptions(){
+        switch (userRole){
+            case "Client":
+                return clientPageIconOptions;
+            case "Cook":
+                return cookPageIconOptions;
+            case "Admin":
+                return adminPageIconOptions;
+            default:
+                return null;
+        }
+    }
+
+    private void LogoutRequest(){
+        FirebaseAuth.getInstance().signOut();
+        finish();
+    }
+
 
     private void collapseAdminButtons(){
         if (!userRole.equals("Admin")){

@@ -53,14 +53,14 @@ public class MenuActivity extends AppCompatActivity {
         getMealsForMealGrid();
     }
 
-    //DOES NOT WORK. FINAL ARRAYLIST MUST BE INITIALIZED
     private void setupUserPages(int viewID){
-        mealsGrid = (GridView) findViewById(viewID);
-        mealsGrid.setNumColumns(pageIconOptions.size());
-        PageIconsAdapter adapter=new PageIconsAdapter(getApplicationContext(), pageIconOptions);
-        mealsGrid.setAdapter(adapter);
 
-        mealsGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        GridView pagesGrid = (GridView) findViewById(viewID);
+        pagesGrid.setNumColumns(pageIconOptions.size());
+        PageIconsAdapter adapter=new PageIconsAdapter(getApplicationContext(), pageIconOptions);
+        pagesGrid.setAdapter(adapter);
+
+        pagesGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Log.d(TAG, "onPageSelected:");
