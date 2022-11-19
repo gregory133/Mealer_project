@@ -19,6 +19,12 @@ email: admin@mealer.ca
 
 password: password
 
+
+## A Cook creditials
+
+email: cook@mealer.ca
+
+password: password
 ## Some testers
 
 emails:
