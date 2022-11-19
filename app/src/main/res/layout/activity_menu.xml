@@ -54,22 +54,30 @@
             android:layout_width="fill_parent"
             android:layout_height="0dp"
             android:layout_weight="0.8"
-            android:footerDividersEnabled="false"
-            android:stretchMode="columnWidth"
             android:verticalSpacing="4dp"
             android:horizontalSpacing="4dp"
             android:layout_marginHorizontal="2dp"
             android:numColumns="3">
-
         </GridView>
 
-        <GridView
-            android:id="@+id/pagesGrid"
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:id="@+id/pagesSpacer"
+            android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_margin="10dp"
-            android:layout_weight="0.1"
-            android:numColumns="3"></GridView>
+            android:layout_weight="0.125"
+            android:paddingHorizontal="40dp"
+            android:background="@color/client_dark">
+
+            <GridView
+                android:id="@+id/pagesGrid"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:padding="10dp"
+                android:gravity="center"
+                android:horizontalSpacing="20dp"
+                android:background="@color/client_dark"
+                android:numColumns="3"/>
+        </RelativeLayout>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

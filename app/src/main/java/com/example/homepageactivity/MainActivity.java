@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
                 currentAccount = document.toObject(Admin.class);
                 break;
             case "Client":
-                intent = new Intent(getApplicationContext(), UserHomepageActivity.class);
+                intent = new Intent(getApplicationContext(), InboxActivity.class);
                 intent.putExtra("userRole","Client");
                 currentAccount = document.toObject(Client.class);
                 break;

@@ -46,6 +46,22 @@ public class MealsGridAdapter extends BaseAdapter {
         ((TextView) view.findViewById(R.id.mealNameTextView)).setText(meals.get(i).getString("mealName"));
         //set mealIsOffered
         ((ImageView) view.findViewById(R.id.offeredIcon)).setVisibility((meals.get(i).getBoolean("offered")) ? View.VISIBLE : View.INVISIBLE);
+        //set mealPicture
+        //set mealPictureOverlay
+        ((RelativeLayout) view.findViewById(R.id.overlay)).setAlpha(1);
+        //set Rating
+        setStarRating(view, 3.5f);
         return view;
+    }
+
+    private void setStarRating(View view, float rating){
+        ImageView[] starViews = {view.findViewById(R.id.star1Icon),
+                view.findViewById(R.id.star2Icon),
+                view.findViewById(R.id.star3Icon),
+                view.findViewById(R.id.star4Icon),
+                view.findViewById(R.id.star5Icon)};
+        for(int i=0;i< starViews.length;i++){
+            starViews[i].setVisibility((rating-0.5f >= i) ? View.VISIBLE : View.INVISIBLE);
+        }
     }
 }

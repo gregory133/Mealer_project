@@ -5,59 +5,58 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/background"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="175dp"
-        android:layout_margin="10dp"
-        android:scaleType="fitXY"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/box_2" />
+        android:layout_height="80dp"
+        android:elevation="0dp"
+        app:cardElevation="0dp"
+        app:cardCornerRadius="20dp">
 
-    <TextView
-        android:id="@+id/senderText"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_margin="10dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:ellipsize="end"
-        android:fontFamily="@font/lucida_handwriting_italic"
-        android:maxLines="1"
-        android:padding="10dp"
-        android:paddingRight="50dp"
-        android:shadowColor="#000000"
-        android:text="Sender"
-        android:textSize="30dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:padding="5dp"
+            android:elevation="0dp"
+            android:background="@color/off_white"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/subject"
-        android:layout_width="match_parent"
-        android:layout_height="46dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="72dp"
-        android:ellipsize="end"
-        android:fontFamily="@font/lucida_handwriting_italic"
-        android:maxLines="1"
-        android:text="Subject"
-        android:textSize="30dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/senderText"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/lucida_handwriting_italic"
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:shadowColor="#000000"
+                android:text="Sender"
+                android:textSize="16dp"/>
 
-    <TextView
-        android:id="@+id/firstWordText"
-        android:layout_width="match_parent"
-        android:layout_height="46dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="120dp"
-        android:ellipsize="end"
-        android:fontFamily="@font/lucida_handwriting_italic"
-        android:maxLines="1"
-        android:text="First words of the body"
-        android:textSize="30dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/subject"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/lucida_handwriting_italic"
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:shadowColor="#000000"
+                android:text="Subject"
+                android:textSize="16dp"/>
+
+            <TextView
+                android:id="@+id/firstWordText"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/lucida_handwriting_italic"
+                android:maxLines="1"
+                android:shadowColor="#000000"
+                android:text="First Words"
+                android:textSize="16dp"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

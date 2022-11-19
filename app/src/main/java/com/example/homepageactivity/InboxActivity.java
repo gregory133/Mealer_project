@@ -16,11 +16,9 @@ import com.google.firebase.firestore.SetOptions;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.ContextWrapper;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
@@ -51,17 +49,17 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
 
     private static final String logoutText = "Logout";
     private static final ArrayList<PageIconInfo> clientPageIconOptions = new ArrayList<PageIconInfo>() {{
-        add(new PageIconInfo("Inbox", InboxActivity.class));
-        add(new PageIconInfo(logoutText, null));
+        add(new PageIconInfo("Inbox", InboxActivity.class, R.drawable.ic_message_icon));
+        add(new PageIconInfo(logoutText, null, R.drawable.ic_door_icon));
     }};
     private static final ArrayList<PageIconInfo> cookPageIconOptions = new ArrayList<PageIconInfo>() {{
-        add(new PageIconInfo("Menu", MenuActivity.class));
-        add(new PageIconInfo("Inbox", InboxActivity.class));
-        add(new PageIconInfo(logoutText, null));
+        add(new PageIconInfo("Inbox", InboxActivity.class, R.drawable.ic_message_icon));
+        add(new PageIconInfo("Menu", MenuActivity.class, R.drawable.m_icon));
+        add(new PageIconInfo(logoutText, null, R.drawable.ic_door_icon));
     }};
     private static final ArrayList<PageIconInfo> adminPageIconOptions = new ArrayList<PageIconInfo>() {{
-        add(new PageIconInfo("Inbox", InboxActivity.class));
-        add(new PageIconInfo(logoutText, null));
+        add(new PageIconInfo("Inbox", InboxActivity.class, R.drawable.ic_message_icon));
+        add(new PageIconInfo(logoutText, null, R.drawable.ic_door_icon));
     }};
 
     @Override
@@ -105,7 +103,7 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
         GridView pagesGrid;
         pagesGrid = (GridView) findViewById(viewID);
         pagesGrid.setNumColumns(getUserPagesOptions().size());
-        PageIconsAdapter adapter=new PageIconsAdapter(getApplicationContext(), getUserPagesOptions());
+        PageIconsAdapter adapter=new PageIconsAdapter(getApplicationContext(), getUserPagesOptions(), this.getClass(), getIntent().getStringExtra("userRole"));
         pagesGrid.setAdapter(adapter);
 
         pagesGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -118,10 +116,10 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
                     Toast.makeText(getApplicationContext(), "logout at "+i+"", Toast.LENGTH_LONG).show();
                     return;
                 }
-                if (this.getClass().getName().contains(getUserPagesOptions().get(i).getPage().getName())){
+                if (this.getClass().getName().contains(getUserPagesOptions().get(i).getPageClass().getName())){
                     return;
                 }    //Don't reload this page
-                Intent intent=new Intent(getApplicationContext(), getUserPagesOptions().get(i).getPage());
+                Intent intent=new Intent(getApplicationContext(), getUserPagesOptions().get(i).getPageClass());
                 intent.putExtra("userRole",  getIntent().getStringExtra("userRole"));
                 startActivity(intent);
                 finish();
@@ -199,6 +197,10 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
         });
     }
 
+    public void onCLickNewMessage(View view){
+        Toast.makeText(getApplicationContext(), "New Message", Toast.LENGTH_LONG).show();
+    }
+
     private void showMessage() {
 //        currentMessage = new Dialog(this);
 //        currentMessage.setContentView(R.layout.inbox_description);
@@ -214,7 +216,6 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
         intent.putExtra("userRole", userRole);
         intent.putExtra("subjectText", selectedMessage.getSubject());
         intent.putExtra("descText", selectedMessage.getBodyText());
-//        intent.putExtra("userRole", userRole);
 
         int requestCode=1;
         startActivityForResult(intent, requestCode);
@@ -273,11 +274,4 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
     public void onClickLogout(View view){
         returnHomepage();
     }
-    public void onClickMessage(View view){
-        Toast.makeText(this, "not yet implemented", Toast.LENGTH_LONG).show();
-    }
-    public void onClickMealer(View view){
-        Toast.makeText(this, "not yet implemented", Toast.LENGTH_LONG).show();
-    }
-
 }

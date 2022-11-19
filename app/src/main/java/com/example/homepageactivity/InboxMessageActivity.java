@@ -27,7 +27,6 @@ public class InboxMessageActivity extends AppCompatActivity {
     }
 
     private void collapseAdminButtons(){
-
         if (!(userRole.equals("Admin"))){
             LinearLayout adminRow=findViewById(R.id.row4);
             LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
@@ -36,7 +35,6 @@ public class InboxMessageActivity extends AppCompatActivity {
                     1.0f);
             adminRow.setLayoutParams(param);
         }
-
     }
 
     private void setThemeColors(String mode){
@@ -47,4 +45,6 @@ public class InboxMessageActivity extends AppCompatActivity {
             ((ImageView) findViewById(R.id.midground)).setColorFilter(getResources().getColor(R.color.client_light));
         }
     }
+
+
 }
