@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.homepageactivity.R;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -39,9 +41,11 @@ public class MealsGridAdapter extends BaseAdapter {
     }
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        view = inflter.inflate(R.layout.meal_menu_icon, null); // inflate the layout
-        Button icon = (Button) view.findViewById(R.id.mealDisplay); // get the reference of Button
-        icon.setText(meals.get(i).getString("mealName")); // set logo images
+        view = inflter.inflate(R.layout.meal_menu_icon, null);
+        //Set mealName
+        ((TextView) view.findViewById(R.id.mealNameTextView)).setText(meals.get(i).getString("mealName"));
+        //set mealIsOffered
+        ((ImageView) view.findViewById(R.id.offeredIcon)).setVisibility((meals.get(i).getBoolean("offered")) ? View.VISIBLE : View.INVISIBLE);
         return view;
     }
 }
