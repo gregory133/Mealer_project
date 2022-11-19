@@ -19,85 +19,71 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_wave" />
 
+    <ImageView
+        android:id="@+id/midground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:translationY="20dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_wave"
+        app:tint="@color/cook_light" />
+
     <LinearLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/titleRow"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_weight="0.6"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:fontFamily="@font/lucida_handwriting_italic"
-                android:gravity="center"
-                android:shadowColor="#000000"
-                android:text="Register As"
-                android:textColor="@color/off_black"
-                android:textSize="24dp" />
-        </LinearLayout>
+            android:layout_weight="1"
+            android:fontFamily="@font/lucida_handwriting_italic"
+            android:gravity="center"
+            android:shadowColor="#000000"
+            android:text="Register As"
+            android:textColor="@color/off_black"
+            android:textSize="24dp" />
 
         <LinearLayout
             android:id="@+id/nameRow"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginBottom="50dp"
-            android:layout_weight="0.7"
+            android:layout_weight="1"
+            android:gravity="center"
             android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/firstNameCol"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+            <EditText
+                android:id="@+id/firstNameEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_weight="1"
+                android:background="@drawable/outline_off_white"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:hint="First Name"
+                android:inputType="textMultiLine"
+                tools:ignore="TouchTargetSizeCheck" />
 
-                <EditText
-                    android:id="@+id/firstNameEdit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/edittext_custom_2"
-                    android:ems="10"
-                    android:gravity="center"
-                    android:hint="First Name"
-                    android:inputType="textMultiLine"
-                    tools:ignore="TouchTargetSizeCheck" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/lastNameCol"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+            <EditText
+                android:id="@+id/lastNameEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_weight="1"
+                android:background="@drawable/outline_off_white"
                 android:gravity="center"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/lastNameEdit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/edittext_custom_2"
-                    android:ems="10"
-                    android:gravity="center"
-                    android:hint="Last Name"
-                    android:inputType="textMultiLine"
-                    tools:ignore="TouchTargetSizeCheck" />
-            </LinearLayout>
+                android:hint="Last Name"
+                android:inputType="textMultiLine"
+                tools:ignore="TouchTargetSizeCheck" />
         </LinearLayout>
 
         <LinearLayout
@@ -105,6 +91,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <EditText
@@ -114,7 +101,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:background="@drawable/edittext_custom_1"
+                android:background="@drawable/outline_off_white"
                 android:ems="10"
                 android:gravity="center"
                 android:hint="Email Address"
@@ -127,6 +114,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <EditText
@@ -136,7 +124,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:background="@drawable/edittext_custom_1"
+                android:background="@drawable/outline_off_white"
                 android:ems="10"
                 android:gravity="center"
                 android:hint="Address"
@@ -149,6 +137,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <EditText
@@ -158,7 +147,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:background="@drawable/edittext_custom_1"
+                android:background="@drawable/outline_off_white"
                 android:ems="10"
                 android:gravity="center"
                 android:hint="Enter Password"
@@ -171,6 +160,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <EditText
@@ -180,7 +170,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:background="@drawable/edittext_custom_1"
+                android:background="@drawable/outline_off_white"
                 android:ems="10"
                 android:gravity="center"
                 android:hint="Confirm Password"
@@ -198,14 +188,14 @@
 
             <Button
                 android:id="@+id/continueRegistration"
-                android:layout_width="200dp"
-                android:layout_height="80dp"
-                android:layout_margin="20dp"
-                android:background="@drawable/ic_button_1"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:layout_margin="40dp"
+                android:background="@drawable/outline_client_dark"
                 android:fontFamily="@font/lucida_handwriting_italic"
                 android:onClick="onClickMakeUserNextButton"
                 android:text="Next"
-                android:textSize="40dp" />
+                android:textSize="20dp" />
         </LinearLayout>
 
     </LinearLayout>

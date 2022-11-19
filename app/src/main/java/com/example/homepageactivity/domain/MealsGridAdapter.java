@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.homepageactivity.R;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -39,9 +41,27 @@ public class MealsGridAdapter extends BaseAdapter {
     }
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        view = inflter.inflate(R.layout.meal_menu_icon, null); // inflate the layout
-        Button icon = (Button) view.findViewById(R.id.mealDisplay); // get the reference of Button
-        icon.setText(meals.get(i).getString("mealName")); // set logo images
+        view = inflter.inflate(R.layout.meal_menu_icon, null);
+        //Set mealName
+        ((TextView) view.findViewById(R.id.mealNameTextView)).setText(meals.get(i).getString("mealName"));
+        //set mealIsOffered
+        ((ImageView) view.findViewById(R.id.offeredIcon)).setVisibility((meals.get(i).getBoolean("offered")) ? View.VISIBLE : View.INVISIBLE);
+        //set mealPicture
+        //set mealPictureOverlay
+        ((RelativeLayout) view.findViewById(R.id.overlay)).setAlpha(1);
+        //set Rating
+        setStarRating(view, 3.5f);
         return view;
+    }
+
+    private void setStarRating(View view, float rating){
+        ImageView[] starViews = {view.findViewById(R.id.star1Icon),
+                view.findViewById(R.id.star2Icon),
+                view.findViewById(R.id.star3Icon),
+                view.findViewById(R.id.star4Icon),
+                view.findViewById(R.id.star5Icon)};
+        for(int i=0;i< starViews.length;i++){
+            starViews[i].setVisibility((rating-0.5f >= i) ? View.VISIBLE : View.INVISIBLE);
+        }
     }
 }

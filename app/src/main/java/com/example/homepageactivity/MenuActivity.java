@@ -10,13 +10,11 @@ import android.util.Log;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.view.View;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.homepageactivity.domain.MealsGridAdapter;
 import com.example.homepageactivity.domain.PageIconInfo;
 import com.example.homepageactivity.domain.PageIconsAdapter;
-import com.example.homepageactivity.domain.Validator;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.EventListener;
@@ -37,9 +35,9 @@ public class MenuActivity extends AppCompatActivity {
     private QueryDocumentSnapshot docRef;
     private static final String logoutText = "Logout";
     private static final ArrayList<PageIconInfo> pageIconOptions = new ArrayList<PageIconInfo>() {{
-        add(new PageIconInfo("Menu", MenuActivity.class));
-        add(new PageIconInfo("Inbox", InboxActivity.class));
-        add(new PageIconInfo(logoutText, null));
+        add(new PageIconInfo("Inbox", InboxActivity.class, R.drawable.ic_message_icon));
+        add(new PageIconInfo("Menu", MenuActivity.class, R.drawable.m_icon));
+        add(new PageIconInfo(logoutText, null, R.drawable.ic_door_icon));
     }};
 
     @Override
@@ -57,7 +55,7 @@ public class MenuActivity extends AppCompatActivity {
 
         GridView pagesGrid = (GridView) findViewById(viewID);
         pagesGrid.setNumColumns(pageIconOptions.size());
-        PageIconsAdapter adapter=new PageIconsAdapter(getApplicationContext(), pageIconOptions);
+        PageIconsAdapter adapter=new PageIconsAdapter(getApplicationContext(), pageIconOptions, this.getClass(), getIntent().getStringExtra("userRole"));
         pagesGrid.setAdapter(adapter);
 
         pagesGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -70,10 +68,10 @@ public class MenuActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "logout at "+i+"", Toast.LENGTH_LONG).show();
                     return;
                 }
-                if (this.getClass().getName().contains(pageIconOptions.get(i).getPage().getName())){
+                if (this.getClass().getName().contains(pageIconOptions.get(i).getPageClass().getName())){
                     return;
                 }    //Don't reload this page
-                Intent intent=new Intent(getApplicationContext(), pageIconOptions.get(i).getPage());
+                Intent intent=new Intent(getApplicationContext(), pageIconOptions.get(i).getPageClass());
                 intent.putExtra("userRole",  getIntent().getStringExtra("userRole"));
                 startActivity(intent);
                 finish();

@@ -18,7 +18,7 @@ public class InboxMessageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.inbox_description);
+        setContentView(R.layout.activity_inbox_message);
 
         userRole = getIntent().getStringExtra("userRole");
         background=findViewById(R.id.background);
@@ -27,7 +27,6 @@ public class InboxMessageActivity extends AppCompatActivity {
     }
 
     private void collapseAdminButtons(){
-
         if (!(userRole.equals("Admin"))){
             LinearLayout adminRow=findViewById(R.id.row4);
             LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
@@ -36,22 +35,16 @@ public class InboxMessageActivity extends AppCompatActivity {
                     1.0f);
             adminRow.setLayoutParams(param);
         }
-
     }
 
     private void setThemeColors(String mode){
-        ContextWrapper wrapper=null;
         if (mode.equals("Cook")){
-            wrapper=new ContextThemeWrapper(this, R.style.cook_style);
-
-        }
-        else if (mode.equals("Client")){
-            wrapper=new ContextThemeWrapper(this, R.style.client_style);
+            ((ImageView) findViewById(R.id.midground)).setColorFilter(getResources().getColor(R.color.cook_light));
         }
         else{
-            wrapper=new ContextThemeWrapper(this, R.style.client_style);
+            ((ImageView) findViewById(R.id.midground)).setColorFilter(getResources().getColor(R.color.client_light));
         }
-        background.setImageDrawable(StyleApplyer.applyTheme(getApplicationContext(), wrapper,R.drawable.ic_wave));
-
     }
+
+
 }
