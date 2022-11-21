@@ -1,21 +1,10 @@
 package com.example.homepageactivity;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.homepageactivity.domain.*;
-import com.google.firebase.Timestamp;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.SetOptions;
+import static com.example.homepageactivity.MainActivity.currentAccount;
+import static com.example.homepageactivity.MainActivity.firebaseAuth;
+import static com.example.homepageactivity.MainActivity.firestoreDB;
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,6 +18,27 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.homepageactivity.domain.Admin;
+import com.example.homepageactivity.domain.Client;
+import com.example.homepageactivity.domain.ComplaintMessage;
+import com.example.homepageactivity.domain.Cook;
+import com.example.homepageactivity.domain.ItemListAdapter;
+import com.example.homepageactivity.domain.Message;
+import com.example.homepageactivity.domain.PageIconInfo;
+import com.example.homepageactivity.domain.PageIconsAdapter;
+import com.example.homepageactivity.domain.User;
+import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -37,14 +47,10 @@ import java.util.Map;
 
 public class InboxActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
-    String userRole; //Client, Admin or Cook
-    TextView titleText;
-    ListView listView;
-    FirebaseFirestore firestoreDB;
+    private ListView listView;
     private static final String TAG = "InboxActivity";
 
     private ArrayList<QueryDocumentSnapshot> items;
-    private Dialog currentMessage;
     private QueryDocumentSnapshot docRef;
 
     private static final String logoutText = "Logout";
@@ -66,16 +72,13 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inbox);
-        userRole = getIntent().getStringExtra("userRole");
-        titleText=findViewById(R.id.title);
         listView=findViewById(R.id.messagesList);
         collapseAdminButtons();
-        setThemeColors(userRole);
+        setThemeColors();
         setupUserPages(R.id.pagesGrid);
 
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         if (currentUser != null) {
-            firestoreDB = FirebaseFirestore.getInstance();
             firestoreDB.collection("messages")
                     .whereEqualTo("recipientUID", currentUser.getUid()).whereEqualTo("archived", false)
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -128,16 +131,15 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
     }
 
     private final ArrayList<PageIconInfo> getUserPagesOptions(){
-        switch (userRole){
-            case "Client":
-                return clientPageIconOptions;
-            case "Cook":
-                return cookPageIconOptions;
-            case "Admin":
-                return adminPageIconOptions;
-            default:
-                return null;
+        Class<? extends User> aClass = currentAccount.getClass();
+        if (Client.class.equals(aClass)) {
+            return clientPageIconOptions;
+        } else if (Cook.class.equals(aClass)) {
+            return cookPageIconOptions;
+        } else if (Admin.class.equals(aClass)) {
+            return adminPageIconOptions;
         }
+        return null;
     }
 
     private void LogoutRequest(){
@@ -147,10 +149,9 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
 
 
     private void collapseAdminButtons(){
-        if (!userRole.equals("Admin")){
+        if (!(currentAccount.getClass() == Admin.class)){
             LinearLayout adminRow=findViewById(R.id.row4);
             LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
-
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     0,
                     1.0f
@@ -159,28 +160,16 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
         }
     }
 
-    private void setThemeColors(String mode){
-        if (mode.equals("Cook")){
+    private void setThemeColors(){
+        Class hold = currentAccount.getClass();
+        if (hold == Cook.class){
             ((ImageView) findViewById(R.id.midground)).setColorFilter(getResources().getColor(R.color.cook_light));
-        }
-        else{
+        } else {
             ((ImageView) findViewById(R.id.midground)).setColorFilter(getResources().getColor(R.color.client_light));
         }
     }
 
-    private void setTitle(){
-        HashMap<String, String> titleDict=new HashMap<String, String>(){{
-            put("Admin", "User Complaints");
-            put("Cook", "Messages");
-            put("Client", "Messages");
-        }};
-        titleText.setText(titleDict.get(userRole));
-
-    }
     private void returnHomepage(){
-//        Intent returnIntent = new Intent();
-//        returnIntent.putExtra("Logout", 1);
-//        setResult(RESULT_OK, returnIntent);
         finish();
     }
     private void hookList(){
@@ -202,18 +191,9 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
     }
 
     private void showMessage() {
-//        currentMessage = new Dialog(this);
-//        currentMessage.setContentView(R.layout.inbox_description);
-
         Message selectedMessage = docRef.toObject(Message.class);
-//        TextView subjectText=currentMessage.findViewById(R.id.subject);
-//        TextView descText=currentMessage.findViewById(R.id.description);
-//        subjectText.setText(selectedMessage.getSubject());
-//        descText.setText(selectedMessage.getBodyText());
-//        currentMessage.show();
 
         Intent intent=new Intent(this, InboxMessageActivity.class);
-        intent.putExtra("userRole", userRole);
         intent.putExtra("subjectText", selectedMessage.getSubject());
         intent.putExtra("descText", selectedMessage.getBodyText());
 
@@ -268,7 +248,6 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
         change.put("archived", true);
         String msgID = docRef.getId();
         firestoreDB.collection("messages").document(msgID).set(change, SetOptions.merge());
-        currentMessage.dismiss();
     }
 
     public void onClickLogout(View view){

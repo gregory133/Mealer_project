@@ -1,5 +1,7 @@
 package com.example.homepageactivity;
 
+import static com.example.homepageactivity.MainActivity.*;
+
 import android.content.ContextWrapper;
 import android.os.Bundle;
 import android.view.ContextThemeWrapper;
@@ -26,7 +28,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CookDescriptionActivity extends AppCompatActivity {
-    private FirebaseAuth mAuth;
     private Button nextButton;
     private ImageView background;
 
@@ -39,8 +40,6 @@ public class CookDescriptionActivity extends AppCompatActivity {
         nextButton=findViewById(R.id.completeCookRegistration);
         setThemeColors();
 
-        //firebase integration
-        mAuth = FirebaseAuth.getInstance();
     }
 
     private void setThemeColors(){
@@ -74,7 +73,7 @@ public class CookDescriptionActivity extends AppCompatActivity {
                 null,
                 extras.getString("Description"));
 
-        mAuth.createUserWithEmailAndPassword(extras.getString("Email"), extras.getString("Password"))
+        firebaseAuth.createUserWithEmailAndPassword(extras.getString("Email"), extras.getString("Password"))
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>()
                 {
                     @Override
@@ -82,23 +81,11 @@ public class CookDescriptionActivity extends AppCompatActivity {
                     {
                         if (task.isSuccessful()) {
                             //adds the user's details to the Cloud Firestore
-                            String uid = mAuth.getCurrentUser().getUid();
-                            FirebaseFirestore firestoreDB = FirebaseFirestore.getInstance();
+                            String uid = firebaseAuth.getCurrentUser().getUid();
                             firestoreDB.collection("users").document(uid).set(newCook);
                             Map<String, Object> temp = new HashMap<>(1);
                             temp.put("role","Cook");
                             firestoreDB.collection("users").document(uid).set(temp, SetOptions.merge());
-                            /* For some reason it doesn't like addOnSuccessListener(new OnSuccessListener<DocumentReference>(), which worked in the MainActivity test case
-                                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                        @Override
-                                        public void onSuccess(DocumentReference documentReference) {
-                                            onAccountCreationSuccess();
-                                        }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            onDetailAdditionFailure();                                        }
-                                    });*/
                             onAccountCreationSuccess();
                         }
                         else {
@@ -120,8 +107,7 @@ public class CookDescriptionActivity extends AppCompatActivity {
                 "3qjGFvqH4KRehQnBo2xQ2tFKWZT2",
                 "Complaint against "+extras.getString("Email"),
                 "This cook scammed me",
-                mAuth.getCurrentUser().getUid());
-        FirebaseFirestore firestoreDB = FirebaseFirestore.getInstance();
+                firebaseAuth.getCurrentUser().getUid());
         firestoreDB.collection("messages").add(complaint);
         ///////////////////////////////////////////////////////////////////////
         finish();

@@ -1,5 +1,7 @@
 package com.example.homepageactivity;
 
+import static com.example.homepageactivity.MainActivity.*;
+
 import android.content.ContextWrapper;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,7 +30,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ClientPaymentActivity extends AppCompatActivity {
-    private FirebaseAuth mAuth;
     private ImageView background;
     private Button nextButton;
 
@@ -39,9 +40,6 @@ public class ClientPaymentActivity extends AppCompatActivity {
         nextButton=findViewById(R.id.completeClientRegistration);
         background=findViewById(R.id.background);
         setThemeColors();
-
-        //firebase integration
-        mAuth = FirebaseAuth.getInstance();
     }
 
     private void setThemeColors(){
@@ -106,7 +104,7 @@ public class ClientPaymentActivity extends AppCompatActivity {
                 newCard
         );
 
-        mAuth.createUserWithEmailAndPassword(extras.getString("Email"), extras.getString("Password"))
+        firebaseAuth.createUserWithEmailAndPassword(extras.getString("Email"), extras.getString("Password"))
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>()
                 {
                     @Override
@@ -114,23 +112,12 @@ public class ClientPaymentActivity extends AppCompatActivity {
                     {
                         if (task.isSuccessful()) {
                             //adds the user's details to the Cloud Firestore
-                            String uid = mAuth.getCurrentUser().getUid();
+                            String uid = firebaseAuth.getCurrentUser().getUid();
                             FirebaseFirestore firestoreDB = FirebaseFirestore.getInstance();
                             firestoreDB.collection("users").document(uid).set(newClient);
                             Map<String, Object> temp = new HashMap<>(1);
                             temp.put("role","Client");
                             firestoreDB.collection("users").document(uid).set(temp, SetOptions.merge());
-                            /* For some reason it doesn't like addOnSuccessListener(new OnSuccessListener<DocumentReference>(), which worked in the MainActivity test case
-                                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                        @Override
-                                        public void onSuccess(DocumentReference documentReference) {
-                                            onAccountCreationSuccess();
-                                        }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            onDetailAdditionFailure();                                        }
-                                    });*/
                             onAccountCreationSuccess();
                         }
                         else {

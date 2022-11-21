@@ -26,13 +26,18 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private EditText emailTextView, passwordTextView;
-    private FirebaseAuth mAuth;
-    private FirebaseFirestore firestoreDB;
     private Dialog notice;
+    public static FirebaseAuth firebaseAuth;
+    public static FirebaseFirestore firestoreDB;
+    public static User currentAccount;
+    public static final List<String> cuisineOptions = Arrays.asList("Chinese", "Other");
+    public static final List<String> mealTypeOptions = Arrays.asList("Appetizer", "Entree", "Dessert", "Other");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,10 @@ public class MainActivity extends AppCompatActivity {
         // initialising all views through id defined above
         emailTextView = findViewById(R.id.emailTextEdit);
         passwordTextView = findViewById(R.id.editTextPassword);
+
+        firestoreDB = FirebaseFirestore.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
+        currentAccount = null;
     }
 
     public void onClickLoginButton(View view){
@@ -70,12 +79,11 @@ public class MainActivity extends AppCompatActivity {
     private void loginUserAttempt()
     {
         // Take the value of two edit texts in Strings
-        mAuth = FirebaseAuth.getInstance();
         String email = emailTextView.getText().toString();
         String password = passwordTextView.getText().toString();
 
         // signin existing user
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(
+        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(
                         new OnCompleteListener<AuthResult>(){
             @Override
             public void onComplete(
@@ -94,14 +102,12 @@ public class MainActivity extends AppCompatActivity {
         //Don't want to leave there info sitting around after logging in
         ClearLoginInfoBoxes();
 
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
         if (currentUser == null) {
             Toast.makeText(this, "Error, no user signed in", Toast.LENGTH_LONG).show();
             return;
         }
-
-        firestoreDB = FirebaseFirestore.getInstance();
 
         DocumentReference docRef = firestoreDB.collection("users").document(currentUser.getUid());
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -127,22 +133,20 @@ public class MainActivity extends AppCompatActivity {
     private void openHomePage(DocumentSnapshot document){
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 
-        String temp = document.getString("role");
-        User currentAccount = null;
-        switch (temp){
+        switch (document.getString("role")){
             case "Cook":
                 intent = new Intent(getApplicationContext(), MenuActivity.class);
-                intent.putExtra("userRole","Cook");
+                //intent.putExtra("userRole","Cook");
                 currentAccount = document.toObject(Cook.class);
                 break;
             case "Admin":
                 intent = new Intent(getApplicationContext(), InboxActivity.class);
-                intent.putExtra("userRole","Admin");
+                //intent.putExtra("userRole","Admin");
                 currentAccount = document.toObject(Admin.class);
                 break;
             case "Client":
                 intent = new Intent(getApplicationContext(), InboxActivity.class);
-                intent.putExtra("userRole","Client");
+                //intent.putExtra("userRole","Client");
                 currentAccount = document.toObject(Client.class);
                 break;
             default:

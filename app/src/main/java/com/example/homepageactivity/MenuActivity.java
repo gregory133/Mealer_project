@@ -1,5 +1,7 @@
 package com.example.homepageactivity;
 
+import static com.example.homepageactivity.MainActivity.*;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,7 +31,6 @@ import java.util.ArrayList;
 public class MenuActivity extends AppCompatActivity {
     private GridView mealsGrid;
     private int meals[];
-    private FirebaseFirestore db;
     private static final String TAG = "MenuActivity";
     private ArrayList<QueryDocumentSnapshot> items;
     private QueryDocumentSnapshot docRef;
@@ -80,17 +81,16 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void LogoutRequest(){
-        FirebaseAuth.getInstance().signOut();
+        firebaseAuth.signOut();
         finish();
     }
 
     private void getMealsForMealGrid(){
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         if (currentUser == null) {
             loginAttemptFailure("Could not load menu");
         }
-        db = FirebaseFirestore.getInstance();
-        db.collection("meals")
+        firestoreDB.collection("meals")
                 .whereEqualTo("cookUID", currentUser.getUid())
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override

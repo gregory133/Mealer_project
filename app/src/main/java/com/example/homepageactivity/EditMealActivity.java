@@ -1,5 +1,7 @@
 package com.example.homepageactivity;
 
+import static com.example.homepageactivity.MainActivity.*;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,16 +27,14 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class EditMealActivity extends AppCompatActivity {
-    private final List<String> cuisineOptions = Arrays.asList("American", "Mexican", "Chinese", "Other");      //Also hardcoded in AddMealActivity
-    private final List<String> mealTypeOptions = Arrays.asList("Appetizer", "Entree", "Dessert", "Other");      //Also hardcoded in AddMealActivity
     private String chosenCuisine;
     private String chosenMealType;
     private DocumentReference docRef;
     private DocumentSnapshot document;
+    private FirebaseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,15 +86,14 @@ public class EditMealActivity extends AppCompatActivity {
     }
 
     private void getMealInfo(){
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        currentUser = firebaseAuth.getCurrentUser();
         if (currentUser == null) {
             throwToast("Could not load meal");
         }
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
         Bundle extras=getIntent().getExtras();
 
-        docRef = db.collection("meals").document(extras.getString("mealID"));
+        docRef = firestoreDB.collection("meals").document(extras.getString("mealID"));
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -140,7 +139,7 @@ public class EditMealActivity extends AppCompatActivity {
     public void onClickApplyChangesButton(View view) {
 
         //INSERT VALIDATION same as AddMealActivity
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        currentUser = firebaseAuth.getCurrentUser();
         if (currentUser == null) {
             Toast.makeText(this, "Error, no user signed in", Toast.LENGTH_LONG).show();
             finish();

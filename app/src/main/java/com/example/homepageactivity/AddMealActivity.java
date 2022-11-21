@@ -1,6 +1,10 @@
 package com.example.homepageactivity;
 
-import android.content.Intent;
+import static com.example.homepageactivity.MainActivity.cuisineOptions;
+import static com.example.homepageactivity.MainActivity.firebaseAuth;
+import static com.example.homepageactivity.MainActivity.firestoreDB;
+import static com.example.homepageactivity.MainActivity.mealTypeOptions;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,28 +25,21 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class AddMealActivity extends AppCompatActivity {
 
-    private FirebaseFirestore firestoreDB;
     private FirebaseUser currentUser;
-    final List<String> cuisineOptions = Arrays.asList("American", "Mexican", "Chinese", "Other");      //Also hardcoded in EditMealActivity
-    final List<String> mealTypeOptions = Arrays.asList("Appetizer", "Entree", "Dessert", "Other");      //Also hardcoded in EditMealActivity
-    String chosenCuisine;
-    String chosenMealType;
+    private String chosenCuisine;
+    private String chosenMealType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_meal);
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser != null) {
-            firestoreDB = FirebaseFirestore.getInstance();
-        } else {
+        currentUser = firebaseAuth.getCurrentUser();
+        if (currentUser == null) {
             Toast.makeText(this, "Error, no user signed in", Toast.LENGTH_LONG).show();
             finish();
         }
