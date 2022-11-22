@@ -18,9 +18,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.homepageactivity.domain.MealsGridAdapter;
+import com.example.homepageactivity.domain.AdapterMenuMeal;
 import com.example.homepageactivity.domain.PageIconInfo;
-import com.example.homepageactivity.domain.PageIconsAdapter;
+import com.example.homepageactivity.domain.AdapterPageIcon;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -67,7 +67,7 @@ public class MealSearchActivity extends AppCompatActivity {
 
         GridView pagesGrid = (GridView) findViewById(viewID);
         pagesGrid.setNumColumns(pageIconOptions.size());
-        PageIconsAdapter adapter=new PageIconsAdapter(getApplicationContext(), pageIconOptions, this.getClass(), getIntent().getStringExtra("userRole"));
+        AdapterPageIcon adapter=new AdapterPageIcon(getApplicationContext(), pageIconOptions, this.getClass());
         pagesGrid.setAdapter(adapter);
 
         pagesGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -128,7 +128,7 @@ public class MealSearchActivity extends AppCompatActivity {
 
     protected void setUpMealsGrid() {
         GridView mealsGrid = (GridView) findViewById(R.id.mealsGrid);
-        MealsGridAdapter iconsAdapter = new MealsGridAdapter(getApplicationContext(), relevantMeals);
+        AdapterMenuMeal iconsAdapter = new AdapterMenuMeal(getApplicationContext(), relevantMeals);
         mealsGrid.setAdapter(iconsAdapter);
 
         mealsGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
