@@ -50,6 +50,7 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
     private static final String logoutText = "Logout";
     private static final ArrayList<PageIconInfo> clientPageIconOptions = new ArrayList<PageIconInfo>() {{
         add(new PageIconInfo("Inbox", InboxActivity.class, R.drawable.ic_message_icon));
+        add(new PageIconInfo("MealSearch", MealSearchActivity.class, R.drawable.m_icon));
         add(new PageIconInfo(logoutText, null, R.drawable.ic_door_icon));
     }};
     private static final ArrayList<PageIconInfo> cookPageIconOptions = new ArrayList<PageIconInfo>() {{
@@ -184,7 +185,7 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
         finish();
     }
     private void hookList(){
-        ItemListAdapter adapter=new ItemListAdapter(this, R.layout.inbox_list_item, items);
+        ItemListAdapter adapter=new ItemListAdapter(this, R.layout.activity_inbox_list_item, items);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
