@@ -37,21 +37,7 @@ public class AdapterInboxMessage extends ArrayAdapter<QueryDocumentSnapshot> {
         TextView subjectText=convertView.findViewById(R.id.subject);
         TextView firstWordText=convertView.findViewById(R.id.firstWordText);
 
-        FirebaseFirestore firestoreDB = FirebaseFirestore.getInstance();
-        Task<DocumentSnapshot> taskDoc = firestoreDB.collection("users").document(getItem(pos).toObject(Message.class).getSenderUID()).get();
-        while (true) {
-            if (taskDoc.isComplete()) {
-                break;
-            }
-        }
-        String firstName = "ERROR";
-        String lastName = "ERROR";
-        if (taskDoc.isSuccessful()) {
-            DocumentSnapshot document = taskDoc.getResult();
-            firstName = document.getString("firstName");
-            lastName = document.getString("lastName");
-        }
-        senderText.setText("From: "+firstName+" "+lastName);
+        senderText.setText(getItem(pos).toObject(Message.class).getSenderEmail());
         subjectText.setText(getItem(pos).toObject(Message.class).getSubject());
         firstWordText.setText(getItem(pos).toObject(Message.class).getBodyText());
 

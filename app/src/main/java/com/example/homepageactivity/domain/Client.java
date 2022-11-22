@@ -6,8 +6,8 @@ public class Client extends User{
 
     public Client() { }
 
-    public Client(String firstName, String lastName, String address, CreditCardInformation payment){
-        super(firstName, lastName, address);
+    public Client(String firstName, String lastName, String address, String emailAddress, CreditCardInformation payment){
+        super(firstName, lastName, address, emailAddress);
         this.payment = payment;
     }
 

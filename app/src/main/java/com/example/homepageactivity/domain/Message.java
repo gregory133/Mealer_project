@@ -2,6 +2,7 @@ package com.example.homepageactivity.domain;
 
 public class Message {
     private String senderUID;
+    private String senderEmail;
     //This will be the admin in the case of ComplaintMessage. It will initially be null
     //then it will be non-null once admin selects it.
     private String recipientUID;
@@ -15,8 +16,9 @@ public class Message {
 
     public Message() {}
 
-    public Message(String senderUID, String recipientUID, String subject, String bodyText){
+    public Message(String senderUID, String senderEmail, String recipientUID, String subject, String bodyText){
         this.senderUID = senderUID;
+        this.senderEmail = senderEmail;
         this.recipientUID = recipientUID;
         this.subject = subject;
         this.bodyText = bodyText;
@@ -25,6 +27,10 @@ public class Message {
 
     public String getSenderUID() {
         return senderUID;
+    }
+
+    public String getSenderEmail() {
+        return senderEmail;
     }
 
     public String getSubject() {

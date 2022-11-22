@@ -70,6 +70,7 @@ public class CookDescriptionActivity extends AppCompatActivity {
                 extras.getString("FirstName"),
                 extras.getString("LastName"),
                 extras.getString("Address"),
+                extras.getString("Email"),
                 null,
                 extras.getString("Description"));
 
@@ -98,18 +99,8 @@ public class CookDescriptionActivity extends AppCompatActivity {
     private void onAccountCreationSuccess(){
         Toast.makeText(getApplicationContext(),
                         "Registration successful!",
-                        Toast.LENGTH_LONG)
+                        Toast.LENGTH_SHORT)
                 .show();
-
-        ////////////////////Complaint generator////////////////////////////////
-        Bundle extras = getIntent().getExtras();
-        ComplaintMessage complaint = new ComplaintMessage(
-                "3qjGFvqH4KRehQnBo2xQ2tFKWZT2",
-                "Complaint against "+extras.getString("Email"),
-                "This cook scammed me",
-                firebaseAuth.getCurrentUser().getUid());
-        firestoreDB.collection("messages").add(complaint);
-        ///////////////////////////////////////////////////////////////////////
         finish();
     }
 

@@ -8,11 +8,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,7 +37,6 @@ import java.util.Map;
 
 public class InboxMessageActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     DocumentSnapshot docRef;
-    DatePickerDialog.OnDateSetListener calenderListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,7 @@ public class InboxMessageActivity extends AppCompatActivity implements DatePicke
             LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
                     0,
-                    1.0f);
+                    0);
             adminRow.setLayoutParams(param);
         }
     }
@@ -95,7 +96,7 @@ public class InboxMessageActivity extends AppCompatActivity implements DatePicke
     }
     private void SetupMessageInfo(){
         ((TextView) findViewById(R.id.subject)).setText(docRef.toObject(Message.class).getSubject());
-        ((TextView) findViewById(R.id.senderText)).setText(getIntent().getStringExtra("senderName"));
+        ((TextView) findViewById(R.id.senderText)).setText(docRef.toObject(Message.class).getSenderEmail());
         ((TextView) findViewById(R.id.messageText)).setText(docRef.toObject(Message.class).getBodyText());
     }
 
@@ -106,7 +107,14 @@ public class InboxMessageActivity extends AppCompatActivity implements DatePicke
         archiveMessage();
     }
     public void onCLickReplyToMessage(View view){
-        throwToast("Not implemented");
+        throwToast("Disabled due to bugs");
+        if(true){return;}
+        Intent intent=new Intent(this, InboxMessageActivity.class);
+        intent.putExtra("senderEmail", docRef.toObject(Message.class).getSenderEmail());
+
+        int requestCode=1;
+        startActivityForResult(intent, requestCode);
+        startActivity(new Intent(this, InboxWriteMessageActivity.class));
     }
 
     public void onClickBanCook(View view) {

@@ -101,6 +101,7 @@ public class ClientPaymentActivity extends AppCompatActivity {
                 extras.getString("FirstName"),
                 extras.getString("LastName"),
                 extras.getString("Address"),
+                extras.getString("Email"),
                 newCard
         );
 

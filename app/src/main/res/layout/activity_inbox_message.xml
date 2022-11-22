@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/off_grey">
+    android:background="@color/off_grey"
+    tools:context=".InboxMessageActivity">
 
     <ImageView
         android:id="@+id/background"
@@ -131,7 +132,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.1"
-                android:gravity="center"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <TextView
@@ -147,14 +148,9 @@
                     android:id="@+id/imageView9"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:paddingLeft="10dp"
                     android:onClick="onCLickReplyToMessage"
+                    android:paddingLeft="10dp"
                     app:srcCompat="@drawable/ic_refresh" />
-
-                <Space
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
 
             </LinearLayout>
 

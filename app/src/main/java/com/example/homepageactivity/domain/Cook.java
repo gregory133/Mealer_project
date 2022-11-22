@@ -15,8 +15,8 @@ public class Cook extends User{
 
     public Cook() {}
 
-    public Cook(String firstName, String lastName, String address, Image voidChequePicture, String shortDescription) {
-        super(firstName, lastName, address);
+    public Cook(String firstName, String lastName, String address, String emailAddress, Image voidChequePicture, String shortDescription) {
+        super(firstName, lastName, address, emailAddress);
         this.voidChequePicture = voidChequePicture;
         this.shortDescription = shortDescription;
         menu = new ArrayList<Meal>();
