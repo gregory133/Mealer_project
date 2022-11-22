@@ -170,7 +170,7 @@ public class MealAddActivity extends AppCompatActivity {
             Toast.makeText(this, "Ingredients May Only Contain Alphanumeric Characters", Toast.LENGTH_LONG).show();
             return false;
         }
-        if (!val.isAlphanumericPhrase(allergens)){
+        if (!(val.isAlphanumericPhrase(allergens) || allergens == "")){
             Toast.makeText(this, "Allergens May Only Contain Alphanumeric Characters", Toast.LENGTH_LONG).show();
             return false;
         }
