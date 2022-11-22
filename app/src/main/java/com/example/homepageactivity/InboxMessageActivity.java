@@ -35,7 +35,6 @@ import java.util.Map;
 
 public class InboxMessageActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     DocumentSnapshot docRef;
-    DatePickerDialog.OnDateSetListener calenderListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

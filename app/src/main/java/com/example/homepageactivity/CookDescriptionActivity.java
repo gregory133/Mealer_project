@@ -70,6 +70,7 @@ public class CookDescriptionActivity extends AppCompatActivity {
                 extras.getString("FirstName"),
                 extras.getString("LastName"),
                 extras.getString("Address"),
+                extras.getString("Email"),
                 null,
                 extras.getString("Description"));
 

@@ -7,6 +7,7 @@ public abstract class User {
     private String firstName;
     private String lastName;
     private String address;
+    private String emailAddress;
     private boolean banned; //True if banned permanently. This is false if the user is not banned or is banned temporarily
 
     //Initially, this variable will be the date (to the millisecond) the account was created.
@@ -16,10 +17,11 @@ public abstract class User {
 
     public User() {}
 
-    public User(String firstName, String lastName, String address) {
+    public User(String firstName, String lastName, String address, String emailAddress) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
+        this.emailAddress = emailAddress;
         bannedUntil = new Date();
         banned = false;
     }
@@ -34,6 +36,10 @@ public abstract class User {
 
     public String getAddress() {
         return address;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
     }
 
     public Date getBannedUntil() {

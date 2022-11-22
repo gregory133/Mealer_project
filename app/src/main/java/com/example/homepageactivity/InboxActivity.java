@@ -175,7 +175,7 @@ public class InboxActivity extends AppCompatActivity {
         }
     }
     public void onCLickNewMessage(View view){
-        Toast.makeText(getApplicationContext(), "New Message", Toast.LENGTH_LONG).show();
+        startActivity(new Intent(this, InboxWriteMessageActivity.class));
     }
 
     private void OpenMessage(int i) {

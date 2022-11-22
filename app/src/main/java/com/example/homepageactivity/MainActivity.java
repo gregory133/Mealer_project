@@ -81,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
         // Take the value of two edit texts in Strings
         String email = emailTextView.getText().toString();
         String password = passwordTextView.getText().toString();
-
         // signin existing user
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(
                         new OnCompleteListener<AuthResult>(){
