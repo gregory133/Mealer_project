@@ -2,6 +2,10 @@ package com.example.homepageactivity.domain;
 
 import android.media.Image;
 
+import com.google.firebase.Timestamp;
+
+import java.util.Calendar;
+
 public class Meal {
 
     //Image picture;
@@ -14,6 +18,7 @@ public class Meal {
     private double price;
     private boolean offered;
     private String cookUID;
+    private Timestamp bannedUntil;
 
     public Meal() {}
 
@@ -28,6 +33,7 @@ public class Meal {
         this.price = price;
         this.cookUID = cookUID;
         this.offered = offered;
+        bannedUntil = new Timestamp(Calendar.getInstance().getTime());
     }
 
     public String getMealName(){ return mealName; }
@@ -39,6 +45,7 @@ public class Meal {
     public double getPrice() { return price; }
     public String getCookUID() { return cookUID; }
     public boolean getOffered() {return offered; }
+    public Timestamp getBannedUntil() {return bannedUntil; }
 
     public void setOffered(boolean offered){ this.offered = offered; }
 

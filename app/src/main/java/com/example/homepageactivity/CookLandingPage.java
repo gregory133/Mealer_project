@@ -15,7 +15,7 @@ public class CookLandingPage extends AppCompatActivity {
     }
 
     public void onClickAddMeal(View view) {
-        Intent intent = new Intent(getApplicationContext(), AddMealActivity.class);
+        Intent intent = new Intent(getApplicationContext(), MealAddActivity.class);
         startActivity(intent);
     }
 }

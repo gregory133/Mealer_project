@@ -88,6 +88,7 @@ public class MenuActivity extends AppCompatActivity {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser == null) {
             loginAttemptFailure("Could not load menu");
+            return;
         }
         db = FirebaseFirestore.getInstance();
         db.collection("meals")
@@ -119,7 +120,7 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.d(TAG, "MealIconSelected:");
-                Intent intent = new Intent(getApplicationContext(), EditMealActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MealEditActivity.class);
                 intent.putExtra("mealID", items.get(position).getId());
                 startActivity(intent);
             }
@@ -131,7 +132,7 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     public void onClickAddMealButton(View view){
-        Intent intent = new Intent(getApplicationContext(), AddMealActivity.class);
+        Intent intent = new Intent(getApplicationContext(), MealAddActivity.class);
         startActivity(intent);
     }
 }
