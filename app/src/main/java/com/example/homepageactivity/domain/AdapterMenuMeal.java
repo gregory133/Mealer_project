@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -15,12 +14,12 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 
-public class MealsGridAdapter extends BaseAdapter {
+public class AdapterMenuMeal extends BaseAdapter {
     Context context;
     ArrayList<QueryDocumentSnapshot> meals;
     LayoutInflater inflter;
 
-    public MealsGridAdapter(Context applicationContext, ArrayList<QueryDocumentSnapshot> meals) {
+    public AdapterMenuMeal(Context applicationContext, ArrayList<QueryDocumentSnapshot> meals) {
         this.context = applicationContext;
         this.meals = meals;
         inflter = (LayoutInflater.from(applicationContext));

@@ -14,13 +14,11 @@ import android.widget.GridView;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.homepageactivity.domain.MealsGridAdapter;
+import com.example.homepageactivity.domain.AdapterMenuMeal;
 import com.example.homepageactivity.domain.PageIconInfo;
-import com.example.homepageactivity.domain.PageIconsAdapter;
-import com.google.firebase.auth.FirebaseAuth;
+import com.example.homepageactivity.domain.AdapterPageIcon;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -56,7 +54,7 @@ public class MenuActivity extends AppCompatActivity {
 
         GridView pagesGrid = (GridView) findViewById(viewID);
         pagesGrid.setNumColumns(pageIconOptions.size());
-        PageIconsAdapter adapter=new PageIconsAdapter(getApplicationContext(), pageIconOptions, this.getClass());
+        AdapterPageIcon adapter=new AdapterPageIcon(getApplicationContext(), pageIconOptions, this.getClass());
         pagesGrid.setAdapter(adapter);
 
         pagesGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -111,7 +109,7 @@ public class MenuActivity extends AppCompatActivity {
 
     protected void setUpMealsGrid() {
         mealsGrid = (GridView) findViewById(R.id.mealsGrid);
-        MealsGridAdapter iconsAdapter = new MealsGridAdapter(getApplicationContext(), items);
+        AdapterMenuMeal iconsAdapter = new AdapterMenuMeal(getApplicationContext(), items);
         mealsGrid.setAdapter(iconsAdapter);
 
         mealsGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {

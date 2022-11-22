@@ -4,13 +4,11 @@ import static com.example.homepageactivity.MainActivity.currentAccount;
 import static com.example.homepageactivity.MainActivity.firebaseAuth;
 import static com.example.homepageactivity.MainActivity.firestoreDB;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.DatePicker;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,35 +21,26 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.homepageactivity.domain.Admin;
 import com.example.homepageactivity.domain.Client;
-import com.example.homepageactivity.domain.ComplaintMessage;
 import com.example.homepageactivity.domain.Cook;
-import com.example.homepageactivity.domain.ItemListAdapter;
+import com.example.homepageactivity.domain.AdapterInboxMessage;
 import com.example.homepageactivity.domain.Message;
 import com.example.homepageactivity.domain.PageIconInfo;
-import com.example.homepageactivity.domain.PageIconsAdapter;
+import com.example.homepageactivity.domain.AdapterPageIcon;
 import com.example.homepageactivity.domain.User;
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
-public class InboxActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+public class InboxActivity extends AppCompatActivity {
 
-    private ListView listView;
     private static final String TAG = "InboxActivity";
 
     private ArrayList<QueryDocumentSnapshot> items;
-    private QueryDocumentSnapshot docRef;
 
     private static final String logoutText = "Logout";
     private static final ArrayList<PageIconInfo> clientPageIconOptions = new ArrayList<PageIconInfo>() {{
@@ -72,11 +61,14 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inbox);
-        listView=findViewById(R.id.messagesList);
+
         collapseAdminButtons();
         setThemeColors();
         setupUserPages(R.id.pagesGrid);
+        getMessages();
+    }
 
+    private void getMessages(){
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         if (currentUser != null) {
             firestoreDB.collection("messages")
@@ -94,7 +86,7 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
                             for (QueryDocumentSnapshot msg : value) {
                                 items.add(msg);
                             }
-                            hookList();
+                            populateInbox();
                         }
                     });
         } else {
@@ -102,11 +94,25 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
         }
     }
 
+    private void populateInbox(){
+        AdapterInboxMessage adapter=new AdapterInboxMessage(this, R.layout.inbox_list_item, items);
+        ListView listView = (ListView) findViewById(R.id.messagesList);
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.d(TAG, "onItemSelected:");
+                OpenMessage(i);
+            }
+        });
+    }
+
     private void setupUserPages(int viewID){
         GridView pagesGrid;
         pagesGrid = (GridView) findViewById(viewID);
         pagesGrid.setNumColumns(getUserPagesOptions().size());
-        PageIconsAdapter adapter=new PageIconsAdapter(getApplicationContext(), getUserPagesOptions(), this.getClass());
+        AdapterPageIcon adapter=new AdapterPageIcon(getApplicationContext(), getUserPagesOptions(), this.getClass());
         pagesGrid.setAdapter(adapter);
 
         pagesGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -147,7 +153,6 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
         finish();
     }
 
-
     private void collapseAdminButtons(){
         if (!(currentAccount.getClass() == Admin.class)){
             LinearLayout adminRow=findViewById(R.id.row4);
@@ -169,89 +174,18 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
         }
     }
 
-    private void returnHomepage(){
-        finish();
-    }
-    private void hookList(){
-        ItemListAdapter adapter=new ItemListAdapter(this, R.layout.inbox_list_item, items);
-        listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.d(TAG, "onItemSelected:");
-                docRef = items.get(i);
-                showMessage();
-            }
-        });
-    }
-
     public void onCLickNewMessage(View view){
         Toast.makeText(getApplicationContext(), "New Message", Toast.LENGTH_LONG).show();
     }
 
-    private void showMessage() {
-        Message selectedMessage = docRef.toObject(Message.class);
+    private void OpenMessage(int i) {
+        Message selectedMessage = items.get(i).toObject(Message.class);
 
         Intent intent=new Intent(this, InboxMessageActivity.class);
-        intent.putExtra("subjectText", selectedMessage.getSubject());
-        intent.putExtra("senderUID", selectedMessage.getSenderUID());
-        intent.putExtra("descText", selectedMessage.getBodyText());
+        intent.putExtra("messageUID", items.get(i).getId());
+        intent.putExtra("senderName", ((TextView)((ListView)findViewById(R.id.messagesList)).getChildAt(i).findViewById(R.id.senderText)).getText());
 
         int requestCode=1;
         startActivityForResult(intent, requestCode);
-
-    }
-
-    public void onClickBanCook(View view) {
-        String cookUID = docRef.toObject(ComplaintMessage.class).getCookUID();
-        if (cookUID != null) {
-            Map<String, Boolean> change = new HashMap<>(1);
-            change.put("banned", true);
-            firestoreDB.collection("users").document(cookUID).set(change, SetOptions.merge());
-        } else {
-            Toast.makeText(this, "Error, no cook UID found", Toast.LENGTH_LONG).show();
-        }
-        archiveMessage();
-    }
-
-    public void onClickSuspendCook(View view) {
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
-                this,
-                Calendar.getInstance().get(Calendar.YEAR),
-                Calendar.getInstance().get(Calendar.MONTH),
-                Calendar.getInstance().get(Calendar.DATE));
-        datePickerDialog.show();
-    }
-
-    @Override
-    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-
-        Timestamp timestamp = new Timestamp(new Date(year, month, day));
-
-        String cookUID = docRef.toObject(ComplaintMessage.class).getCookUID();
-        if (cookUID != null) {
-            Map<String, Timestamp> change = new HashMap<>(1);
-            change.put("bannedUntil", timestamp);
-            firestoreDB.collection("users").document(cookUID).set(change, SetOptions.merge());
-        } else {
-            Toast.makeText(this, "Error, no cook UID found", Toast.LENGTH_LONG).show();
-        }
-        archiveMessage();
-    }
-
-    public void onClickDismiss(View view) {
-        archiveMessage();
-    }
-
-    private void archiveMessage(){
-        Map<String, Boolean> change = new HashMap<>(1);
-        change.put("archived", true);
-        String msgID = docRef.getId();
-        firestoreDB.collection("messages").document(msgID).set(change, SetOptions.merge());
-    }
-
-    public void onClickLogout(View view){
-        returnHomepage();
     }
 }

@@ -102,7 +102,7 @@
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_weight="0.2"
-                        android:onClick="onCLickReturnToInbox"
+                        android:onClick="onCLickDeleteMessage"
                         android:padding="5dp"
                         android:src="@drawable/ic_trash"></ImageView>
                 </androidx.cardview.widget.CardView>
@@ -111,7 +111,7 @@
             <LinearLayout
                 android:id="@+id/row2"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="0.1"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
@@ -120,6 +120,7 @@
                     android:id="@+id/subject"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:fontFamily="@font/lucida_handwriting_italic"
                     android:text="Subject"
                     android:textSize="18dp" />
@@ -128,7 +129,7 @@
             <LinearLayout
                 android:id="@+id/row3"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="0.1"
                 android:gravity="center"
                 android:orientation="horizontal">
@@ -137,6 +138,7 @@
                     android:id="@+id/senderText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:fontFamily="@font/lucida_handwriting_italic"
                     android:text="Sender"
                     android:textSize="16dp" />
@@ -146,6 +148,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:paddingLeft="10dp"
+                    android:onClick="onCLickReplyToMessage"
                     app:srcCompat="@drawable/ic_refresh" />
 
                 <Space
@@ -172,7 +175,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/ic_box_4"
                     android:fontFamily="@font/lucida_handwriting_italic"
-                    android:onClick="onClickDismiss"
+                    android:onClick="onCLickDeleteMessage"
                     android:text="Dismiss"
                     android:textColor="@color/off_grey" />
 
@@ -218,7 +221,7 @@
                     android:fontFamily="@font/lucida_handwriting_italic"
                     android:scrollbars="vertical"
                     android:text="TextView"
-                    android:textSize="12dp" />
+                    android:textSize="16dp" />
             </LinearLayout>
         </LinearLayout>
 

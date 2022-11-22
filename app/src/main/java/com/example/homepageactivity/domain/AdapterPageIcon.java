@@ -2,7 +2,6 @@ package com.example.homepageactivity.domain;
 
 import android.content.Context;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,13 +15,13 @@ import com.example.homepageactivity.R;
 
 import java.util.ArrayList;
 
-public class PageIconsAdapter extends BaseAdapter {
+public class AdapterPageIcon extends BaseAdapter {
     Context context;
     ArrayList<PageIconInfo> iconInfos;
     LayoutInflater inflter;
     Class currnetClass;
 
-    public PageIconsAdapter(Context applicationContext, ArrayList<PageIconInfo> iconInfos, Class currnetClass) {
+    public AdapterPageIcon(Context applicationContext, ArrayList<PageIconInfo> iconInfos, Class currnetClass) {
         this.context = applicationContext;
         this.iconInfos = iconInfos;
         this.currnetClass=currnetClass;
