@@ -195,6 +195,7 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
 
         Intent intent=new Intent(this, InboxMessageActivity.class);
         intent.putExtra("subjectText", selectedMessage.getSubject());
+        intent.putExtra("senderUID", selectedMessage.getSenderUID());
         intent.putExtra("descText", selectedMessage.getBodyText());
 
         int requestCode=1;

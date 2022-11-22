@@ -108,15 +108,22 @@
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/subject"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/row2"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.1"
-                android:fontFamily="@font/lucida_handwriting_italic"
-                android:text="Subject"
-                android:gravity="center"
-                android:textSize="18dp" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/subject"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lucida_handwriting_italic"
+                    android:text="Subject"
+                    android:textSize="18dp" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/row3"
