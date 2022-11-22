@@ -9,20 +9,19 @@ import android.widget.TextView;
 
 import com.example.homepageactivity.R;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 
-public class ItemListAdapter extends ArrayAdapter<QueryDocumentSnapshot> {
+public class AdapterInboxMessage extends ArrayAdapter<QueryDocumentSnapshot> {
 
 
     private Context context;
     private int res;
 
-    public ItemListAdapter(Context context, int res, ArrayList<QueryDocumentSnapshot> list){
+    public AdapterInboxMessage(Context context, int res, ArrayList<QueryDocumentSnapshot> list){
         super(context, res, list);
         this.context=context;
         this.res=res;

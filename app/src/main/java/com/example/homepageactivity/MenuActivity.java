@@ -1,5 +1,7 @@
 package com.example.homepageactivity;
 
+import static com.example.homepageactivity.MainActivity.*;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,13 +14,11 @@ import android.widget.GridView;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.homepageactivity.domain.MealsGridAdapter;
+import com.example.homepageactivity.domain.AdapterMenuMeal;
 import com.example.homepageactivity.domain.PageIconInfo;
-import com.example.homepageactivity.domain.PageIconsAdapter;
-import com.google.firebase.auth.FirebaseAuth;
+import com.example.homepageactivity.domain.AdapterPageIcon;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -29,7 +29,6 @@ import java.util.ArrayList;
 public class MenuActivity extends AppCompatActivity {
     private GridView mealsGrid;
     private int meals[];
-    private FirebaseFirestore db;
     private static final String TAG = "MenuActivity";
     private ArrayList<QueryDocumentSnapshot> items;
     private QueryDocumentSnapshot docRef;
@@ -55,7 +54,7 @@ public class MenuActivity extends AppCompatActivity {
 
         GridView pagesGrid = (GridView) findViewById(viewID);
         pagesGrid.setNumColumns(pageIconOptions.size());
-        PageIconsAdapter adapter=new PageIconsAdapter(getApplicationContext(), pageIconOptions, this.getClass(), getIntent().getStringExtra("userRole"));
+        AdapterPageIcon adapter=new AdapterPageIcon(getApplicationContext(), pageIconOptions, this.getClass());
         pagesGrid.setAdapter(adapter);
 
         pagesGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -72,7 +71,6 @@ public class MenuActivity extends AppCompatActivity {
                     return;
                 }    //Don't reload this page
                 Intent intent=new Intent(getApplicationContext(), pageIconOptions.get(i).getPageClass());
-                intent.putExtra("userRole",  getIntent().getStringExtra("userRole"));
                 startActivity(intent);
                 finish();
             }
@@ -80,18 +78,17 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void LogoutRequest(){
-        FirebaseAuth.getInstance().signOut();
+        firebaseAuth.signOut();
         finish();
     }
 
     private void getMealsForMealGrid(){
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         if (currentUser == null) {
             loginAttemptFailure("Could not load menu");
             return;
         }
-        db = FirebaseFirestore.getInstance();
-        db.collection("meals")
+        firestoreDB.collection("meals")
                 .whereEqualTo("cookUID", currentUser.getUid())
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
@@ -113,7 +110,7 @@ public class MenuActivity extends AppCompatActivity {
 
     protected void setUpMealsGrid() {
         mealsGrid = (GridView) findViewById(R.id.mealsGrid);
-        MealsGridAdapter iconsAdapter = new MealsGridAdapter(getApplicationContext(), items);
+        AdapterMenuMeal iconsAdapter = new AdapterMenuMeal(getApplicationContext(), items);
         mealsGrid.setAdapter(iconsAdapter);
 
         mealsGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {

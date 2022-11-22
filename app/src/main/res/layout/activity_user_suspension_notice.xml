@@ -53,11 +53,11 @@
             android:id="@+id/logoutButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="suspendedUserLogout"
             android:background="@drawable/outline_off_white"
-            android:text="Logout"
-            android:textSize="24sp"
-            android:padding="20dp"/>
+            android:onClick="suspendedUserLogout"
+            android:padding="20dp"
+            android:text="Return"
+            android:textSize="24sp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

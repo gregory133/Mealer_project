@@ -2,7 +2,6 @@ package com.example.homepageactivity.domain;
 
 import android.content.Context;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,18 +15,16 @@ import com.example.homepageactivity.R;
 
 import java.util.ArrayList;
 
-public class PageIconsAdapter extends BaseAdapter {
+public class AdapterPageIcon extends BaseAdapter {
     Context context;
     ArrayList<PageIconInfo> iconInfos;
     LayoutInflater inflter;
     Class currnetClass;
-    String userType;
 
-    public PageIconsAdapter(Context applicationContext, ArrayList<PageIconInfo> iconInfos, Class currnetClass, String userType) {
+    public AdapterPageIcon(Context applicationContext, ArrayList<PageIconInfo> iconInfos, Class currnetClass) {
         this.context = applicationContext;
         this.iconInfos = iconInfos;
         this.currnetClass=currnetClass;
-        this.userType=userType;
         inflter = (LayoutInflater.from(applicationContext));
     }
     @Override
@@ -54,7 +51,11 @@ public class PageIconsAdapter extends BaseAdapter {
         if(iconInfos.get(i).getPageClass() != null && currnetClass.getName().contains(iconInfos.get(i).getPageClass().getName())){
             int bgColor;
             CardView bg = (CardView) view.findViewById(R.id.bg);    // get the reference of Button
-            bgColor = userType.contains("Cook") ? R.color.cook_light : R.color.client_light;
+            if (currnetClass == Cook.class) {
+                bgColor = R.color.cook_light;
+            } else{
+                bgColor = R.color.client_light;
+            }
             bg.setCardBackgroundColor(ContextCompat.getColor(context, bgColor));
 
             iconColor = R.color.dark_grey;
