@@ -148,8 +148,8 @@
                     android:id="@+id/imageView9"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:paddingLeft="10dp"
                     android:onClick="onCLickReplyToMessage"
+                    android:paddingLeft="10dp"
                     app:srcCompat="@drawable/ic_refresh" />
 
             </LinearLayout>

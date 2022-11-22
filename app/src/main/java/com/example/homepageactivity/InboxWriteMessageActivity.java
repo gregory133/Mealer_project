@@ -38,6 +38,11 @@ public class InboxWriteMessageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inbox_write_message);
+
+//        Bundle extras=getIntent().getExtras();
+//        if(extras.getString("senderEmail") != null){
+//            ((TextView) findViewById(R.id.recipientEmailEdit)).setText(extras.getString("senderEmail"));
+//        }
     }
 
     public void onClickSendMessageButton(View view) {
@@ -92,8 +97,9 @@ public class InboxWriteMessageActivity extends AppCompatActivity {
         String subject = (((EditText) findViewById(R.id.subjectEdit)).getText()).toString();
         String bodyText = ((EditText) findViewById(R.id.messageBodyEdit)).getText().toString();
         String senderUID = firebaseAuth.getCurrentUser().getUid();
+        String senderEmail = firebaseAuth.getCurrentUser().getEmail();
 
-        Message newMessage = new Message(senderUID, docRef.getId(), subject, bodyText);
+        Message newMessage = new Message(senderUID, senderEmail, docRef.getId(), subject, bodyText);
 
         firestoreDB.collection("messages").add(newMessage)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
