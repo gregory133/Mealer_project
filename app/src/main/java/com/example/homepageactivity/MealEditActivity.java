@@ -27,9 +27,12 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Arrays;
 import java.util.List;
 
-public class EditMealActivity extends AppCompatActivity {
+public class MealEditActivity extends AppCompatActivity {
+    private final List<String> cuisineOptions = Arrays.asList("Cuisine", "American", "Mexican", "Chinese", "Other");      //Also hardcoded in AddMealActivity
+    private final List<String> mealTypeOptions = Arrays.asList("Meal Type", "Appetizer", "Entree", "Dessert", "Other");      //Also hardcoded in AddMealActivity
     private String chosenCuisine;
     private String chosenMealType;
     private DocumentReference docRef;
@@ -41,13 +44,13 @@ public class EditMealActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_meal);
 
-        setupCuisineSpinner((Spinner) findViewById(R.id.cuisineTypeSpinner), cuisineOptions);
-        setupMealTypeSpinner((Spinner) findViewById(R.id.mealTypeSpinner), mealTypeOptions);
+        setupCuisineOrTypeSpinner((Spinner) findViewById(R.id.cuisineTypeSpinner), cuisineOptions);
+        setupCuisineOrTypeSpinner((Spinner) findViewById(R.id.mealTypeSpinner), mealTypeOptions);
         getMealInfo();
 
     }
 
-    public void setupCuisineSpinner(Spinner spinner, final List<String> options){
+    public void setupCuisineOrTypeSpinner(Spinner spinner, final List<String> options){
         chosenCuisine = "";
         ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(),
                 R.layout.dropdown_layout,
@@ -59,25 +62,14 @@ public class EditMealActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 chosenCuisine = options.get(i);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {}
-        });
-    }
-
-    public void setupMealTypeSpinner(Spinner spinner, final List<String> options){
-        chosenMealType = "";
-        ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(),
-                R.layout.dropdown_layout,
-                options);
-        adapter.setDropDownViewResource(R.layout.dropdown_layout);
-        spinner.setAdapter(adapter);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                chosenMealType = options.get(i);
+                switch (options.get(0)){
+                    case "Cuisine":
+                        chosenCuisine = options.get(i);
+                        break;
+                    case "Meal Type":
+                        chosenMealType = options.get(i);
+                        break;
+                }
             }
 
             @Override
@@ -213,11 +205,11 @@ public class EditMealActivity extends AppCompatActivity {
             Toast.makeText(this, "Your Meal Description is "+(val.getStringLength(description)-300)+" Characters Too Long", Toast.LENGTH_LONG).show();
             return false;
         }
-        if(val.getStringIndex(cuisineOptions, chosenCuisine) < 0){
+        if(val.getStringIndex(cuisineOptions, chosenCuisine) < 1){
             Toast.makeText(this, "Please Select a Cuisine For This Meal", Toast.LENGTH_LONG).show();
             return false;
         }
-        if(val.getStringIndex(mealTypeOptions, chosenMealType) < 0){
+        if(val.getStringIndex(mealTypeOptions, chosenMealType) < 1){
             Toast.makeText(this, "Please Select a Meal Type For This Meal", Toast.LENGTH_LONG).show();
             return false;
         }

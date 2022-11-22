@@ -22,17 +22,22 @@ import com.example.homepageactivity.domain.Meal;
 import com.example.homepageactivity.domain.Validator;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
-public class AddMealActivity extends AppCompatActivity {
+public class MealAddActivity extends AppCompatActivity {
 
     private FirebaseUser currentUser;
     private String chosenCuisine;
     private String chosenMealType;
+    private final List<String> cuisineOptions = Arrays.asList("Cuisine", "American", "Mexican", "Chinese", "Other");      //Also hardcoded in AddMealActivity
+    private final List<String> mealTypeOptions = Arrays.asList("Meal Type", "Appetizer", "Entree", "Dessert", "Other");      //Also hardcoded in AddMealActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,11 +155,11 @@ public class AddMealActivity extends AppCompatActivity {
             Toast.makeText(this, "Your Meal Description is "+(val.getStringLength(description)-300)+" Characters Too Long", Toast.LENGTH_LONG).show();
             return false;
         }
-        if(val.getStringIndex(cuisineOptions, chosenCuisine) < 0){
+        if(val.getStringIndex(cuisineOptions, chosenCuisine) < 1){
             Toast.makeText(this, "Please Select a Cuisine For This Meal", Toast.LENGTH_LONG).show();
             return false;
         }
-        if(val.getStringIndex(mealTypeOptions, chosenMealType) < 0){
+        if(val.getStringIndex(mealTypeOptions, chosenMealType) < 1){
             Toast.makeText(this, "Please Select a Meal Type For This Meal", Toast.LENGTH_LONG).show();
             return false;
         }

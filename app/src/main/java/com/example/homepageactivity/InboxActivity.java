@@ -45,6 +45,7 @@ public class InboxActivity extends AppCompatActivity {
     private static final String logoutText = "Logout";
     private static final ArrayList<PageIconInfo> clientPageIconOptions = new ArrayList<PageIconInfo>() {{
         add(new PageIconInfo("Inbox", InboxActivity.class, R.drawable.ic_message_icon));
+        add(new PageIconInfo("MealSearch", MealSearchActivity.class, R.drawable.m_icon));
         add(new PageIconInfo(logoutText, null, R.drawable.ic_door_icon));
     }};
     private static final ArrayList<PageIconInfo> cookPageIconOptions = new ArrayList<PageIconInfo>() {{
@@ -95,7 +96,7 @@ public class InboxActivity extends AppCompatActivity {
     }
 
     private void populateInbox(){
-        AdapterInboxMessage adapter=new AdapterInboxMessage(this, R.layout.inbox_list_item, items);
+        AdapterInboxMessage adapter=new AdapterInboxMessage(this, R.layout.activity_inbox_list_item, items);
         ListView listView = (ListView) findViewById(R.id.messagesList);
         listView.setAdapter(adapter);
 
@@ -173,7 +174,6 @@ public class InboxActivity extends AppCompatActivity {
             ((ImageView) findViewById(R.id.midground)).setColorFilter(getResources().getColor(R.color.client_light));
         }
     }
-
     public void onCLickNewMessage(View view){
         Toast.makeText(getApplicationContext(), "New Message", Toast.LENGTH_LONG).show();
     }

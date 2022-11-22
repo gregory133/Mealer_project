@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void showSuspensionNotice(String addon) {
         notice = new Dialog(this);
-        notice.setContentView(R.layout.user_suspension_notice);
+        notice.setContentView(R.layout.activity_user_suspension_notice);
         TextView noticeText = notice.findViewById(R.id.userSuspensionNoticeText);
         String noticeString = (String)noticeText.getText();
         noticeText.setText(noticeString+addon);
