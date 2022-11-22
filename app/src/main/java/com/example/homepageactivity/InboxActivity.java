@@ -106,7 +106,7 @@ public class InboxActivity extends AppCompatActivity implements DatePickerDialog
         GridView pagesGrid;
         pagesGrid = (GridView) findViewById(viewID);
         pagesGrid.setNumColumns(getUserPagesOptions().size());
-        PageIconsAdapter adapter=new PageIconsAdapter(getApplicationContext(), getUserPagesOptions(), this.getClass(), getIntent().getStringExtra("userRole"));
+        PageIconsAdapter adapter=new PageIconsAdapter(getApplicationContext(), getUserPagesOptions(), this.getClass());
         pagesGrid.setAdapter(adapter);
 
         pagesGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {

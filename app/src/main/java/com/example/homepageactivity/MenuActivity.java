@@ -56,7 +56,7 @@ public class MenuActivity extends AppCompatActivity {
 
         GridView pagesGrid = (GridView) findViewById(viewID);
         pagesGrid.setNumColumns(pageIconOptions.size());
-        PageIconsAdapter adapter=new PageIconsAdapter(getApplicationContext(), pageIconOptions, this.getClass(), getIntent().getStringExtra("userRole"));
+        PageIconsAdapter adapter=new PageIconsAdapter(getApplicationContext(), pageIconOptions, this.getClass());
         pagesGrid.setAdapter(adapter);
 
         pagesGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -73,7 +73,6 @@ public class MenuActivity extends AppCompatActivity {
                     return;
                 }    //Don't reload this page
                 Intent intent=new Intent(getApplicationContext(), pageIconOptions.get(i).getPageClass());
-                intent.putExtra("userRole",  getIntent().getStringExtra("userRole"));
                 startActivity(intent);
                 finish();
             }

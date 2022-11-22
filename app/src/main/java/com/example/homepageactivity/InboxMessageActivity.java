@@ -1,5 +1,7 @@
 package com.example.homepageactivity;
 
+import static com.example.homepageactivity.MainActivity.currentAccount;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContextWrapper;
@@ -8,11 +10,12 @@ import android.view.ContextThemeWrapper;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.example.homepageactivity.domain.Admin;
+import com.example.homepageactivity.domain.Cook;
 import com.example.homepageactivity.domain.StyleApplyer;
 
 public class InboxMessageActivity extends AppCompatActivity {
 
-    private String userRole;
     private ImageView background;
 
     @Override
@@ -20,14 +23,13 @@ public class InboxMessageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inbox_message);
 
-        userRole = getIntent().getStringExtra("userRole");
         background=findViewById(R.id.background);
-        setThemeColors(userRole);
+        setThemeColors();
         collapseAdminButtons();
     }
 
     private void collapseAdminButtons(){
-        if (!(userRole.equals("Admin"))){
+        if (!(currentAccount.getClass() == Admin.class)){
             LinearLayout adminRow=findViewById(R.id.row4);
             LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
@@ -37,8 +39,8 @@ public class InboxMessageActivity extends AppCompatActivity {
         }
     }
 
-    private void setThemeColors(String mode){
-        if (mode.equals("Cook")){
+    private void setThemeColors(){
+        if (currentAccount.getClass() == Cook.class){
             ((ImageView) findViewById(R.id.midground)).setColorFilter(getResources().getColor(R.color.cook_light));
         }
         else{
