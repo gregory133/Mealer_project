@@ -17,6 +17,9 @@ public class MealOrder {
         this.clientUID=clientUID;
         this.clientEmail=clientEmail;
         this.mealUID=mealUID;
+        this.approved=0;
+        this.delivered=0;
+        this.received=0;
     }
 
 
