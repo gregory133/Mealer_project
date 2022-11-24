@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -95,8 +94,8 @@ public class InboxMessageActivity extends AppCompatActivity implements DatePicke
         });
     }
     private void SetupMessageInfo(){
-        ((TextView) findViewById(R.id.subject)).setText(docRef.toObject(Message.class).getSubject());
-        ((TextView) findViewById(R.id.senderText)).setText(docRef.toObject(Message.class).getSenderEmail());
+        ((TextView) findViewById(R.id.mealName)).setText(docRef.toObject(Message.class).getSubject());
+        ((TextView) findViewById(R.id.cuisineType)).setText(docRef.toObject(Message.class).getSenderEmail());
         ((TextView) findViewById(R.id.messageText)).setText(docRef.toObject(Message.class).getBodyText());
     }
 

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/off_grey"
     tools:context=".MealAddActivity">
 
     <ImageView
@@ -21,8 +22,8 @@
         android:id="@+id/midground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:translationY="20dp"
         android:scaleType="fitXY"
+        android:translationY="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +41,7 @@
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.2"/>
+            android:layout_weight="0.2" />
 
         <TextView
             android:id="@+id/title"
@@ -63,7 +64,7 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/mealNameEdit"
+                android:id="@+id/mealName"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="20dp"
@@ -89,12 +90,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/outline_off_white"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:background="@drawable/outline_off_white">
+
                 <Spinner
-                    android:id="@+id/mealTypeSpinner"
+                    android:id="@+id/mealType"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"/>
+                    android:layout_height="50dp" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -102,12 +104,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="20dp"
-                android:background="@drawable/outline_off_white"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:background="@drawable/outline_off_white">
+
                 <Spinner
-                    android:id="@+id/cuisineTypeSpinner"
+                    android:id="@+id/cuisineType"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"/>
+                    android:layout_height="50dp" />
             </RelativeLayout>
 
 
@@ -122,7 +125,7 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/listOfIngredientsEdit"
+                android:id="@+id/listOfIngredients"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="20dp"
@@ -143,7 +146,7 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/allergensEdit"
+                android:id="@+id/allergens"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="20dp"
@@ -164,7 +167,7 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/priceEdit"
+                android:id="@+id/price"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="20dp"
@@ -185,7 +188,7 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/descriptionEdit"
+                android:id="@+id/description"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="20dp"
@@ -205,7 +208,7 @@
             android:buttonTint="@color/off_white"
             android:text="Offer Meal"
             android:textColor="@color/off_white"
-            android:textSize="20dp"/>
+            android:textSize="20dp" />
 
 
         <Button
@@ -218,9 +221,10 @@
             android:onClick="onClickAddMealButton"
             android:text="Add Meal"
             android:textSize="20dp" />
+
         <Space
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.5"/>
+            android:layout_weight="0.5" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

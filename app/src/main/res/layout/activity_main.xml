@@ -39,7 +39,7 @@
 
         <LinearLayout
             android:id="@+id/row2"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.8"
             android:gravity="center"
@@ -48,26 +48,26 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="500dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:translationX="3dp"
-                android:translationY="-3dp"
                 android:layout_margin="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/outline_off_grey"
                 android:clipToOutline="true"
-                android:background="@drawable/outline_off_grey">
+                android:translationX="3dp"
+                android:translationY="-3dp">
 
                 <EditText
                     android:id="@+id/emailTextEdit"
 
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:translationX="-3dp"
-                    android:translationY="3dp"
                     android:background="@drawable/outline_off_white"
-
                     android:gravity="center"
                     android:hint="Enter Username"
+
                     android:inputType="textMultiLine"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:translationX="-3dp"
+                    android:translationY="3dp" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
@@ -89,6 +89,7 @@
                 android:layout_margin="20dp"
                 android:clipToOutline="true"
                 android:background="@drawable/outline_off_grey">
+
                 <EditText
                     android:id="@+id/editTextPassword"
 
@@ -97,11 +98,23 @@
                     android:translationX="-3dp"
                     android:translationY="3dp"
                     android:background="@drawable/outline_off_white"
-
                     android:gravity="center"
                     android:hint="Enter Password"
-                    android:inputType="textMultiLine"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:inputType="textPassword" />
+
+<!--                <EditText-->
+
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:translationX="-3dp"-->
+<!--                    android:translationY="3dp"-->
+<!--                    android:background="@drawable/outline_off_white"-->
+
+<!--                    android:gravity="center"-->
+<!--                    android:hint="Enter Password"-->
+<!--                    android:inputType="textMultiLine"-->
+<!--                    android:singleLine="true" />-->
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>

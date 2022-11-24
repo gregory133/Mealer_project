@@ -1,9 +1,7 @@
 package com.example.homepageactivity;
 
-import static com.example.homepageactivity.MainActivity.cuisineOptions;
 import static com.example.homepageactivity.MainActivity.firebaseAuth;
 import static com.example.homepageactivity.MainActivity.firestoreDB;
-import static com.example.homepageactivity.MainActivity.mealTypeOptions;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -22,13 +20,10 @@ import com.example.homepageactivity.domain.Meal;
 import com.example.homepageactivity.domain.Validator;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.Timestamp;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.List;
 
 public class MealAddActivity extends AppCompatActivity {
@@ -49,16 +44,16 @@ public class MealAddActivity extends AppCompatActivity {
             finish();
         }
 
-        setupCuisineSpinner((Spinner) findViewById(R.id.cuisineTypeSpinner), cuisineOptions);
-        setupMealTypeSpinner((Spinner) findViewById(R.id.mealTypeSpinner), mealTypeOptions);
+        setupCuisineSpinner((Spinner) findViewById(R.id.cuisineType), cuisineOptions);
+        setupMealTypeSpinner((Spinner) findViewById(R.id.cuisineType), mealTypeOptions);
     }
 
     public void onClickAddMealButton(View view) {
-        String mealName = (((EditText) findViewById(R.id.mealNameEdit)).getText()).toString();
-        String description = (((EditText) findViewById(R.id.descriptionEdit)).getText()).toString();
-        String priceStr = ((EditText) findViewById(R.id.priceEdit)).getText().toString();
-        String ingredients = (((EditText) findViewById(R.id.listOfIngredientsEdit)).getText()).toString();
-        String allergens = (((EditText) findViewById(R.id.allergensEdit)).getText()).toString();
+        String mealName = (((EditText) findViewById(R.id.mealName)).getText()).toString();
+        String description = (((EditText) findViewById(R.id.description)).getText()).toString();
+        String priceStr = ((EditText) findViewById(R.id.price)).getText().toString();
+        String ingredients = (((EditText) findViewById(R.id.listOfIngredients)).getText()).toString();
+        String allergens = (((EditText) findViewById(R.id.allergens)).getText()).toString();
         boolean offered = ((CheckBox)findViewById(R.id.offerMealCheckbox)).isChecked();
 
         if(!validateMeal(mealName, description, chosenCuisine, chosenMealType,

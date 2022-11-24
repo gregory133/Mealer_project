@@ -2,10 +2,13 @@ package com.example.homepageactivity;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
+import static com.example.homepageactivity.MainActivity.firestoreDB;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -19,14 +22,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.homepageactivity.domain.AdapterMenuMeal;
+import com.example.homepageactivity.domain.Meal;
 import com.example.homepageactivity.domain.PageIconInfo;
 import com.example.homepageactivity.domain.AdapterPageIcon;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -57,8 +65,8 @@ public class MealSearchActivity extends AppCompatActivity {
         startTime = System.currentTimeMillis();
 
         setupUserPages(R.id.pagesGrid);
-        setupCuisineOrTypeSpinner((Spinner) findViewById(R.id.cuisineTypeSpinner), cuisineOptions);
-        setupCuisineOrTypeSpinner((Spinner) findViewById(R.id.mealTypeSpinner), mealTypeOptions);
+        setupCuisineOrTypeSpinner((Spinner) findViewById(R.id.cuisineType), cuisineOptions);
+        setupCuisineOrTypeSpinner((Spinner) findViewById(R.id.cuisineType), mealTypeOptions);
         onSearchByNameFieldChange();
         getMealsForMealGrid();
     }
@@ -75,7 +83,7 @@ public class MealSearchActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Log.d(TAG, "onPageSelected:");
 
-                if (pageIconOptions.get(i).getIconName() == logoutText) {        //logout MUST be last
+                if (pageIconOptions.get(i).getIconName().equals(logoutText)) {        //logout MUST be last
                     LogoutRequest();
                     Toast.makeText(getApplicationContext(), "logout at "+i+"", Toast.LENGTH_LONG).show();
                     return;
@@ -134,10 +142,36 @@ public class MealSearchActivity extends AppCompatActivity {
         mealsGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d(TAG, "MealIconSelected:");
-                Intent intent = new Intent(getApplicationContext(), MealEditActivity.class);
-                intent.putExtra("mealID", relevantMeals.get(position).getId());
-                startActivity(intent);
+//                Log.d(TAG, "MealIconSelected:");
+
+                Intent intent = new Intent(getApplicationContext(), MealInfoActivity.class);
+                Meal meal = relevantMeals.get(position).toObject(Meal.class);
+
+                intent.putExtra("mealType", meal.getMealType());
+                intent.putExtra("mealName", meal.getMealName());
+                intent.putExtra("description", meal.getDescription());
+                intent.putExtra("cuisineType", meal.getCuisineType());
+                intent.putExtra("ingredients", meal.getIngredients());
+                intent.putExtra("allergens", meal.getAllergens());
+                intent.putExtra("price", meal.getPrice());
+
+                String cookUID=meal.getCookUID();
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                Task<DocumentSnapshot> task=db.collection("users").document(cookUID).get();
+
+                task.addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+//                        Log.d("TAG", documentSnapshot.get("firstName").toString()+documentSnapshot.get("lastName").toString()+documentSnapshot.get("shortDescription").toString());
+                        intent.putExtra("cookFirstName", documentSnapshot.get("firstName").toString());
+                        intent.putExtra("cookLastName", documentSnapshot.get("lastName").toString());
+                        intent.putExtra("cookDesc", documentSnapshot.get("shortDescription").toString());
+                        startActivity(intent);
+                    }
+                });
+
+
+
             }
         });
     }

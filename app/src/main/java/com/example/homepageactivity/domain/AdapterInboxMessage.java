@@ -8,9 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.homepageactivity.R;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
@@ -33,8 +30,8 @@ public class AdapterInboxMessage extends ArrayAdapter<QueryDocumentSnapshot> {
         LayoutInflater inflater=LayoutInflater.from(context);
         convertView=inflater.inflate(res, parent, false);
 
-        TextView senderText=convertView.findViewById(R.id.senderText);
-        TextView subjectText=convertView.findViewById(R.id.subject);
+        TextView senderText=convertView.findViewById(R.id.cuisineType);
+        TextView subjectText=convertView.findViewById(R.id.mealName);
         TextView firstWordText=convertView.findViewById(R.id.firstWordText);
 
         senderText.setText(getItem(pos).toObject(Message.class).getSenderEmail());

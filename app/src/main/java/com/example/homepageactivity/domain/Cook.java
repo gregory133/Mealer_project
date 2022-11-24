@@ -33,4 +33,6 @@ public class Cook extends User{
     public ArrayList<Meal> getMenu() {
         return menu;
     }
+
+    public String getDesc(){return shortDescription;}
 }

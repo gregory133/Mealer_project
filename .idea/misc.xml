@@ -6,19 +6,30 @@
         <entry key="..\:/Users/grego/Desktop/Programming/Java/University/SEG_2105/project/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2355" />
         <entry key="..\:/Users/grego/Desktop/Programming/Java/University/SEG_2105/project/app/src/main/res/drawable/custom_message_icon.xml" value="0.2355" />
         <entry key="..\:/Users/grego/Desktop/Programming/Java/University/SEG_2105/project/app/src/main/res/drawable/ic_button_1.xml" value="0.2355" />
+        <entry key="..\:/Users/grego/Desktop/Programming/Java/University/SEG_2105/project/app/src/main/res/drawable/ic_door_icon.xml" value="0.2255" />
         <entry key="..\:/Users/grego/Desktop/Programming/Java/University/SEG_2105/project/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2355" />
         <entry key="..\:/Users/grego/Desktop/Programming/Java/University/SEG_2105/project/app/src/main/res/drawable/ic_message_icon.xml" value="0.2355" />
         <entry key="..\:/Users/grego/Desktop/Programming/Java/University/SEG_2105/project/app/src/main/res/drawable/ic_message_icon_2.xml" value="0.2355" />
         <entry key="..\:/Users/grego/Desktop/Programming/Java/University/SEG_2105/project/app/src/main/res/drawable/ic_wave.xml" value="0.2355" />
         <entry key="..\:/Users/grego/Desktop/Programming/Java/University/SEG_2105/project/app/src/main/res/drawable/ic_yin_yang.xml" value="0.2375" />
+        <entry key="..\:/Users/grego/Desktop/Programming/Java/University/SEG_2105/project/app/src/main/res/layout/activity_add_meal.xml" value="0.23641304347826086" />
         <entry key="..\:/Users/grego/Desktop/Programming/Java/University/SEG_2105/project/app/src/main/res/layout/activity_choose_role.xml" value="0.264" />
         <entry key="..\:/Users/grego/Desktop/Programming/Java/University/SEG_2105/project/app/src/main/res/layout/activity_client_payment.xml" value="0.264" />
         <entry key="..\:/Users/grego/Desktop/Programming/Java/University/SEG_2105/project/app/src/main/res/layout/activity_cook_description.xml" value="0.264" />
+        <entry key="..\:/Users/grego/Desktop/Programming/Java/University/SEG_2105/project/app/src/main/res/layout/activity_cook_landing_page.xml" value="0.23641304347826086" />
+        <entry key="..\:/Users/grego/Desktop/Programming/Java/University/SEG_2105/project/app/src/main/res/layout/activity_cook_profile.xml" value="0.264" />
+        <entry key="..\:/Users/grego/Desktop/Programming/Java/University/SEG_2105/project/app/src/main/res/layout/activity_edit_meal.xml" value="0.264" />
         <entry key="..\:/Users/grego/Desktop/Programming/Java/University/SEG_2105/project/app/src/main/res/layout/activity_inbox.xml" value="0.264" />
         <entry key="..\:/Users/grego/Desktop/Programming/Java/University/SEG_2105/project/app/src/main/res/layout/activity_inbox_description.xml" value="0.245018115942029" />
-        <entry key="..\:/Users/grego/Desktop/Programming/Java/University/SEG_2105/project/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/grego/Desktop/Programming/Java/University/SEG_2105/project/app/src/main/res/layout/activity_inbox_list_item.xml" value="0.23641304347826086" />
+        <entry key="..\:/Users/grego/Desktop/Programming/Java/University/SEG_2105/project/app/src/main/res/layout/activity_inbox_message.xml" value="0.25" />
+        <entry key="..\:/Users/grego/Desktop/Programming/Java/University/SEG_2105/project/app/src/main/res/layout/activity_inbox_write_message.xml" value="0.23641304347826086" />
+        <entry key="..\:/Users/grego/Desktop/Programming/Java/University/SEG_2105/project/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/grego/Desktop/Programming/Java/University/SEG_2105/project/app/src/main/res/layout/activity_make_user.xml" value="0.264" />
+        <entry key="..\:/Users/grego/Desktop/Programming/Java/University/SEG_2105/project/app/src/main/res/layout/activity_meal_info.xml" value="0.264" />
+        <entry key="..\:/Users/grego/Desktop/Programming/Java/University/SEG_2105/project/app/src/main/res/layout/activity_meal_search.xml" value="0.23641304347826086" />
         <entry key="..\:/Users/grego/Desktop/Programming/Java/University/SEG_2105/project/app/src/main/res/layout/activity_menu.xml" value="0.23097826086956522" />
+        <entry key="..\:/Users/grego/Desktop/Programming/Java/University/SEG_2105/project/app/src/main/res/layout/activity_place_order.xml" value="0.264" />
         <entry key="..\:/Users/grego/Desktop/Programming/Java/University/SEG_2105/project/app/src/main/res/layout/activity_registration.xml" value="0.264" />
         <entry key="..\:/Users/grego/Desktop/Programming/Java/University/SEG_2105/project/app/src/main/res/layout/activity_user_account.xml" value="0.2006340579710145" />
         <entry key="..\:/Users/grego/Desktop/Programming/Java/University/SEG_2105/project/app/src/main/res/layout/activity_user_homepage.xml" value="0.264" />

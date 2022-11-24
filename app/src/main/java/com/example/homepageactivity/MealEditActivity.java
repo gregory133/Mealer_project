@@ -21,11 +21,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Arrays;
 import java.util.List;
@@ -44,8 +42,8 @@ public class MealEditActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_meal);
 
-        setupCuisineOrTypeSpinner((Spinner) findViewById(R.id.cuisineTypeSpinner), cuisineOptions);
-        setupCuisineOrTypeSpinner((Spinner) findViewById(R.id.mealTypeSpinner), mealTypeOptions);
+        setupCuisineOrTypeSpinner((Spinner) findViewById(R.id.cuisineType), cuisineOptions);
+        setupCuisineOrTypeSpinner((Spinner) findViewById(R.id.cuisineType), mealTypeOptions);
         getMealInfo();
 
     }
@@ -110,20 +108,20 @@ public class MealEditActivity extends AppCompatActivity {
     }
 
     private void SetupMealInfo(){
-        ((EditText) findViewById(R.id.mealNameEdit)).setText(document.getString("mealName"));
-        ((EditText) findViewById(R.id.descriptionEdit)).setText(document.getString("description"));
-        ((EditText) findViewById(R.id.priceEdit)).setText(document.getDouble("price").toString());
-        ((EditText) findViewById(R.id.listOfIngredientsEdit)).setText(document.getString("ingredients"));
-        ((EditText) findViewById(R.id.allergensEdit)).setText(document.getString("allergens"));
+        ((EditText) findViewById(R.id.mealName)).setText(document.getString("mealName"));
+        ((EditText) findViewById(R.id.description)).setText(document.getString("description"));
+        ((EditText) findViewById(R.id.price)).setText(document.getDouble("price").toString());
+        ((EditText) findViewById(R.id.listOfIngredients)).setText(document.getString("ingredients"));
+        ((EditText) findViewById(R.id.allergens)).setText(document.getString("allergens"));
         ((CheckBox)findViewById(R.id.offerMealCheckbox)).setChecked(document.getBoolean("offered"));
 
         //Finds and display current cuisine type
-        Spinner spinny = (Spinner) findViewById(R.id.cuisineTypeSpinner);
+        Spinner spinny = (Spinner) findViewById(R.id.cuisineType);
         ArrayAdapter myAdap = (ArrayAdapter) spinny.getAdapter();
         spinny.setSelection(myAdap.getPosition(document.getString("cuisineType")));
 
         //Finds and display current meal type
-        spinny = (Spinner) findViewById(R.id.mealTypeSpinner);
+        spinny = (Spinner) findViewById(R.id.cuisineType);
         myAdap = (ArrayAdapter) spinny.getAdapter();
         spinny.setSelection(myAdap.getPosition(document.getString("mealType")));
     }
@@ -138,11 +136,11 @@ public class MealEditActivity extends AppCompatActivity {
             return;
         }
 
-        String mealName = (((EditText) findViewById(R.id.mealNameEdit)).getText()).toString();
-        String description = (((EditText) findViewById(R.id.descriptionEdit)).getText()).toString();
-        String priceStr = ((EditText) findViewById(R.id.priceEdit)).getText().toString();
-        String ingredients = (((EditText) findViewById(R.id.listOfIngredientsEdit)).getText()).toString();
-        String allergens = (((EditText) findViewById(R.id.allergensEdit)).getText()).toString();
+        String mealName = (((EditText) findViewById(R.id.mealName)).getText()).toString();
+        String description = (((EditText) findViewById(R.id.description)).getText()).toString();
+        String priceStr = ((EditText) findViewById(R.id.price)).getText().toString();
+        String ingredients = (((EditText) findViewById(R.id.listOfIngredients)).getText()).toString();
+        String allergens = (((EditText) findViewById(R.id.allergens)).getText()).toString();
         boolean offered = ((CheckBox)findViewById(R.id.offerMealCheckbox)).isChecked();
 
         if(!validateMeal(mealName, description, chosenCuisine, chosenMealType,
