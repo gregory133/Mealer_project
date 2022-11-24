@@ -104,28 +104,30 @@ public class MealInfoActivity extends AppCompatActivity {
         intent.putExtra("cuisineType", getIntent().getStringExtra("cuisineType"));
         intent.putExtra("mealPrice", getIntent().getStringExtra("price"));
 
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        startActivity(intent);
+
+//        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 //        Log.d("TAG", userId);
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        Task<DocumentSnapshot> task=db.collection("users").document(userId).get();
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        Task<DocumentSnapshot> task=db.collection("users").document(userId).get();
 
-        task.addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-
-
-                HashMap<String, String> dict1=(HashMap<String, String>)documentSnapshot.get("payment");
-                HashMap<String, Number> dict2=(HashMap<String, Number>)documentSnapshot.get("payment");
-
-                String cardholderName=dict1.get("cardHolderName");
-                Number cardNumber=dict2.get("cardNumber");
-
-                intent.putExtra("cardholderName", cardholderName);
-                intent.putExtra("cardNumber", String.valueOf(cardNumber));
-//                Log.d("TAG", documentSnapshot.get("cardholderName").toString()+documentSnapshot.get("cardNumber").toString());
-                startActivity(intent);
-            }
-        });
+//        task.addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+//            @Override
+//            public void onSuccess(DocumentSnapshot documentSnapshot) {
+//
+//
+//                HashMap<String, String> dict1=(HashMap<String, String>)documentSnapshot.get("payment");
+//                HashMap<String, Number> dict2=(HashMap<String, Number>)documentSnapshot.get("payment");
+//
+//                String cardholderName=dict1.get("cardHolderName");
+//                Number cardNumber=dict2.get("cardNumber");
+//
+//                intent.putExtra("cardholderName", cardholderName);
+//                intent.putExtra("cardNumber", String.valueOf(cardNumber));
+////                Log.d("TAG", documentSnapshot.get("cardholderName").toString()+documentSnapshot.get("cardNumber").toString());
+//
+//            }
+//        });
 
 
 //

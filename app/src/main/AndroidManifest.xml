@@ -16,6 +16,9 @@
         android:theme="@style/Theme.HomepageActivity"
         tools:targetApi="31">
         <activity
+            android:name=".EditCookProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".PlaceOrderActivity"
             android:exported="false" />
         <activity
