@@ -109,7 +109,7 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     protected void setUpMealsGrid() {
-        mealsGrid = (GridView) findViewById(R.id.mealsGrid);
+        mealsGrid = (GridView) findViewById(R.id.ordersGrid);
         AdapterMenuMeal iconsAdapter = new AdapterMenuMeal(getApplicationContext(), items);
         mealsGrid.setAdapter(iconsAdapter);
 

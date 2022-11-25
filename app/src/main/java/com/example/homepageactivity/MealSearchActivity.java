@@ -2,13 +2,10 @@ package com.example.homepageactivity;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
-import static com.example.homepageactivity.MainActivity.firestoreDB;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -34,7 +31,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -66,7 +62,7 @@ public class MealSearchActivity extends AppCompatActivity {
 
         setupUserPages(R.id.pagesGrid);
         setupCuisineOrTypeSpinner((Spinner) findViewById(R.id.cuisineType), cuisineOptions);
-        setupCuisineOrTypeSpinner((Spinner) findViewById(R.id.cuisineType), mealTypeOptions);
+        setupCuisineOrTypeSpinner((Spinner) findViewById(R.id.mealType), mealTypeOptions);
         onSearchByNameFieldChange();
         getMealsForMealGrid();
     }
@@ -135,7 +131,7 @@ public class MealSearchActivity extends AppCompatActivity {
     }
 
     protected void setUpMealsGrid() {
-        GridView mealsGrid = (GridView) findViewById(R.id.mealsGrid);
+        GridView mealsGrid = (GridView) findViewById(R.id.ordersGrid);
         AdapterMenuMeal iconsAdapter = new AdapterMenuMeal(getApplicationContext(), relevantMeals);
         mealsGrid.setAdapter(iconsAdapter);
 
