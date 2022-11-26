@@ -45,7 +45,7 @@ public class MealAddActivity extends AppCompatActivity {
         }
 
         setupCuisineSpinner((Spinner) findViewById(R.id.cuisineType), cuisineOptions);
-        setupMealTypeSpinner((Spinner) findViewById(R.id.cuisineType), mealTypeOptions);
+        setupMealTypeSpinner((Spinner) findViewById(R.id.mealType), mealTypeOptions);
     }
 
     public void onClickAddMealButton(View view) {
