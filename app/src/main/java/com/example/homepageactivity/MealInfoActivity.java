@@ -8,7 +8,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.homepageactivity.domain.Client;
+import com.example.homepageactivity.domain.Meal;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,112 +29,64 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class MealInfoActivity extends AppCompatActivity {
-
-    private TextView mealNameText;
-    private TextView mealTypeText;
-    private TextView cuisineTypeText;
-    private TextView ingredientsText;
-    private TextView allergensText;
-    private TextView priceText;
-    private TextView descText;
-
-    private Button orderButton;
+    private Meal meal;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meal_info);
-
-        mealNameText=findViewById(R.id.mealName);
-        mealTypeText=findViewById(R.id.mealType);
-        cuisineTypeText=findViewById(R.id.cuisineType);
-        ingredientsText=findViewById(R.id.ingredients);
-        allergensText=findViewById(R.id.allergens);
-        priceText=findViewById(R.id.price);
-        descText=findViewById(R.id.description);
-
-        orderButton=findViewById(R.id.orderButton);
-        loadTextViews();
-
+        getMealFromFirebase();
     }
 
-    private void loadTextViews(){
+    private void getMealFromFirebase(){
         Intent intent=getIntent();
+        String mealUID=intent.getStringExtra("mealUID");
 
-        String mealName=intent.getStringExtra("mealName");
-        String mealType=intent.getStringExtra("mealType");
-        String cuisineType=intent.getStringExtra("cuisineType");
-        String ingredients=intent.getStringExtra("ingredients");
-        String allergens=intent.getStringExtra("allergens");
-        String price=intent.getStringExtra("price");
-        String description=intent.getStringExtra("description");
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Task<DocumentSnapshot> task=db.collection("meals").document(mealUID).get();
 
-//        Log.d("TAG", mealName);
+        task.addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                try{
+                    meal = documentSnapshot.toObject(Meal.class);
+                    setupUI();
+                }catch (Exception e){
+                    Toast.makeText(getApplicationContext(), "Could not load Meal Information", Toast.LENGTH_LONG);
+                }
+            }
+        });
+    }
 
-        mealNameText.setText(mealNameText.getText()+mealName);
-        mealTypeText.setText(mealTypeText.getText()+mealType);
-        cuisineTypeText.setText(cuisineTypeText.getText()+cuisineType);
-        ingredientsText.setText(ingredientsText.getText()+ingredients);
-        allergensText.setText(allergensText.getText()+allergens);
-        priceText.setText(priceText.getText()+price);
-        descText.setText(descText.getText()+description);
+    private void setupUI(){
+        ((TextView) findViewById(R.id.mealName)).setText("Meal: "+meal.getMealName());
+        ((TextView) findViewById(R.id.mealType)).setText("type: "+meal.getMealType());
+        ((TextView) findViewById(R.id.cuisineType)).setText("cuisine: "+meal.getCuisineType());
+        ((TextView) findViewById(R.id.ingredients)).setText("ingredients: "+meal.getIngredients());
+        ((TextView) findViewById(R.id.allergens)).setText("allergens"+meal.getAllergens());
+        ((TextView) findViewById(R.id.price)).setText("price"+meal.getPrice());
+        ((TextView) findViewById(R.id.description)).setText("description"+meal.getDescription());
     }
 
     public void onClickCookProfile(View view){
 
-        Intent newIntent=new Intent(getApplicationContext(), CookProfileActivity.class);
-
-        String firstName=getIntent().getStringExtra("cookFirstName");
-        String lastName=getIntent().getStringExtra("cookLastName");
-        String desc=getIntent().getStringExtra("cookDesc");
-
-
-        newIntent.putExtra("firstName", firstName);
-        newIntent.putExtra("lastName", lastName);
-        newIntent.putExtra("desc", desc);
-
-//        Log.d("TAG", firstName+lastName+desc);
-
-        startActivity(newIntent);
+        Intent intent=new Intent(getApplicationContext(), CookProfileActivity.class);
+        intent.putExtra("cookUID", meal.getCookUID());
+        startActivity(intent);
     }
 
     public void onClickPlaceOrderButton(View view){
 
-        Intent intent=new Intent(getApplicationContext(), PlaceOrderActivity.class);
-        intent.putExtra("mealName", getIntent().getStringExtra("mealName"));
-        intent.putExtra("mealType", getIntent().getStringExtra("mealType"));
-        intent.putExtra("cuisineType", getIntent().getStringExtra("cuisineType"));
-        intent.putExtra("mealPrice", getIntent().getStringExtra("price"));
+        Intent intent=getIntent();
+        String mealUID=intent.getStringExtra("mealUID");
+
+        intent=new Intent(getApplicationContext(), PlaceOrderActivity.class);
+
+        intent.putExtra("cookUID", meal.getCookUID());
+        intent.putExtra("mealUID", mealUID);
+        intent.putExtra("mealName", meal.getMealName());
 
         startActivity(intent);
-
-//        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//        Log.d("TAG", userId);
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        Task<DocumentSnapshot> task=db.collection("users").document(userId).get();
-
-//        task.addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-//            @Override
-//            public void onSuccess(DocumentSnapshot documentSnapshot) {
-//
-//
-//                HashMap<String, String> dict1=(HashMap<String, String>)documentSnapshot.get("payment");
-//                HashMap<String, Number> dict2=(HashMap<String, Number>)documentSnapshot.get("payment");
-//
-//                String cardholderName=dict1.get("cardHolderName");
-//                Number cardNumber=dict2.get("cardNumber");
-//
-//                intent.putExtra("cardholderName", cardholderName);
-//                intent.putExtra("cardNumber", String.valueOf(cardNumber));
-////                Log.d("TAG", documentSnapshot.get("cardholderName").toString()+documentSnapshot.get("cardNumber").toString());
-//
-//            }
-//        });
-
-
-//
-
-
     }
 }

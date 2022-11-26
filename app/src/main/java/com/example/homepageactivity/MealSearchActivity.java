@@ -143,13 +143,7 @@ public class MealSearchActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), MealInfoActivity.class);
                 Meal meal = relevantMeals.get(position).toObject(Meal.class);
 
-                intent.putExtra("mealType", meal.getMealType());
-                intent.putExtra("mealName", meal.getMealName());
-                intent.putExtra("description", meal.getDescription());
-                intent.putExtra("cuisineType", meal.getCuisineType());
-                intent.putExtra("ingredients", meal.getIngredients());
-                intent.putExtra("allergens", meal.getAllergens());
-                intent.putExtra("price", meal.getPrice());
+                intent.putExtra("mealUID", relevantMeals.get(position).getId());
 
                 String cookUID=meal.getCookUID();
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
