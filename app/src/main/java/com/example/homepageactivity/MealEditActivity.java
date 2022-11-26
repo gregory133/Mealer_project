@@ -43,7 +43,7 @@ public class MealEditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_meal);
 
         setupCuisineOrTypeSpinner((Spinner) findViewById(R.id.cuisineType), cuisineOptions);
-        setupCuisineOrTypeSpinner((Spinner) findViewById(R.id.cuisineType), mealTypeOptions);
+        setupCuisineOrTypeSpinner((Spinner) findViewById(R.id.mealType), mealTypeOptions);
         getMealInfo();
 
     }

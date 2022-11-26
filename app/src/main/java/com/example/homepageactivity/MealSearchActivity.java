@@ -66,7 +66,7 @@ public class MealSearchActivity extends AppCompatActivity {
 
         setupUserPages(R.id.pagesGrid);
         setupCuisineOrTypeSpinner((Spinner) findViewById(R.id.cuisineType), cuisineOptions);
-        setupCuisineOrTypeSpinner((Spinner) findViewById(R.id.cuisineType), mealTypeOptions);
+        setupCuisineOrTypeSpinner((Spinner) findViewById(R.id.mealType), mealTypeOptions);
         onSearchByNameFieldChange();
         getMealsForMealGrid();
     }
