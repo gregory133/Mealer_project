@@ -140,7 +140,7 @@ public class InboxMessageActivity extends AppCompatActivity implements DatePicke
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int day) {
 
-        Timestamp timestamp = new Timestamp(new Date(year, month, day));
+        Timestamp timestamp = new Timestamp(new Date(year-1900, month, day));
 
         String cookUID = docRef.toObject(ComplaintMessage.class).getCookUID();
         if (cookUID != null) {
