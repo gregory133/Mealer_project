@@ -4,29 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.homepageactivity.domain.Client;
 import com.example.homepageactivity.domain.Meal;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import org.w3c.dom.Document;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 
 public class MealInfoActivity extends AppCompatActivity {
     private Meal meal;
@@ -46,27 +31,32 @@ public class MealInfoActivity extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Task<DocumentSnapshot> task=db.collection("meals").document(mealUID).get();
 
-        task.addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                try{
-                    meal = documentSnapshot.toObject(Meal.class);
-                    setupUI();
-                }catch (Exception e){
-                    Toast.makeText(getApplicationContext(), "Could not load Meal Information", Toast.LENGTH_LONG);
-                }
+        task.addOnSuccessListener(documentSnapshot -> {
+            try{
+                meal = documentSnapshot.toObject(Meal.class);
+                setupUI();
+            }catch (Exception e){
+                Toast.makeText(getApplicationContext(), "Could not load Meal Information", Toast.LENGTH_LONG).show();
             }
         });
     }
 
     private void setupUI(){
-        ((TextView) findViewById(R.id.mealName)).setText("Meal: "+meal.getMealName());
-        ((TextView) findViewById(R.id.mealType)).setText("type: "+meal.getMealType());
-        ((TextView) findViewById(R.id.cuisineType)).setText("cuisine: "+meal.getCuisineType());
-        ((TextView) findViewById(R.id.ingredients)).setText("ingredients: "+meal.getIngredients());
-        ((TextView) findViewById(R.id.allergens)).setText("allergens"+meal.getAllergens());
-        ((TextView) findViewById(R.id.price)).setText("price"+meal.getPrice());
-        ((TextView) findViewById(R.id.description)).setText("description"+meal.getDescription());
+        String mealName ="Meal: "+meal.getMealName();
+        String mealType = "type: "+meal.getMealType();
+        String cuisineType = "cuisine: "+meal.getCuisineType();
+        String ingredients = "ingredients: "+meal.getIngredients();
+        String allergens = "allergens"+meal.getAllergens();
+        String price = "price"+meal.getPrice();
+        String description = "description"+meal.getDescription();
+
+        ((TextView) findViewById(R.id.mealName)).setText(mealName);
+        ((TextView) findViewById(R.id.mealType)).setText(mealType);
+        ((TextView) findViewById(R.id.cuisineType)).setText(cuisineType);
+        ((TextView) findViewById(R.id.ingredients)).setText(ingredients);
+        ((TextView) findViewById(R.id.allergens)).setText(allergens);
+        ((TextView) findViewById(R.id.price)).setText(price);
+        ((TextView) findViewById(R.id.description)).setText(description);
     }
 
     public void onClickCookProfile(View view){
@@ -81,11 +71,12 @@ public class MealInfoActivity extends AppCompatActivity {
         Intent intent=getIntent();
         String mealUID=intent.getStringExtra("mealUID");
 
+        intent = new Intent(this, PlaceOrderActivity.class);
+
         intent.putExtra("cookUID", meal.getCookUID());
         intent.putExtra("mealUID", mealUID);
         intent.putExtra("mealName", meal.getMealName());
         intent.putExtra("mealPrice", Double.toString(meal.getPrice()));
-        Toast.makeText(getApplicationContext(), "place order", Toast.LENGTH_LONG);
 
         startActivity(intent);
     }

@@ -10,6 +10,7 @@ public class MealOrder {
     String clientEmail;
     String mealUID;
     String mealName;
+    int rating;
 
     public MealOrder(){}
     public MealOrder(String cookUID, String cookEmail, String clientUID, String clientEmail, String mealUID, String mealName){
@@ -22,6 +23,7 @@ public class MealOrder {
         this.approved=0;
         this.delivered=0;
         this.received=0;
+        this.rating=0;
     }
 
     public int getApproved() {
@@ -54,5 +56,23 @@ public class MealOrder {
     }
     public String getMealName() {
         return mealName;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setApproved(int approved) {
+        this.approved = approved;
+    }
+    public void setDelivered(int delivered) {
+        this.delivered = delivered;
+    }
+    public void setReceived(int received) {
+        this.received = received;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 }

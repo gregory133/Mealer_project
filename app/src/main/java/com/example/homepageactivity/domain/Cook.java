@@ -37,5 +37,12 @@ public class Cook extends User{
         return ratingTotal;
     }
 
+    public void setRatingTotal(int ratingTotal) {
+        this.ratingTotal = ratingTotal;
+    }
+    public void setNumRatings(int numRatings) {
+        this.numRatings = numRatings;
+    }
+
     public String getDesc(){return shortDescription;}
 }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/off_grey"
-    tools:context=".domain.MealOrderInfoActivity">
+    tools:context=".MealOrderInfoActivity">
 
     <ImageView
         android:id="@+id/background"
@@ -135,7 +135,7 @@
             android:layout_height="40dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <Spinner
                 android:id="@+id/approvedSpinner"
@@ -165,21 +165,22 @@
 
         </LinearLayout>
 
+
+        <TextView
+            android:id="@+id/ratingPrompt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:fontFamily="@font/lucida_handwriting_italic"
+            android:text="Your Rating:  "
+            android:textSize="18dp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
+            android:layout_weight="0"
+            android:gravity="center"
             android:orientation="horizontal">
-
-
-            <TextView
-                android:id="@+id/ratingPrompt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/lucida_handwriting_italic"
-                android:text="Your Rating:  "
-                android:textSize="18dp" />
 
 
             <ImageView
@@ -238,7 +239,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="left"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <Button
@@ -247,7 +248,7 @@
                 android:layout_height="40dp"
                 android:background="@drawable/outline_off_grey"
                 android:fontFamily="@font/lucida_handwriting_italic"
-                android:onClick="onClickApplyChangesButton"
+                android:onClick="onClickWriteComplaintButton"
                 android:paddingHorizontal="10dp"
                 android:text="Write Complaint"
                 android:textSize="16dp" />

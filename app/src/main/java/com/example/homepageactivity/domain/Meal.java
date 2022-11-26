@@ -58,6 +58,13 @@ public class Meal {
         return ratingTotal;
     }
 
+    public void setRatingTotal(int ratingTotal) {
+        this.ratingTotal = ratingTotal;
+    }
+    public void setNumRatings(int numRatings) {
+        this.numRatings = numRatings;
+    }
+
     public String toString(){
         return mealName+", "+description+", "+cuisineType+", "+mealName+", "+ingredients+", "+allergens+", "+price+", "+cookUID+", "+offered;
     }

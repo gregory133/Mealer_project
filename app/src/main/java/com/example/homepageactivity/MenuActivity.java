@@ -36,6 +36,7 @@ public class MenuActivity extends AppCompatActivity {
     private static final ArrayList<PageIconInfo> pageIconOptions = new ArrayList<PageIconInfo>() {{
         add(new PageIconInfo("Inbox", InboxActivity.class, R.drawable.ic_message_icon));
         add(new PageIconInfo("Menu", MenuActivity.class, R.drawable.m_icon));
+        add(new PageIconInfo("MealOrders", MealOrdersActivity.class, R.drawable.ic_arrow));
         add(new PageIconInfo(logoutText, null, R.drawable.ic_door_icon));
     }};
 
