@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/off_grey"
-    tools:context=".ClientPaymentActivity">
+    tools:context=".PlaceOrderActivity">
 
     <ImageView
         android:id="@+id/background"
@@ -65,7 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:layout_weight=".5"
+            android:layout_weight=".4"
             android:orientation="vertical">
 
             <TextView
@@ -73,7 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:layout_weight="2"
+                android:layout_weight="1"
                 android:fontFamily="@font/lucida_handwriting_italic"
                 android:gravity="center_vertical"
                 android:text="Meal Summary"
@@ -89,25 +89,7 @@
                 android:textSize="16dp" />
 
             <TextView
-                android:id="@+id/mealType"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/lucida_handwriting_italic"
-                android:text="Meal Type: "
-                android:textSize="16dp" />
-
-            <TextView
-                android:id="@+id/cuisineType"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:fontFamily="@font/lucida_handwriting_italic"
-                android:text="Cuisine Type: "
-                android:textSize="16dp" />
-
-            <TextView
-                android:id="@+id/mealPrice"
+                android:id="@+id/price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -155,27 +137,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/row4"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:layout_weight="1"
-            android:background="@drawable/outline_off_white"
-            android:elevation="5dp"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/orderNotes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:background="@null"
-                android:ems="10"
-                android:gravity="start|top"
-                android:hint="Your Order Notes..."
-                android:inputType="textMultiLine" />
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/row5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -184,15 +145,14 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/orderButton"
-                android:layout_width="200dp"
+                android:id="@+id/confirmOrderButton"
+                android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
                 android:layout_weight="1"
                 android:background="@drawable/outline_client_dark"
                 android:fontFamily="@font/lucida_handwriting_italic"
-                android:text="Place Order!"
+                android:paddingHorizontal="10dp"
+                android:text="Confirm Order!"
                 android:textSize="20dp" />
         </LinearLayout>
 

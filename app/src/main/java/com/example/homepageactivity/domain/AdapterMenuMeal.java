@@ -42,14 +42,19 @@ public class AdapterMenuMeal extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         view = inflter.inflate(R.layout.meal_menu_icon, null);
         //Set mealName
-        ((TextView) view.findViewById(R.id.mealNameTextView)).setText(meals.get(i).getString("mealName"));
+        Meal meal = meals.get(i).toObject(Meal.class);
+        ((TextView) view.findViewById(R.id.mealNameTextView)).setText(meal.getMealName());
         //set mealIsOffered
-        ((ImageView) view.findViewById(R.id.offeredIcon)).setVisibility((meals.get(i).getBoolean("offered")) ? View.VISIBLE : View.INVISIBLE);
+        ((ImageView) view.findViewById(R.id.offeredIcon)).setVisibility(meal.getOffered() ? View.VISIBLE : View.INVISIBLE);
         //set mealPicture
         //set mealPictureOverlay
         ((RelativeLayout) view.findViewById(R.id.overlay)).setAlpha(1);
         //set Rating
-        setStarRating(view, 3.5f);
+        if(meal.getNumRatings() == 0){
+            setStarRating(view, 0.0f);
+        }else{
+            setStarRating(view, meal.getRatingTotal()/meal.getNumRatings());
+        }
         return view;
     }
 

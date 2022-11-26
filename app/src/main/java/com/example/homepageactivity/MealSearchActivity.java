@@ -81,7 +81,6 @@ public class MealSearchActivity extends AppCompatActivity {
 
                 if (pageIconOptions.get(i).getIconName().equals(logoutText)) {        //logout MUST be last
                     LogoutRequest();
-                    Toast.makeText(getApplicationContext(), "logout at "+i+"", Toast.LENGTH_LONG).show();
                     return;
                 }
                 if (this.getClass().getName().contains(pageIconOptions.get(i).getPageClass().getName())){

@@ -11,7 +11,8 @@ public class Cook extends User{
 
     private Image voidChequePicture;
     private String shortDescription;
-    private ArrayList<Meal> menu;
+    private int ratingTotal;
+    private int numRatings;
 
     public Cook() {}
 
@@ -19,19 +20,21 @@ public class Cook extends User{
         super(firstName, lastName, address, emailAddress);
         this.voidChequePicture = voidChequePicture;
         this.shortDescription = shortDescription;
-        menu = new ArrayList<Meal>();
+        this.ratingTotal = 0;
+        this.numRatings = 0;
     }
 
     public Image getVoidChequePicture() {
         return voidChequePicture;
     }
-
     public String getShortDescription() {
         return shortDescription;
     }
-
-    public ArrayList<Meal> getMenu() {
-        return menu;
+    public int getNumRatings() {
+        return numRatings;
+    }
+    public int getRatingTotal() {
+        return ratingTotal;
     }
 
     public String getDesc(){return shortDescription;}

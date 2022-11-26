@@ -123,7 +123,6 @@ public class InboxActivity extends AppCompatActivity {
 
                 if (getUserPagesOptions().get(i).getIconName() == logoutText) {        //logout MUST be last
                     LogoutRequest();
-                    Toast.makeText(getApplicationContext(), "logout at "+i+"", Toast.LENGTH_LONG).show();
                     return;
                 }
                 if (this.getClass().getName().contains(getUserPagesOptions().get(i).getPageClass().getName())){

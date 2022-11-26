@@ -8,7 +8,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,7 +40,10 @@ public class PlaceOrderActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_order);
 
+        Toast.makeText(getApplicationContext(), "not workingA", Toast.LENGTH_LONG);
         loadText();
+        Toast.makeText(getApplicationContext(), "not working", Toast.LENGTH_LONG);
+        setupOnClickConfirmOrderButton();
     }
 
     private void loadText(){
@@ -50,7 +56,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 try{
                     orderingClient = documentSnapshot.toObject(Client.class);
-                    //setupUI();
+                    setupPlaceOrderActivityUI();
                 }catch (Exception e){
                     Toast.makeText(getApplicationContext(), "Could not load User Information", Toast.LENGTH_LONG);
                 }
@@ -58,31 +64,30 @@ public class PlaceOrderActivity extends AppCompatActivity {
         });
     }
 
-    public void setupPlaceOrderActivityUI(){
-        TextView mealName=findViewById(R.id.mealName);
-        TextView  mealType=findViewById(R.id.mealType);
-        TextView  cuisineType=findViewById(R.id.cuisineType);
-        TextView mealPrice=findViewById(R.id.mealPrice);
-        TextView cardholderName=findViewById(R.id.cardholderName);
-        TextView cardNumber=findViewById(R.id.cardNumber);
-
-        String cardholderNameString = orderingClient.getPayment().getCardHolderName();
-        Long cardNumberString = orderingClient.getPayment().getCardNumber();
-
-        cardholderName.setText(cardholderName.getText()+cardholderNameString);
-
-        String cardNum = String.valueOf(cardNumberString);
+    private void setupPlaceOrderActivityUI(){
+        String cardNum = String.valueOf(orderingClient.getPayment().getCardNumber());
         String lastDigits = cardNum.substring(cardNum.length() - 4);
-        String muffledCardNumber = "**** **** **** "+lastDigits;
-        cardNumber.setText(cardNumber.getText()+muffledCardNumber);
 
-        mealName.setText(mealName.getText()+getIntent().getStringExtra("mealName"));
-        mealType.setText(mealType.getText()+getIntent().getStringExtra("mealType"));
-        cuisineType.setText(cuisineType.getText()+getIntent().getStringExtra("cuisineType"));
-        mealPrice.setText(mealPrice.getText()+getIntent().getStringExtra("mealPrice"));
+        ((TextView) findViewById(R.id.mealName)).setText("Meal: "+getIntent().getStringExtra("mealName"));
+        ((TextView) findViewById(R.id.price)).setText("Price: $"+getIntent().getStringExtra("mealPrice"));
+        ((TextView)findViewById(R.id.cardholderName)).setText("Card Holder: "+orderingClient.getPayment().getCardHolderName());
+        ((TextView)findViewById(R.id.cardNumber)).setText("Card Number:\n\t **** **** **** "+lastDigits);
     }
 
-    public void onClickPlaceOrderButton(View view){
+    private void setupOnClickConfirmOrderButton(){
+        Toast.makeText(getApplicationContext(), "setupOnClickConfirmOrderButton", Toast.LENGTH_LONG);
+        Button confirmOrderButton = (Button) findViewById(R.id.confirmOrderButton);
+
+        confirmOrderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickConfirmOrderButton(v);
+            }
+        });
+    }
+
+    public void onClickConfirmOrderButton(View view){
+        Toast.makeText(getApplicationContext(), "Place Order", Toast.LENGTH_LONG);
         String cookUID = getIntent().getStringExtra("cookUID");
         getFirebaseObjectByUID("users", cookUID);
     }
@@ -104,15 +109,8 @@ public class PlaceOrderActivity extends AppCompatActivity {
     }
 
     private void placeOrder(DocumentSnapshot cookDoc){
-        Cook cook;
-        try {
-            cook = cookDoc.toObject(Cook.class);
-        }catch (Exception e){
-            Toast.makeText(getApplicationContext(), "Failed to Place Order", Toast.LENGTH_LONG);
-            return;
-        }
         String cookUID = cookDoc.getId();
-        String cookEmail = cook.getEmailAddress();
+        String cookEmail = cookDoc.getString("");
         String clientUID = FirebaseAuth.getInstance().getCurrentUser().getUid();
         String clientEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         Intent intent = getIntent();
@@ -125,9 +123,8 @@ public class PlaceOrderActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        //onMessageCreationSuccess();
-                        finish();
                         Toast.makeText(getApplicationContext(), "Order Request Sent", Toast.LENGTH_SHORT);
+                        finish();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override

@@ -81,11 +81,11 @@ public class MealInfoActivity extends AppCompatActivity {
         Intent intent=getIntent();
         String mealUID=intent.getStringExtra("mealUID");
 
-        intent=new Intent(getApplicationContext(), PlaceOrderActivity.class);
-
         intent.putExtra("cookUID", meal.getCookUID());
         intent.putExtra("mealUID", mealUID);
         intent.putExtra("mealName", meal.getMealName());
+        intent.putExtra("mealPrice", Double.toString(meal.getPrice()));
+        Toast.makeText(getApplicationContext(), "place order", Toast.LENGTH_LONG);
 
         startActivity(intent);
     }
