@@ -144,13 +144,18 @@
                     android:text="Sender"
                     android:textSize="16dp" />
 
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+
                 <ImageView
                     android:id="@+id/imageView9"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+                    android:layout_marginRight="10dp"
                     android:onClick="onCLickReplyToMessage"
-                    android:paddingLeft="10dp"
-                    app:srcCompat="@drawable/ic_refresh" />
+                    app:srcCompat="@drawable/reply_button" />
 
             </LinearLayout>
 
