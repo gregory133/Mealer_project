@@ -153,7 +153,7 @@ public class MealSearchActivity extends AppCompatActivity {
                 intent.putExtra("cuisineType", meal.getCuisineType());
                 intent.putExtra("ingredients", meal.getIngredients());
                 intent.putExtra("allergens", meal.getAllergens());
-                intent.putExtra("price", meal.getPrice());
+                intent.putExtra("price", Double.toString(meal.getPrice()));
 
                 String cookUID=meal.getCookUID();
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
