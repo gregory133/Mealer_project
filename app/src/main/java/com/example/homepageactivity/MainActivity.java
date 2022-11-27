@@ -29,6 +29,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     private EditText emailTextView, passwordTextView;
@@ -132,7 +133,12 @@ public class MainActivity extends AppCompatActivity {
     private void openHomePage(DocumentSnapshot document){
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 
-        switch (document.getString("role")){
+        String role=document.getString("role");
+        if(role==null){
+            loginAttemptFailure("Login attempt failed");
+            return;
+        }
+        switch (role){
             case "Cook":
                 intent = new Intent(getApplicationContext(), MenuActivity.class);
                 //intent.putExtra("userRole","Cook");
@@ -149,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
                 currentAccount = document.toObject(Client.class);
                 break;
             default:
-                loginAttemptFailure("switch failed");
+                loginAttemptFailure("Login attempt failed");
                 return;
         }
 

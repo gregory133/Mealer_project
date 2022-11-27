@@ -115,6 +115,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
 
         firestoreDB.collection("orders").add(mealOrder)
                 .addOnSuccessListener(documentReference -> {
+                    Toast.makeText(getApplicationContext(), "Order Confirmed", Toast.LENGTH_LONG).show();
                     finish();
                 }).addOnFailureListener(e -> Toast.makeText(getApplicationContext(), "Problem Sending Order Request", Toast.LENGTH_LONG).show());
     }

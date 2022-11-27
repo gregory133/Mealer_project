@@ -48,14 +48,13 @@
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:layout_weight="1"
-            android:gravity="center"
+            android:gravity="start"
             android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/backHolder"
-                android:layout_width="0dp"
+                android:layout_width="40dp"
                 android:layout_height="fill_parent"
-                android:layout_weight="0.2"
                 app:cardBackgroundColor="@android:color/transparent"
                 app:cardElevation="0dp">
 
@@ -65,20 +64,15 @@
                     android:layout_height="fill_parent"
                     android:layout_weight="0.2"
                     android:onClick="onCLickReturn"
-                    android:src="@drawable/ic_arrow"></ImageView>
+                    android:src="@drawable/ic_arrow"/>
             </androidx.cardview.widget.CardView>
-
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.2" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
@@ -87,17 +81,16 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lucida_handwriting_italic"
                 android:text="Meal: "
-                android:textSize="18dp" />
+                android:textSize="18sp" />
 
 
             <TextView
                 android:id="@+id/orderMealName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:fontFamily="@font/lucida_handwriting_italic"
                 android:text="mealName"
-                android:textSize="18dp" />
+                android:textSize="18sp" />
 
 
         </LinearLayout>
@@ -106,7 +99,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
@@ -115,53 +108,50 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/lucida_handwriting_italic"
                 android:text="Meal: "
-                android:textSize="18dp" />
+                android:textSize="18sp" />
 
 
             <TextView
                 android:id="@+id/otherParty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:fontFamily="@font/lucida_handwriting_italic"
                 android:text="otherParty"
-                android:textSize="18dp" />
+                android:textSize="18sp" />
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/statusLayout"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:padding="20dp"
             android:gravity="center"
+            android:background="@drawable/outline_off_grey"
             android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lucida_handwriting_italic"
+                android:text="Status: "
+                android:textSize="18sp"/>
 
             <Spinner
                 android:id="@+id/approvedSpinner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <Space
-                android:layout_width="20dp"
-                android:layout_height="20dp" />
+                android:layout_height="30dp" />
 
             <Spinner
                 android:id="@+id/deliveredSpinner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-            <Space
-                android:layout_width="20dp"
-                android:layout_height="20dp" />
+                android:layout_height="30dp" />
 
             <Spinner
                 android:id="@+id/receivedSpinner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_height="30dp" />
 
         </LinearLayout>
 
@@ -173,7 +163,7 @@
             android:textAlignment="center"
             android:fontFamily="@font/lucida_handwriting_italic"
             android:text="Your Rating:  "
-            android:textSize="18dp" />
+            android:textSize="18sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -187,51 +177,41 @@
                 android:id="@+id/star1Icon"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:onClick="onClickStar"
                 android:src="@drawable/cook_button"
-                android:tag="1"
                 android:translationY="-5dp"
-                app:tint="@color/cook_light"></ImageView>
+                app:tint="@color/off_grey"/>
 
             <ImageView
                 android:id="@+id/star2Icon"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:onClick="onClickStar"
                 android:src="@drawable/cook_button"
-                android:tag="2"
                 android:translationY="5dp"
-                app:tint="@color/cook_light"></ImageView>
+                app:tint="@color/off_grey"/>
 
             <ImageView
                 android:id="@+id/star3Icon"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:onClick="onClickStar"
                 android:src="@drawable/cook_button"
-                android:tag="3"
                 android:translationY="-5dp"
-                app:tint="@color/cook_light"></ImageView>
+                app:tint="@color/off_grey"/>
 
             <ImageView
                 android:id="@+id/star4Icon"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:onClick="onClickStar"
                 android:src="@drawable/cook_button"
-                android:tag="4"
                 android:translationY="5dp"
-                app:tint="@color/cook_light"></ImageView>
+                app:tint="@color/off_grey"/>
 
             <ImageView
                 android:id="@+id/star5Icon"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:onClick="onClickStar"
                 android:src="@drawable/cook_button"
-                android:tag="5"
                 android:translationY="-5dp"
-                app:tint="@color/cook_light"></ImageView>
+                app:tint="@color/off_grey"/>
 
         </LinearLayout>
 
@@ -251,7 +231,7 @@
                 android:onClick="onClickWriteComplaintButton"
                 android:paddingHorizontal="10dp"
                 android:text="Write Complaint"
-                android:textSize="16dp" />
+                android:textSize="16sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -269,7 +249,7 @@
                 android:fontFamily="@font/lucida_handwriting_italic"
                 android:onClick="onClickApplyChangesButton"
                 android:text="Apply \n Changes"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
         </LinearLayout>
 
 

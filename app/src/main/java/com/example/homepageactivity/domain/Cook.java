@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Cook extends User{
-
+    private final static String role = "Cook";
     private Image voidChequePicture;
     private String shortDescription;
     private int ratingTotal;
@@ -17,7 +17,7 @@ public class Cook extends User{
     public Cook() {}
 
     public Cook(String firstName, String lastName, String address, String emailAddress, Image voidChequePicture, String shortDescription) {
-        super(firstName, lastName, address, emailAddress);
+        super(firstName, lastName, address, emailAddress, "role");
         this.voidChequePicture = voidChequePicture;
         this.shortDescription = shortDescription;
         this.ratingTotal = 0;

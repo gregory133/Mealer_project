@@ -5,14 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.homepageactivity.R;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class AdapterMealOrder extends BaseAdapter {
     Context context;
@@ -40,19 +40,22 @@ public class AdapterMealOrder extends BaseAdapter {
     }
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        view = inflter.inflate(R.layout.meal_order_icon, null);
-        QueryDocumentSnapshot order = orders.get(i);
+        view = View.inflate(context, R.layout.meal_order_icon, null);
+        MealOrder order = orders.get(i).toObject(MealOrder.class);
         //Set orderName
-        ((TextView) view.findViewById(R.id.orderMealNameTextView)).setText(order.getString("mealName"));
+        ((TextView) view.findViewById(R.id.orderMealNameTextView)).setText(order.getMealName());
 
         String status;
-        String[][] statuses = {{"Request Declined", "Pending Approval", "Request Approved"},{"Order Canceled", "", "Order Delivered"},{"Order Lost", "", "Order Received"}};
-        if(order.getDouble("received").intValue() != 0){
-            status = statuses[2][order.getDouble("received").intValue()+1];     //-1 converts from -1, 0, 1 => 0, 1, 2 for: fail, default, pass
-        }else if(order.getDouble("delivered") != 0){
-            status = statuses[1][order.getDouble("delivered").intValue()+1];
+        List<String> approvedOptions = Arrays.asList("Pending Approval", "Request Approved", "Request Declined");
+        List<String> deliveredOptions = Arrays.asList("Delivery Status", "Order Delivered", "Order Canceled");
+        List<String> receivedOptions = Arrays.asList("Received Status", "Order Received", "Order Lost");
+
+        if(order.getReceived() != 0){
+            status = receivedOptions.get(order.getReceived());
+        }else if(order.getDelivered() != 0){
+            status = deliveredOptions.get(order.getDelivered());
         }else{
-            status = statuses[0][order.getDouble("approved").intValue()+1];
+            status = approvedOptions.get(order.approved);
         }
         ((TextView) view.findViewById(R.id.orderStatusTextView)).setText(status);
 

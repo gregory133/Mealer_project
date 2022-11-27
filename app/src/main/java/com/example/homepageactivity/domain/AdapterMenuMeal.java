@@ -44,11 +44,8 @@ public class AdapterMenuMeal extends BaseAdapter {
         //Set mealName
         Meal meal = meals.get(i).toObject(Meal.class);
         ((TextView) view.findViewById(R.id.mealNameTextView)).setText(meal.getMealName());
-        //set mealIsOffered
-        ((ImageView) view.findViewById(R.id.offeredIcon)).setVisibility(meal.getOffered() ? View.VISIBLE : View.INVISIBLE);
-        //set mealPicture
-        //set mealPictureOverlay
-        ((RelativeLayout) view.findViewById(R.id.overlay)).setAlpha(1);
+        view.findViewById(R.id.offeredIcon).setVisibility(meal.getOffered() ? View.VISIBLE : View.INVISIBLE);
+        view.findViewById(R.id.overlay).setAlpha(1);
         //set Rating
         if(meal.getNumRatings() == 0){
             setStarRating(view, 0.0f);
