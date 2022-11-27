@@ -142,7 +142,7 @@ public class MealAddActivity extends AppCompatActivity {
             Toast.makeText(this, "Your Meal Must Have A Name", Toast.LENGTH_LONG).show();
             return false;
         }
-        if (!val.isPhrase(mealName)){
+        if (!val.isAlphanumericPhrase(mealName)){
             Toast.makeText(this, "Meal Names May Only Contain Alphanumeric Characters, Apostrophes, and Spaces", Toast.LENGTH_LONG).show();
             return false;
         }
