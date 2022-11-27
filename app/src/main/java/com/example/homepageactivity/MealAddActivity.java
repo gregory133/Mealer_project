@@ -126,7 +126,7 @@ public class MealAddActivity extends AppCompatActivity {
     }
 
 
-    private boolean validateMeal(String mealName, String description, String chosenCuisine, String chosenMealType,
+    public boolean validateMeal(String mealName, String description, String chosenCuisine, String chosenMealType,
                              String ingredients, String allergens, String price) {
         Validator val = new Validator();
         double mealPrice;
@@ -166,7 +166,7 @@ public class MealAddActivity extends AppCompatActivity {
             Toast.makeText(this, "Ingredients May Only Contain Alphanumeric Characters", Toast.LENGTH_LONG).show();
             return false;
         }
-        if (!val.isAlphanumericPhrase(allergens)){
+        if (!(allergens.isEmpty() || val.isAlphanumericPhrase(allergens))){
             Toast.makeText(this, "Allergens May Only Contain Alphanumeric Characters", Toast.LENGTH_LONG).show();
             return false;
         }
