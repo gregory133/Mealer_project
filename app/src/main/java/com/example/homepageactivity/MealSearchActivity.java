@@ -2,13 +2,10 @@ package com.example.homepageactivity;
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
-import static com.example.homepageactivity.MainActivity.firestoreDB;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -34,7 +31,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -50,9 +46,10 @@ public class MealSearchActivity extends AppCompatActivity {
     private final List<String> cuisineOptions = Arrays.asList("Cuisine", "American", "Mexican", "Chinese", "Other");      //Also hardcoded in AddMealActivity
     private final List<String> mealTypeOptions = Arrays.asList("Meal Type", "Appetizer", "Entree", "Dessert", "Other");      //Also hardcoded in AddMealActivity
     private static final String logoutText = "Logout";
-    private static final ArrayList<PageIconInfo> pageIconOptions = new ArrayList<PageIconInfo>() {{
+    private static final ArrayList<PageIconInfo> clientPageIconOptions = new ArrayList<PageIconInfo>() {{
         add(new PageIconInfo("Inbox", InboxActivity.class, R.drawable.ic_message_icon));
         add(new PageIconInfo("MealSearch", MealSearchActivity.class, R.drawable.m_icon));
+        add(new PageIconInfo("MealOrders", MealOrdersActivity.class, R.drawable.ic_arrow));
         add(new PageIconInfo(logoutText, null, R.drawable.ic_door_icon));
     }};
     long startTime;
@@ -74,8 +71,8 @@ public class MealSearchActivity extends AppCompatActivity {
     private void setupUserPages(int viewID){
 
         GridView pagesGrid = (GridView) findViewById(viewID);
-        pagesGrid.setNumColumns(pageIconOptions.size());
-        AdapterPageIcon adapter=new AdapterPageIcon(getApplicationContext(), pageIconOptions, this.getClass());
+        pagesGrid.setNumColumns(clientPageIconOptions.size());
+        AdapterPageIcon adapter=new AdapterPageIcon(getApplicationContext(), clientPageIconOptions, this.getClass());
         pagesGrid.setAdapter(adapter);
 
         pagesGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -83,15 +80,14 @@ public class MealSearchActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Log.d(TAG, "onPageSelected:");
 
-                if (pageIconOptions.get(i).getIconName().equals(logoutText)) {        //logout MUST be last
+                if (clientPageIconOptions.get(i).getIconName().equals(logoutText)) {        //logout MUST be last
                     LogoutRequest();
-                    Toast.makeText(getApplicationContext(), "logout at "+i+"", Toast.LENGTH_LONG).show();
                     return;
                 }
-                if (this.getClass().getName().contains(pageIconOptions.get(i).getPageClass().getName())){
+                if (this.getClass().getName().contains(clientPageIconOptions.get(i).getPageClass().getName())){
                     return;
                 }    //Don't reload this page
-                Intent intent=new Intent(getApplicationContext(), pageIconOptions.get(i).getPageClass());
+                Intent intent=new Intent(getApplicationContext(), clientPageIconOptions.get(i).getPageClass());
                 intent.putExtra("userRole",  getIntent().getStringExtra("userRole"));
                 startActivity(intent);
                 finish();
@@ -107,7 +103,7 @@ public class MealSearchActivity extends AppCompatActivity {
     private void getMealsForMealGrid(){
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser == null) {
-            loginAttemptFailure("Could not load menu");
+            Toast.makeText(getApplicationContext(), "Error Loading Page\nTry Again Later", Toast.LENGTH_LONG).show();
         }
         Timestamp currentDate = new Timestamp(Calendar.getInstance().getTime());
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -135,7 +131,7 @@ public class MealSearchActivity extends AppCompatActivity {
     }
 
     protected void setUpMealsGrid() {
-        GridView mealsGrid = (GridView) findViewById(R.id.mealsGrid);
+        GridView mealsGrid = (GridView) findViewById(R.id.ordersGrid);
         AdapterMenuMeal iconsAdapter = new AdapterMenuMeal(getApplicationContext(), relevantMeals);
         mealsGrid.setAdapter(iconsAdapter);
 
@@ -147,6 +143,7 @@ public class MealSearchActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), MealInfoActivity.class);
                 Meal meal = relevantMeals.get(position).toObject(Meal.class);
 
+                intent.putExtra("mealUID", relevantMeals.get(position).getId());
                 intent.putExtra("mealType", meal.getMealType());
                 intent.putExtra("mealName", meal.getMealName());
                 intent.putExtra("description", meal.getDescription());
@@ -186,7 +183,7 @@ public class MealSearchActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(System.currentTimeMillis() - startTime < 500){loginAttemptFailure((startTime-System.currentTimeMillis())+""); return;}     //BUG FIX: ignore for half a second so the meals are not overwritten
+                if(System.currentTimeMillis() - startTime < 500){return;}     //BUG FIX: ignore for half a second so the meals are not overwritten
                 if(i==0){
                     updateMeals("mealName", "");
                     return;
@@ -206,9 +203,6 @@ public class MealSearchActivity extends AppCompatActivity {
         });
     }
 
-    private void loginAttemptFailure(String failureReason){
-        Toast.makeText(this, failureReason, Toast.LENGTH_LONG).show();
-    }
 
     private void onSearchByNameFieldChange(){
         TextView searchByNameField = (TextView) findViewById(R.id.searchByNameField);

@@ -1,79 +1,122 @@
 package com.example.homepageactivity;
 
+import static android.content.ContentValues.TAG;
+import static com.example.homepageactivity.MainActivity.firestoreDB;
+
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.example.homepageactivity.domain.Client;
+import com.example.homepageactivity.domain.MealOrder;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
-
 public class PlaceOrderActivity extends AppCompatActivity {
-
-    private TextView mealName;
-    private TextView mealType;
-    private TextView cuisineType;
-    private TextView mealPrice;
-
-    private TextView cardholderName;
-    private TextView cardNumber;
-
+    private Client orderingClient;
+    private DocumentSnapshot cookDoc;
+    private static final String TAG = "PlaceOrderActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_place_order);
 
-        mealName=findViewById(R.id.mealName);
-        mealType=findViewById(R.id.mealType);
-        cuisineType=findViewById(R.id.cuisineType);
-        mealPrice=findViewById(R.id.mealPrice);
-        cardholderName=findViewById(R.id.cardholderName);
-        cardNumber=findViewById(R.id.cardNumber);
-
         loadText();
+        setupOnClickConfirmOrderButton();
     }
 
     private void loadText(){
-        mealName.setText(mealName.getText()+getIntent().getStringExtra("mealName"));
-        mealType.setText(mealType.getText()+getIntent().getStringExtra("mealType"));
-        cuisineType.setText(cuisineType.getText()+getIntent().getStringExtra("cuisineType"));
-        mealPrice.setText(mealPrice.getText()+getIntent().getStringExtra("mealPrice"));
-
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String userId;
+        try{
+            userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        }catch (Exception e){
+            Toast.makeText(getApplicationContext(), "Could now Retrieve User Data\nTry Again Layer", Toast.LENGTH_LONG).show();
+            return;
+        }
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Task<DocumentSnapshot> task=db.collection("users").document(userId).get();
 
-        task.addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-
-
-                HashMap<String, String> dict1=(HashMap<String, String>)documentSnapshot.get("payment");
-                HashMap<String, Number> dict2=(HashMap<String, Number>)documentSnapshot.get("payment");
-
-                String cardholderNameString=dict1.get("cardHolderName");
-                Number cardNumberString=dict2.get("cardNumber");
-
-                cardholderName.setText(cardholderName.getText()+cardholderNameString);
-
-                String cardNum=String.valueOf(cardNumberString);
-                String lastDigits=cardNum.substring(cardNum.length() - 4);
-                String muffledCardNumber="**** **** **** "+lastDigits;
-                cardNumber.setText(cardNumber.getText()+muffledCardNumber);
-
+        task.addOnSuccessListener(documentSnapshot -> {
+            try{
+                orderingClient = documentSnapshot.toObject(Client.class);
+                setupPlaceOrderActivityUI();
+            }catch (Exception e){
+                Toast.makeText(getApplicationContext(), "Could not load User Information", Toast.LENGTH_LONG).show();
             }
         });
-
-
-
-
     }
 
+    private void setupPlaceOrderActivityUI(){
+        String cardNum = String.valueOf(orderingClient.getPayment().getCardNumber());
+        String lastDigits = cardNum.substring(cardNum.length() - 4);
 
+        //Done in 2 steps as per Android Studio guidelines
+        String mealName = "Meal: "+getIntent().getStringExtra("mealName");
+        String mealPrice = "Price: $"+getIntent().getStringExtra("mealPrice");
+        String cardholderName = "Card Holder: "+orderingClient.getPayment().getCardHolderName();
+        String cardNumber = "Card Number:\n\t **** **** **** "+lastDigits;
+
+        ((TextView) findViewById(R.id.mealName)).setText(mealName);
+        ((TextView) findViewById(R.id.price)).setText(mealPrice);
+        ((TextView)findViewById(R.id.cardholderName)).setText(cardholderName);
+        ((TextView)findViewById(R.id.cardNumber)).setText(cardNumber);
+    }
+
+    private void setupOnClickConfirmOrderButton(){
+        Button confirmOrderButton = (Button) findViewById(R.id.confirmOrderButton);
+        confirmOrderButton.setOnClickListener(this::onClickConfirmOrderButton);
+    }
+
+    public void onClickConfirmOrderButton(View view){
+        String cookUID = getIntent().getStringExtra("cookUID");
+        getFirebaseObjectByUID(cookUID);
+    }
+
+    private void getFirebaseObjectByUID(String UID){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Task<DocumentSnapshot> task=db.collection("users").document(UID).get();
+
+        task.addOnSuccessListener(documentSnapshot -> {
+            try{
+                this.cookDoc = documentSnapshot;
+                placeOrder();
+            }catch (Exception e){
+                Log.e(TAG, "getFirebaseObjectByUID: "+e);
+            }
+        });
+    }
+
+    private void placeOrder(){
+        String cookUID = cookDoc.getId();
+        String cookEmail = cookDoc.getString("emailAddress");
+
+        String clientUID;
+        try{
+            clientUID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        }catch (Exception e){
+            Toast.makeText(getApplicationContext(), "Could now Retrieve User Data\nTry Again Layer", Toast.LENGTH_LONG).show();
+            return;
+        }
+        String clientEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        Intent intent = getIntent();
+        String mealUID = intent.getStringExtra("mealUID");
+        String mealName = intent.getStringExtra("mealName");
+
+        MealOrder mealOrder = new MealOrder(cookUID, cookEmail, clientUID, clientEmail, mealUID, mealName);
+
+        firestoreDB.collection("orders").add(mealOrder)
+                .addOnSuccessListener(documentReference -> {
+                    Toast.makeText(getApplicationContext(), "Order Confirmed", Toast.LENGTH_LONG).show();
+                    finish();
+                }).addOnFailureListener(e -> Toast.makeText(getApplicationContext(), "Problem Sending Order Request", Toast.LENGTH_LONG).show());
+    }
 }

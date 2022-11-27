@@ -16,7 +16,21 @@
         android:theme="@style/Theme.HomepageActivity"
         tools:targetApi="31">
         <activity
-            android:name=".EditCookProfileActivity"
+            android:name=".InboxWriteComplaintActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".MealOrdersActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".MealOrderInfoActivity"
             android:exported="false" />
         <activity
             android:name=".PlaceOrderActivity"

@@ -16,6 +16,8 @@ public class Meal {
     private String ingredients;
     private String allergens;
     private double price;
+    private int ratingTotal;
+    private int numRatings;
     private boolean offered;
     private String cookUID;
     private Timestamp bannedUntil;
@@ -34,6 +36,8 @@ public class Meal {
         this.cookUID = cookUID;
         this.offered = offered;
         bannedUntil = new Timestamp(Calendar.getInstance().getTime());
+        this.ratingTotal = 0;
+        this.numRatings = 0;
     }
 
     public String getMealName(){ return mealName; }
@@ -46,8 +50,20 @@ public class Meal {
     public String getCookUID() { return cookUID; }
     public boolean getOffered() {return offered; }
     public Timestamp getBannedUntil() {return bannedUntil; }
-
     public void setOffered(boolean offered){ this.offered = offered; }
+    public int getNumRatings() {
+        return numRatings;
+    }
+    public int getRatingTotal() {
+        return ratingTotal;
+    }
+
+    public void setRatingTotal(int ratingTotal) {
+        this.ratingTotal = ratingTotal;
+    }
+    public void setNumRatings(int numRatings) {
+        this.numRatings = numRatings;
+    }
 
     public String toString(){
         return mealName+", "+description+", "+cuisineType+", "+mealName+", "+ingredients+", "+allergens+", "+price+", "+cookUID+", "+offered;

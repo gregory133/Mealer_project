@@ -6,35 +6,52 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.homepageactivity.domain.Cook;
+import com.example.homepageactivity.domain.Meal;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class CookProfileActivity extends AppCompatActivity {
-
-    private TextView firstNameText;
-    private TextView lastNameText;
-    private TextView emailText;
-    private TextView descText;
+    private Cook cook;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cook_profile);
 
-        firstNameText=findViewById(R.id.firstName);
-        lastNameText=findViewById(R.id.lastName);
-        emailText=findViewById(R.id.email);
-        descText=findViewById(R.id.description);
-
-        loadTextViews();
-
-
+        getCookFromFirebase();
     }
 
-    private void loadTextViews(){
 
+
+    private void getCookFromFirebase(){
         Intent intent=getIntent();
+        String cookUID = intent.getStringExtra("cookUID");
 
-        firstNameText.setText(firstNameText.getText()+intent.getStringExtra("firstName"));
-        lastNameText.setText(lastNameText.getText()+intent.getStringExtra("lastName"));
-        descText.setText(descText.getText()+intent.getStringExtra("desc"));
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Task<DocumentSnapshot> task=db.collection("users").document(cookUID).get();
+
+        task.addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                try{
+                    cook = documentSnapshot.toObject(Cook.class);
+                    setupUI();
+                }catch (Exception e){
+                    Toast.makeText(getApplicationContext(), "Could not load Meal Information", Toast.LENGTH_LONG);
+                }
+            }
+        });
+    }
+
+    private void setupUI(){
+        ((TextView)findViewById(R.id.firstName)).setText(cook.getFirstName());
+        ((TextView)findViewById(R.id.lastName)).setText(cook.getLastName());
+        ((TextView)findViewById(R.id.email)).setText(cook.getEmailAddress());
+        ((TextView)findViewById(R.id.description)).setText(cook.getDesc());
     }
 }

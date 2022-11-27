@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/off_grey"
-    tools:context=".MenuActivity">
+    tools:context=".MealOrdersActivity">
 
     <ImageView
         android:id="@+id/background"
@@ -29,7 +29,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_wave"
-        app:tint="@color/cook_light" />
+        app:tint="@color/client_light" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -38,16 +38,26 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="320dp"
-            android:layout_height="0dp"
+        <LinearLayout
+            android:id="@+id/nameRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:layout_weight="0.1"
-            android:background="@drawable/outline_off_white"
-            android:onClick="onClickAddMealButton"
-            android:text="Add Meal" />
+            android:gravity="center"
+            android:orientation="horizontal">
 
+            <EditText
+                android:id="@+id/searchByNameField"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="@drawable/outline_off_white"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="Search Meals"
+                android:inputType="textMultiLine"
+                tools:ignore="TouchTargetSizeCheck" />
+        </LinearLayout>
 
         <GridView
             android:id="@+id/ordersGrid"
@@ -80,4 +90,5 @@
         </RelativeLayout>
 
     </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

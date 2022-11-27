@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/off_grey"
-    tools:context=".ClientPaymentActivity">
+    tools:context=".PlaceOrderActivity">
 
     <ImageView
         android:id="@+id/background"
@@ -35,181 +35,124 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_margin="20dp"
+        android:padding="20dp"
+        android:background="@drawable/outline_off_white"
         android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/row1"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.2"
+            android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/paymentTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/lucida_handwriting_italic"
                 android:gravity="center"
-                android:text="Place Order"
+                android:text="Meal Order"
                 android:textColor="@color/black"
                 android:textSize="24dp" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/row2"
+            android:id="@+id/mealInfoLayout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:layout_weight="0.5"
-            android:orientation="horizontal">
+            android:layout_weight=".4"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/textView7"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/lucida_handwriting_italic"
+                android:gravity="center_vertical"
+                android:text="Meal Summary"
+                android:textSize="20dp" />
 
-                <TextView
-                    android:id="@+id/textView7"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="2"
-                    android:fontFamily="@font/lucida_handwriting_italic"
-                    android:gravity="center_vertical"
-                    android:text="Meal Summary"
-                    android:textSize="25dp" />
+            <TextView
+                android:id="@+id/mealName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/lucida_handwriting_italic"
+                android:text="Name: "
+                android:textSize="16dp" />
 
-                <TextView
-                    android:id="@+id/mealName"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/lucida_handwriting_italic"
-                    android:text="Name: "
-                    android:textSize="20dp" />
-
-                <TextView
-                    android:id="@+id/mealType"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/lucida_handwriting_italic"
-                    android:text="Meal Type: "
-                    android:textSize="20dp" />
-
-                <TextView
-                    android:id="@+id/cuisineType"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/lucida_handwriting_italic"
-                    android:text="Cuisine Type: "
-                    android:textSize="20dp" />
-
-                <TextView
-                    android:id="@+id/mealPrice"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/lucida_handwriting_italic"
-                    android:text="Price: "
-                    android:textSize="20dp" />
-            </LinearLayout>
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/lucida_handwriting_italic"
+                android:text="Price: "
+                android:textSize="16dp" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/row3"
+            android:id="@+id/paymentInfoLayout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:layout_weight="0.3"
-            android:orientation="horizontal">
+            android:layout_weight=".4"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/textView9"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:fontFamily="@font/lucida_handwriting_italic"
+                android:gravity="center_vertical"
+                android:text="Payment Information"
+                android:textSize="20dp" />
 
-                <TextView
-                    android:id="@+id/textView9"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/lucida_handwriting_italic"
-                    android:gravity="center_vertical"
-                    android:text="Payment Information"
-                    android:textSize="25dp" />
-
-                <TextView
-                    android:id="@+id/cardholderName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/lucida_handwriting_italic"
-                    android:text="Cardholder Name: "
-                    android:textSize="20dp" />
-
-                <TextView
-                    android:id="@+id/cardNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/lucida_handwriting_italic"
-                    android:text="Card Number: "
-                    android:textSize="20dp" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/row4"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_margin="20dp"
-            android:layout_weight="0.7"
-            android:background="@drawable/outline_off_white"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/orderNotes"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_margin="15dp"
+            <TextView
+                android:id="@+id/cardholderName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@null"
-                android:ems="10"
-                android:gravity="start|top"
-                android:hint="Order Notes..."
-                android:inputType="textMultiLine" />
+                android:fontFamily="@font/lucida_handwriting_italic"
+                android:text="Cardholder Name: "
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/cardNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/lucida_handwriting_italic"
+                android:text="Card Number: \n"
+                android:textSize="16dp" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/row5"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
             android:gravity="center"
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/orderButton"
+                android:id="@+id/confirmOrderButton"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
                 android:background="@drawable/outline_client_dark"
                 android:fontFamily="@font/lucida_handwriting_italic"
-                android:text="Order Meal"
+                android:paddingHorizontal="10dp"
+                android:text="Confirm Order!"
                 android:textSize="20dp" />
         </LinearLayout>
 

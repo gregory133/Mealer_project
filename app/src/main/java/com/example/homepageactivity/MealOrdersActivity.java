@@ -1,8 +1,12 @@
 package com.example.homepageactivity;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import static com.example.homepageactivity.MainActivity.currentAccount;
 import static com.example.homepageactivity.MainActivity.firebaseAuth;
 import static com.example.homepageactivity.MainActivity.firestoreDB;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,36 +15,22 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
+import com.example.homepageactivity.domain.AdapterMealOrder;
+import com.example.homepageactivity.domain.AdapterPageIcon;
 import com.example.homepageactivity.domain.Admin;
 import com.example.homepageactivity.domain.Client;
 import com.example.homepageactivity.domain.Cook;
-import com.example.homepageactivity.domain.AdapterInboxMessage;
-import com.example.homepageactivity.domain.Message;
 import com.example.homepageactivity.domain.PageIconInfo;
-import com.example.homepageactivity.domain.AdapterPageIcon;
 import com.example.homepageactivity.domain.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-public class InboxActivity extends AppCompatActivity {
-
-    private static final String TAG = "InboxActivity";
-
-    private ArrayList<QueryDocumentSnapshot> items;
+public class MealOrdersActivity extends AppCompatActivity {
 
     private static final String logoutText = "Logout";
     private static final ArrayList<PageIconInfo> clientPageIconOptions = new ArrayList<PageIconInfo>() {{
@@ -60,60 +50,20 @@ public class InboxActivity extends AppCompatActivity {
         add(new PageIconInfo(logoutText, null, R.drawable.ic_door_icon));
     }};
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_inbox);
+        setContentView(R.layout.activity_meal_orders);
 
-        collapseAdminButtons();
-        setThemeColors();
         setupUserPages(R.id.pagesGrid);
-        getMessages();
-    }
-
-    private void getMessages(){
-        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-        if (currentUser != null) {
-            firestoreDB.collection("messages")
-                    .whereEqualTo("recipientUID", currentUser.getUid()).whereEqualTo("archived", false)
-                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                        @Override
-                        public void onEvent(@Nullable QuerySnapshot value,
-                                            @Nullable FirebaseFirestoreException e) {
-                            if (e != null) {
-                                Log.w(TAG, "Listen failed.", e);
-                                return;
-                            }
-
-                            items = new ArrayList<>();
-                            for (QueryDocumentSnapshot msg : value) {
-                                items.add(msg);
-                            }
-                            populateInbox();
-                        }
-                    });
-        } else {
-            Toast.makeText(this, "Error, no user signed in", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    private void populateInbox(){
-        AdapterInboxMessage adapter=new AdapterInboxMessage(this, R.layout.activity_inbox_list_item, items);
-        ListView listView = (ListView) findViewById(R.id.messagesList);
-        listView.setAdapter(adapter);
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.d(TAG, "onItemSelected:");
-                OpenMessage(i);
-            }
-        });
+        setThemeColors();
+        getMealsForMealGrid();
     }
 
     private void setupUserPages(int viewID){
         GridView pagesGrid;
-        pagesGrid = (GridView) findViewById(viewID);
+        pagesGrid = findViewById(viewID);
         pagesGrid.setNumColumns(getUserPagesOptions().size());
         AdapterPageIcon adapter=new AdapterPageIcon(getApplicationContext(), getUserPagesOptions(), this.getClass());
         pagesGrid.setAdapter(adapter);
@@ -123,8 +73,9 @@ public class InboxActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Log.d(TAG, "onPageSelected:");
 
-                if (getUserPagesOptions().get(i).getIconName() == logoutText) {        //logout MUST be last
+                if (getUserPagesOptions().get(i).getIconName().equals(logoutText)) {        //logout MUST be last
                     LogoutRequest();
+                    Toast.makeText(getApplicationContext(), "logout at "+i+"", Toast.LENGTH_LONG).show();
                     return;
                 }
                 if (this.getClass().getName().contains(getUserPagesOptions().get(i).getPageClass().getName())){
@@ -137,8 +88,7 @@ public class InboxActivity extends AppCompatActivity {
             }
         });
     }
-
-    private final ArrayList<PageIconInfo> getUserPagesOptions(){
+    private ArrayList<PageIconInfo> getUserPagesOptions(){
         Class<? extends User> aClass = currentAccount.getClass();
         if (Client.class.equals(aClass)) {
             return clientPageIconOptions;
@@ -149,22 +99,9 @@ public class InboxActivity extends AppCompatActivity {
         }
         return null;
     }
-
     private void LogoutRequest(){
         FirebaseAuth.getInstance().signOut();
         finish();
-    }
-
-    private void collapseAdminButtons(){
-        if (!(currentAccount.getClass() == Admin.class)){
-            LinearLayout adminRow=findViewById(R.id.row4);
-            LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    0,
-                    1.0f
-            );
-            adminRow.setLayoutParams(param);
-        }
     }
 
     private void setThemeColors(){
@@ -175,18 +112,49 @@ public class InboxActivity extends AppCompatActivity {
             ((ImageView) findViewById(R.id.midground)).setColorFilter(getResources().getColor(R.color.client_light));
         }
     }
-    public void onCLickNewMessage(View view){
-        startActivity(new Intent(this, InboxWriteMessageActivity.class));
+
+    private void getMealsForMealGrid(){
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+
+        String uidField;
+        Class<? extends User> aClass = currentAccount.getClass();
+        if (Client.class.equals(aClass)) {
+            uidField = "clientUID";
+        } else if (Cook.class.equals(aClass)) {
+            uidField = "cookUID";
+        }else{
+            return;
+        }
+
+        if (currentUser == null) {
+            Toast.makeText(this, "Could not load Orders", Toast.LENGTH_LONG).show();
+            return;
+        }
+        firestoreDB.collection("orders")
+                .whereEqualTo(uidField, currentUser.getUid())
+                .addSnapshotListener((value, e) -> {
+                    if (e != null) {
+                        Log.w(TAG, "Listen failed.", e);
+                        return;
+                    }
+
+                    ArrayList<QueryDocumentSnapshot> orderDocs = new ArrayList<>();
+                    for (QueryDocumentSnapshot msg : value) {
+                        orderDocs.add(msg);
+                    }
+                    setUpMealsGrid(orderDocs);
+                });
     }
+    protected void setUpMealsGrid(ArrayList<QueryDocumentSnapshot> orderDocs) {
+        GridView ordersGrid = findViewById(R.id.ordersGrid);
+        AdapterMealOrder iconsAdapter = new AdapterMealOrder(getApplicationContext(), orderDocs);
+        ordersGrid.setAdapter(iconsAdapter);
 
-    private void OpenMessage(int i) {
-        Message selectedMessage = items.get(i).toObject(Message.class);
-
-        Intent intent=new Intent(this, InboxMessageActivity.class);
-        intent.putExtra("messageUID", items.get(i).getId());
-        intent.putExtra("senderName", ((TextView)((ListView)findViewById(R.id.messagesList)).getChildAt(i).findViewById(R.id.cuisineType)).getText());
-
-        int requestCode=1;
-        startActivityForResult(intent, requestCode);
+        ordersGrid.setOnItemClickListener((parent, view, position, id) -> {
+            Log.d(TAG, "MealOrderIconSelected:");
+                Intent intent = new Intent(getApplicationContext(), MealOrderInfoActivity.class);
+                intent.putExtra("orderID", orderDocs.get(position).getId());
+                startActivity(intent);
+        });
     }
 }

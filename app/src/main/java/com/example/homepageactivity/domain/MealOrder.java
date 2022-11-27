@@ -9,19 +9,22 @@ public class MealOrder {
     String clientUID;
     String clientEmail;
     String mealUID;
+    String mealName;
+    int rating;
 
     public MealOrder(){}
-    public MealOrder(String cookUID, String cookEmail, String clientUID, String clientEmail, String mealUID){
+    public MealOrder(String cookUID, String cookEmail, String clientUID, String clientEmail, String mealUID, String mealName){
         this.cookUID=cookUID;
         this.cookEmail=cookEmail;
         this.clientUID=clientUID;
         this.clientEmail=clientEmail;
         this.mealUID=mealUID;
+        this.mealName=mealName;
         this.approved=0;
         this.delivered=0;
         this.received=0;
+        this.rating=0;
     }
-
 
     public int getApproved() {
         return approved;
@@ -50,5 +53,26 @@ public class MealOrder {
 
     public String getMealUID() {
         return mealUID;
+    }
+    public String getMealName() {
+        return mealName;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setApproved(int approved) {
+        this.approved = approved;
+    }
+    public void setDelivered(int delivered) {
+        this.delivered = delivered;
+    }
+    public void setReceived(int received) {
+        this.received = received;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 }

@@ -8,30 +8,40 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Cook extends User{
-
+    private final static String role = "Cook";
     private Image voidChequePicture;
     private String shortDescription;
-    private ArrayList<Meal> menu;
+    private int ratingTotal;
+    private int numRatings;
 
     public Cook() {}
 
     public Cook(String firstName, String lastName, String address, String emailAddress, Image voidChequePicture, String shortDescription) {
-        super(firstName, lastName, address, emailAddress);
+        super(firstName, lastName, address, emailAddress, "role");
         this.voidChequePicture = voidChequePicture;
         this.shortDescription = shortDescription;
-        menu = new ArrayList<Meal>();
+        this.ratingTotal = 0;
+        this.numRatings = 0;
     }
 
     public Image getVoidChequePicture() {
         return voidChequePicture;
     }
-
     public String getShortDescription() {
         return shortDescription;
     }
+    public int getNumRatings() {
+        return numRatings;
+    }
+    public int getRatingTotal() {
+        return ratingTotal;
+    }
 
-    public ArrayList<Meal> getMenu() {
-        return menu;
+    public void setRatingTotal(int ratingTotal) {
+        this.ratingTotal = ratingTotal;
+    }
+    public void setNumRatings(int numRatings) {
+        this.numRatings = numRatings;
     }
 
     public String getDesc(){return shortDescription;}

@@ -158,6 +158,8 @@ public class InboxMessageActivity extends AppCompatActivity implements DatePicke
         change.put("archived", true);
         String msgID = docRef.getId();
         firestoreDB.collection("messages").document(msgID).set(change, SetOptions.merge());
+
+        throwToast(docRef.toObject(ComplaintMessage.class).getCookUID()+"");
         finish();
     }
 
