@@ -70,7 +70,8 @@
                         android:layout_height="fill_parent"
                         android:translationY="-5dp"
                         android:layout_weight="1"
-                        android:src="@drawable/cook_button">
+                        android:src="@drawable/cook_button"
+                        app:tint="@color/off_grey">
                     </ImageView>
                     <ImageView
                         android:id="@+id/star2Icon"
@@ -78,6 +79,7 @@
                         android:layout_height="fill_parent"
                         android:translationY="5dp"
                         android:layout_weight="1"
+                        app:tint="@color/off_grey"
                         android:src="@drawable/cook_button">
                     </ImageView>
                     <ImageView
@@ -86,6 +88,7 @@
                         android:layout_height="fill_parent"
                         android:translationY="-5dp"
                         android:layout_weight="1"
+                        app:tint="@color/off_grey"
                         android:src="@drawable/cook_button">
                     </ImageView>
                     <ImageView
@@ -94,6 +97,7 @@
                         android:layout_height="fill_parent"
                         android:translationY="5dp"
                         android:layout_weight="1"
+                        app:tint="@color/off_grey"
                         android:src="@drawable/cook_button">
                     </ImageView>
                     <ImageView
@@ -102,6 +106,7 @@
                         android:layout_height="fill_parent"
                         android:translationY="-5dp"
                         android:layout_weight="1"
+                        app:tint="@color/off_grey"
                         android:src="@drawable/cook_button">
                     </ImageView>
                 </LinearLayout>
@@ -116,7 +121,8 @@
                     android:layout_width="0dp"
                     android:layout_height="fill_parent"
                     android:layout_weight="0.5"
-                    android:src="@drawable/client_button">
+                    android:src="@drawable/offered"
+                    app:tint="@color/cook_light">
                 </ImageView>
             </LinearLayout>
         </LinearLayout>

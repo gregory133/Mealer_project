@@ -16,6 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/client_dark"
         app:srcCompat="@drawable/ic_wave" />
 
     <ImageView
@@ -143,10 +144,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp" />
 
+            <Space
+                android:layout_width="fill_parent"
+                android:layout_height="5dp"/>
+
             <Spinner
                 android:id="@+id/deliveredSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="30dp" />
+
+            <Space
+                android:layout_width="fill_parent"
+                android:layout_height="5dp"/>
 
             <Spinner
                 android:id="@+id/receivedSpinner"
@@ -155,67 +164,76 @@
 
         </LinearLayout>
 
-
-        <TextView
-            android:id="@+id/ratingPrompt"
+        <LinearLayout
+            android:id="@+id/ratingLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:fontFamily="@font/lucida_handwriting_italic"
-            android:text="Your Rating:  "
-            android:textSize="18sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_weight="0"
+            android:layout_weight="1"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/ratingPrompt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:fontFamily="@font/lucida_handwriting_italic"
+                android:text="Your Rating:  "
+                android:textSize="18sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_weight="0"
+                android:gravity="center"
+                android:orientation="horizontal">
 
 
-            <ImageView
-                android:id="@+id/star1Icon"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/cook_button"
-                android:translationY="-5dp"
-                app:tint="@color/off_grey"/>
+                <ImageView
+                    android:id="@+id/star1Icon"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/cook_button"
+                    android:translationY="-5dp"
+                    app:tint="@color/off_grey"/>
 
-            <ImageView
-                android:id="@+id/star2Icon"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/cook_button"
-                android:translationY="5dp"
-                app:tint="@color/off_grey"/>
+                <ImageView
+                    android:id="@+id/star2Icon"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/cook_button"
+                    android:translationY="5dp"
+                    app:tint="@color/off_grey"/>
 
-            <ImageView
-                android:id="@+id/star3Icon"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/cook_button"
-                android:translationY="-5dp"
-                app:tint="@color/off_grey"/>
+                <ImageView
+                    android:id="@+id/star3Icon"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/cook_button"
+                    android:translationY="-5dp"
+                    app:tint="@color/off_grey"/>
 
-            <ImageView
-                android:id="@+id/star4Icon"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/cook_button"
-                android:translationY="5dp"
-                app:tint="@color/off_grey"/>
+                <ImageView
+                    android:id="@+id/star4Icon"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/cook_button"
+                    android:translationY="5dp"
+                    app:tint="@color/off_grey"/>
 
-            <ImageView
-                android:id="@+id/star5Icon"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:src="@drawable/cook_button"
-                android:translationY="-5dp"
-                app:tint="@color/off_grey"/>
+                <ImageView
+                    android:id="@+id/star5Icon"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/cook_button"
+                    android:translationY="-5dp"
+                    app:tint="@color/off_grey"/>
 
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/complaintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -232,24 +250,6 @@
                 android:paddingHorizontal="10dp"
                 android:text="Write Complaint"
                 android:textSize="16sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/applyChangesButton"
-                android:layout_width="180dp"
-                android:layout_height="60dp"
-                android:background="@drawable/outline_client_dark"
-                android:fontFamily="@font/lucida_handwriting_italic"
-                android:onClick="onClickApplyChangesButton"
-                android:text="Apply \n Changes"
-                android:textSize="20sp" />
         </LinearLayout>
 
 

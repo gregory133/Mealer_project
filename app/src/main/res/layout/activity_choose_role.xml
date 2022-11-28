@@ -8,15 +8,29 @@
     tools:context=".ChooseRole">
 
     <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/main"
-        app:layout_constraintStart_toStartOf="@+id/main"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/choose_activity_bg" />
+        app:tint="@color/client_dark"
+        app:srcCompat="@drawable/ic_wave" />
+
+    <ImageView
+        android:id="@+id/midground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:translationY="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_wave"
+        app:tint="@color/client_light" />
 
     <LinearLayout
         android:id="@+id/main"
@@ -51,9 +65,9 @@
                     android:background="@drawable/outline_off_white"
 
                     android:fontFamily="@font/lucida_handwriting_italic"
+                    android:textSize="30sp"
                     android:gravity="center"
-                    android:text="What Kind of User are You?"
-                    android:textSize="30dp" />
+                    android:text="What Kind of User are You?" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
@@ -69,37 +83,69 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <Button
-                    android:id="@+id/button3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/client_button"
-                    android:onClick="onClickButton"
-                    android:tag="Client"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:background="@drawable/outline_client_dark_circle"
+                    android:clipToOutline="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.121"
+                    app:layout_constraintHorizontal_bias="0.05"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.66"
-                    tools:ignore="SpeakableTextPresentCheck" />
+                    app:layout_constraintVertical_bias="1">
 
-                <Button
-                    android:id="@+id/button4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/cook_button"
-                    android:onClick="onClickButton"
-                    android:tag="Cook"
+                    <Button
+                        android:id="@+id/button3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/outline_cook_light_circle"
+                        android:onClick="onClickButton"
+                        android:tag="Client"
+                        android:text="Client"
+                        android:fontFamily="@font/lucida_handwriting_italic"
+                        android:textSize="30sp"
+                        android:translationX="10dp"
+                        android:translationY="-10dp"
+                        tools:ignore="SpeakableTextPresentCheck"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="160dp"
+                    android:layout_height="160dp"
+                    android:background="@drawable/outline_client_dark_circle"
+                    android:clipToOutline="true"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.937"
+                    app:layout_constraintHorizontal_bias="0.95"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.012"
-                    tools:ignore="SpeakableTextPresentCheck" />
+                    app:layout_constraintVertical_bias="0.0">
+
+                    <Button
+                        android:id="@+id/button4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/outline_client_light_circle"
+                        android:onClick="onClickButton"
+                        android:tag="Cook"
+                        android:text="Cook"
+                        android:fontFamily="@font/lucida_handwriting_italic"
+                        android:textSize="30sp"
+                        android:translationX="-10dp"
+                        android:translationY="10dp"
+                        tools:ignore="SpeakableTextPresentCheck" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/client_light"/>
 
     </LinearLayout>
 
