@@ -67,7 +67,7 @@ public class Validator {
                     return false;
                 }
             }
-            if("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#$%&'*+-/=?^_`{|}~\"(),:;<>@[\\]".indexOf(emailChars[i]) >= 0){
+            if("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!#$%&'*+-/=?^_`{|}~\"(),.:;<>@[\\]".indexOf(emailChars[i]) >= 0){
                 i++;
                 if(i >= emailChars.length){return false;}      //.com has not been reached
                 continue;
@@ -124,11 +124,11 @@ public class Validator {
         int i = 0;
 
         while(i < chars.length){
-            if("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz ',".indexOf(chars[i]) >= 0){
+            if("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz',".indexOf(chars[i]) >= 0){
                 i++;
                 continue;
             }else{
-                return false;       //not a valid pre-@ character
+                return false;
             }
         }
         return true;
@@ -144,7 +144,7 @@ public class Validator {
                 i++;
                 continue;
             }else{
-                return false;       //not a valid pre-@ character
+                return false;
             }
         }
         return true;

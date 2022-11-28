@@ -62,12 +62,13 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/outline_off_white"
                     android:gravity="center"
-                    android:hint="Enter Username"
+                    android:hint="Enter Email Address"
 
                     android:inputType="textMultiLine"
                     android:singleLine="true"
                     android:translationX="-3dp"
-                    android:translationY="3dp" />
+                    android:translationY="3dp"
+                    tools:layout_editor_absoluteY="3dp" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
