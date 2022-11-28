@@ -16,6 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/client_dark"
         app:srcCompat="@drawable/ic_wave" />
 
     <ImageView
@@ -44,9 +45,11 @@
             android:layout_height="0dp"
             android:layout_margin="20dp"
             android:layout_weight="0.1"
-            android:background="@drawable/outline_off_white"
+            android:background="@drawable/edittext_custom_2"
+            android:fontFamily="@font/futura_medium"
             android:onClick="onClickAddMealButton"
-            android:text="Add Meal" />
+            android:text="Add Meal"
+            android:textSize="30dp" />
 
 
         <GridView

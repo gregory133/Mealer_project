@@ -16,6 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/client_dark"
         app:srcCompat="@drawable/ic_wave" />
 
     <ImageView
@@ -229,7 +230,7 @@
                 android:layout_height="60dp"
                 android:layout_weight="1"
                 android:background="@drawable/outline_client_dark"
-                android:fontFamily="@font/lucida_handwriting_italic"
+                android:fontFamily="@font/futura_medium"
                 android:onClick="onClickApplyChangesButton"
                 android:text="Apply \n Changes"
                 android:textSize="20dp" />
@@ -245,7 +246,7 @@
                 android:layout_height="60dp"
                 android:layout_weight="1"
                 android:background="@drawable/outline_client_dark"
-                android:fontFamily="@font/lucida_handwriting_italic"
+                android:fontFamily="@font/futura_medium"
                 android:onClick="onClickDeleteMealButton"
                 android:text="Delete\nMeal"
                 android:textSize="20dp" />

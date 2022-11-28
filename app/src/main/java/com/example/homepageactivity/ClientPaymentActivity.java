@@ -39,16 +39,6 @@ public class ClientPaymentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_client_payment);
         nextButton=findViewById(R.id.completeClientRegistration);
         background=findViewById(R.id.background);
-        setThemeColors();
-    }
-
-    private void setThemeColors(){
-
-        ContextWrapper wrapper=new ContextThemeWrapper(this, R.style.client_style);
-
-        background.setImageDrawable(StyleApplyer.applyTheme(getApplicationContext(), wrapper,R.drawable.ic_wave));
-        nextButton.setBackground(StyleApplyer.applyTheme(getApplicationContext(), wrapper,R.drawable.ic_button_1));
-
     }
 
     public void onClickFinishClientRegButton(View view){

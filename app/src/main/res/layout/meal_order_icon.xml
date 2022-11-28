@@ -30,11 +30,11 @@
                 android:id="@+id/orderMealNameTextView"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/lucida_handwriting_italic"
+                android:fontFamily="@font/futura_medium"
                 android:gravity="center"
                 android:text="Meal Name"
                 android:textColor="@color/off_black"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
             <androidx.slidingpanelayout.widget.SlidingPaneLayout
                 android:layout_width="wrap_content"
@@ -44,11 +44,11 @@
                 android:id="@+id/orderStatusTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/lucida_handwriting_italic"
+                android:fontFamily="@font/futura_medium"
                 android:gravity="center"
                 android:text="Status"
                 android:textColor="@color/off_black"
-                android:textSize="16sp"/>
+                android:textSize="12sp" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

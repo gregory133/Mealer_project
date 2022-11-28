@@ -16,6 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/client_dark"
         app:srcCompat="@drawable/ic_wave" />
 
     <ImageView
@@ -102,9 +103,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_marginRight="10dp"
+                    android:fontFamily="@font/futura_medium"
                     android:gravity="center_vertical"
-                    android:text="To:"
                     android:inputType="textMultiLine"
+                    android:text="To:"
                     android:textSize="18dp"
                     tools:ignore="TouchTargetSizeCheck" />
 
@@ -113,6 +115,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:background="@drawable/outline_off_white"
+                    android:fontFamily="@font/futura_medium"
                     android:hint="Recipient Email Address"
                     android:inputType="textMultiLine"
                     android:textSize="18dp"
@@ -131,8 +134,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_marginRight="10dp"
+                    android:fontFamily="@font/futura_medium"
                     android:gravity="center_vertical"
-                    android:text="Subjuct:"
+                    android:text="Subject:"
                     android:textSize="18dp"
                     tools:ignore="TouchTargetSizeCheck" />
 
@@ -141,6 +145,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:background="@drawable/outline_off_white"
+                    android:fontFamily="@font/futura_medium"
                     android:gravity="center_vertical"
                     android:hint="Subject"
                     android:inputType="textMultiLine"
@@ -152,10 +157,11 @@
                 android:id="@+id/messageBodyEdit"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:layout_weight="1"
-                android:gravity="top"
                 android:layout_marginHorizontal="20dp"
+                android:layout_weight="1"
                 android:background="@drawable/outline_off_white"
+                android:fontFamily="@font/futura_medium"
+                android:gravity="top"
                 android:hint="Your Message Here"
                 android:inputType="textMultiLine"
                 android:textSize="16dp"

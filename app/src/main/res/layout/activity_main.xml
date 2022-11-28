@@ -4,38 +4,82 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cook_light"
+    android:background="@color/client_light"
     android:backgroundTintMode="screen"
     android:foregroundGravity="center"
     tools:context=".MainActivity">
 
     <ImageView
-        android:id="@+id/background"
-        android:layout_width="match_parent"
+        android:id="@+id/mg"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/background" />
+        android:adjustViewBounds="true"
+        android:translationY="7dp"
+        android:scaleX="1.1"
+        android:scaleY="1.1"
+        app:tint="@color/client_dark"
+        android:scaleType="centerCrop"
+        android:src="@drawable/yinyang_menu_offsetb"/>
+
+
+    <ImageView
+        android:id="@+id/bg"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:adjustViewBounds="true"
+        android:scaleX="1.1"
+        android:scaleY="1.1"
+        app:tint="@color/cook_light"
+        android:scaleType="centerCrop"
+        android:src="@drawable/yinyang_menu"/>
 
     <LinearLayout
         android:id="@+id/main"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="@+id/background"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <Space
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.15" />
+
         <LinearLayout
-            android:id="@+id/row1"
+            android:id="@+id/rowTitle"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2"
-            android:orientation="horizontal" />
+            android:layout_weight=".7"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/Title"
+                android:layout_width="228dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/mistral2"
+                android:lineSpacingExtra="8sp"
+                android:shadowColor="@color/client_dark"
+                android:text="Mealer"
+                android:textAllCaps="true"
+                android:textColor="@color/cook_light"
+                android:textSize="75dp"
+                android:textStyle="bold"
+                android:typeface="normal"
+                tools:ignore="TouchTargetSizeCheck" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".3"/>
 
         <LinearLayout
             android:id="@+id/row2"
@@ -47,10 +91,9 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="500dp"
-                android:layout_height="match_parent"
-                android:layout_margin="20dp"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="20dp"
                 android:layout_weight="1"
-                android:background="@drawable/outline_off_grey"
                 android:clipToOutline="true"
                 android:translationX="3dp"
                 android:translationY="-3dp">
@@ -60,14 +103,15 @@
 
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/outline_off_white"
+                    android:background="@drawable/edittext_custom_1"
+                    android:fontFamily="@font/futura_medium"
                     android:gravity="center"
+
                     android:hint="Enter Email Address"
 
                     android:inputType="textMultiLine"
-                    android:singleLine="true"
-                    android:translationX="-3dp"
-                    android:translationY="3dp"
+
+
                     tools:layout_editor_absoluteY="3dp" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -83,39 +127,25 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="500dp"
-                android:layout_height="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginHorizontal="20dp"
                 android:layout_weight="1"
-                android:translationX="3dp"
-                android:translationY="-3dp"
-                android:layout_margin="20dp"
                 android:clipToOutline="true"
-                android:background="@drawable/outline_off_grey">
+                android:translationX="3dp"
+                android:translationY="-3dp">
 
                 <EditText
                     android:id="@+id/editTextPassword"
 
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:translationX="-3dp"
-                    android:translationY="3dp"
-                    android:background="@drawable/outline_off_white"
+                    android:background="@drawable/edittext_custom_1"
+                    android:fontFamily="@font/futura_medium"
                     android:gravity="center"
                     android:hint="Enter Password"
+                    android:inputType="textPassword"
                     android:singleLine="true"
-                    android:inputType="textPassword" />
-
-<!--                <EditText-->
-
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    android:translationX="-3dp"-->
-<!--                    android:translationY="3dp"-->
-<!--                    android:background="@drawable/outline_off_white"-->
-
-<!--                    android:gravity="center"-->
-<!--                    android:hint="Enter Password"-->
-<!--                    android:inputType="textMultiLine"-->
-<!--                    android:singleLine="true" />-->
+                    tools:layout_editor_absoluteY="3dp" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
@@ -133,25 +163,23 @@
                 android:id="@+id/buttonBG"
                 android:layout_width="200dp"
                 android:layout_height="50dp"
-                android:translationX="3dp"
-                android:translationY="-3dp"
                 android:layout_margin="20dp"
                 android:clipToOutline="true"
-                android:background="@drawable/outline_off_grey">
+                android:translationX="3dp"
+                android:translationY="-3dp">
 
                 <Button
                     android:id="@+id/button"
 
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:translationX="-3dp"
-                    android:translationY="3dp"
-                    android:background="@drawable/outline_off_white"
-
-                    android:fontFamily="@font/mistral2"
+                    android:background="@drawable/edittext_custom_2"
+                    android:fontFamily="@font/futura_medium"
                     android:onClick="onClickLoginButton"
+
                     android:text="Login"
-                    android:textSize="30dp" />
+                    android:textSize="20dp"
+                    tools:layout_editor_absoluteY="3dp" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
@@ -160,8 +188,8 @@
             android:id="@+id/row5"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1.8"
-            android:gravity="center_horizontal"
+            android:layout_weight="1"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
@@ -169,12 +197,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:fontFamily="@font/mistral2"
+                android:fontFamily="@font/futura_medium"
                 android:onClick="onClickRegister"
                 android:text="Don't Have\nAn Account?"
                 android:textColor="@color/off_black"
-                android:textSize="30dp"
+                android:textSize="25dp"
                 tools:ignore="TouchTargetSizeCheck" />
         </LinearLayout>
+
+        <Space
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.1"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

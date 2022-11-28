@@ -44,7 +44,7 @@
                 android:layout_height="50dp"
                 android:layout_margin="20dp"
 
-                android:background="@drawable/edittext_custom_2"
+                android:background="@drawable/outline_off_white"
                 android:fontFamily="@font/mistral2"
                 android:onClick="onClickLoginButton"
                 android:text="Inbox"
@@ -65,7 +65,7 @@
                 android:layout_height="50dp"
                 android:layout_margin="20dp"
 
-                android:background="@drawable/edittext_custom_2"
+                android:background="@drawable/outline_off_white"
                 android:fontFamily="@font/mistral2"
                 android:onClick="onClickLoginButton"
                 android:text="Meal List"
@@ -86,7 +86,7 @@
                 android:layout_height="50dp"
                 android:layout_margin="20dp"
 
-                android:background="@drawable/edittext_custom_2"
+                android:background="@drawable/outline_off_white"
                 android:fontFamily="@font/mistral2"
                 android:onClick="onClickAddMeal"
                 android:text="Add Meal"

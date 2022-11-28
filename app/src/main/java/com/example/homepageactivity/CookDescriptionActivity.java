@@ -38,17 +38,6 @@ public class CookDescriptionActivity extends AppCompatActivity {
 
         background=findViewById(R.id.background);
         nextButton=findViewById(R.id.completeCookRegistration);
-        setThemeColors();
-
-    }
-
-    private void setThemeColors(){
-
-        ContextWrapper wrapper=new ContextThemeWrapper(this, R.style.cook_style);
-
-        background.setImageDrawable(StyleApplyer.applyTheme(getApplicationContext(), wrapper,R.drawable.ic_wave));
-        nextButton.setBackground(StyleApplyer.applyTheme(getApplicationContext(), wrapper,R.drawable.ic_button_1));
-
     }
 
 

@@ -8,11 +8,17 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="cook_dark">#FF9E0909</color>
-    <color name="cook_light">#FFD11919</color>
-    <color name="cook_extra_light">#FFFF4D4D</color>
-    <color name="client_light">#FF00ED43</color>
-    <color name="client_dark">#FF009E2D</color>
+<!--    <color name="cook_dark">#33438A</color>-->
+<!--    <color name="cook_light">#576CCC</color>-->
+<!--    <color name="cook_extra_light">#687699</color>-->
+<!--    <color name="client_light">#ADB7F1</color>-->
+<!--    <color name="client_dark">#182A7C</color>-->
+
+    <color name="cook_dark">#33678A</color>
+    <color name="cook_light">#57C2CC</color>
+    <color name="cook_extra_light">#689599</color>
+    <color name="client_light">#A4ED3B</color>
+    <color name="client_dark">#427C18</color>
     <color name="off_white">#FFE0E0E0</color>
     <color name="off_grey">#BABABA</color>
     <color name="dark_grey">#525252</color>

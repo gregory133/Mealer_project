@@ -5,7 +5,7 @@
     style="?android:attr/spinnerDropDownItemStyle"
     android:layout_width="match_parent"
     android:layout_height="?attr/dropdownListPreferredItemHeight"
-    android:background="@color/off_grey"
+    android:background="@color/off_white"
     android:ellipsize="marquee"
     android:singleLine="true"
     android:textColor="@color/black"
