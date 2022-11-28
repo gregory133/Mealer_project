@@ -67,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
                     android:layout_weight="1"
-                    android:fontFamily="@font/lucida_handwriting_italic"
+                    android:fontFamily="@font/futura_medium"
                     android:gravity="center"
                     android:text="First Name: \n"
                     android:textSize="25dp" />
@@ -78,7 +78,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
                     android:layout_weight="1"
-                    android:fontFamily="@font/lucida_handwriting_italic"
+                    android:fontFamily="@font/futura_medium"
                     android:gravity="center"
                     android:text="Last Name: \n"
                     android:textSize="25dp" />
@@ -97,7 +97,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
                     android:layout_weight="1"
-                    android:fontFamily="@font/lucida_handwriting_italic"
+                    android:fontFamily="@font/futura_medium"
                     android:text="Email: "
                     android:textSize="25dp" />
             </LinearLayout>
@@ -115,7 +115,7 @@
                     android:layout_height="match_parent"
                     android:layout_margin="20dp"
                     android:layout_weight="1"
-                    android:fontFamily="@font/lucida_handwriting_italic"
+                    android:fontFamily="@font/futura_medium"
                     android:text="Short Description: \n \n"
                     android:textSize="25dp" />
             </LinearLayout>

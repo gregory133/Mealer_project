@@ -94,7 +94,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:fontFamily="@font/lucida_handwriting_italic"
+                    android:fontFamily="@font/futura_medium"
                     android:text="Inbox"
                     android:textColor="@color/off_black"
                     android:textSize="16dp" />

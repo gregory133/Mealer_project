@@ -27,35 +27,35 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:fontFamily="@font/lucida_handwriting_italic"
-                android:textStyle="bold"
+                android:fontFamily="@font/futura_medium"
                 android:maxLines="1"
                 android:shadowColor="#000000"
                 android:text="Sender"
-                android:textSize="16dp"/>
+                android:textSize="16dp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/mealName"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:fontFamily="@font/lucida_handwriting_italic"
-                android:textStyle="bold"
+                android:fontFamily="@font/futura_medium"
                 android:maxLines="1"
                 android:shadowColor="#000000"
                 android:text="Subject"
-                android:textSize="16dp"/>
+                android:textSize="16dp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/firstWordText"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:fontFamily="@font/lucida_handwriting_italic"
+                android:fontFamily="@font/futura_medium"
                 android:maxLines="1"
                 android:shadowColor="#000000"
                 android:text="First Words"
-                android:textSize="16dp"/>
+                android:textSize="16dp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

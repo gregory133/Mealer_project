@@ -123,7 +123,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:fontFamily="@font/lucida_handwriting_italic"
+                    android:fontFamily="@font/futura_medium"
                     android:text="Subject"
                     android:textSize="18dp" />
             </LinearLayout>
@@ -141,7 +141,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:fontFamily="@font/lucida_handwriting_italic"
+                    android:fontFamily="@font/futura_medium"
                     android:text="Sender"
                     android:textSize="16dp" />
 
@@ -176,7 +176,7 @@
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     android:background="@drawable/outline_client_dark"
-                    android:fontFamily="@font/lucida_handwriting_italic"
+                    android:fontFamily="@font/futura_medium"
                     android:onClick="onCLickDeleteMessage"
                     android:text="Dismiss"
                     android:textColor="@color/off_grey" />
@@ -188,7 +188,7 @@
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     android:background="@drawable/outline_client_dark"
-                    android:fontFamily="@font/lucida_handwriting_italic"
+                    android:fontFamily="@font/futura_medium"
                     android:onClick="onClickSuspendCook"
                     android:text="temp ban"
                     android:textColor="@color/off_grey" />
@@ -200,7 +200,7 @@
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     android:background="@drawable/outline_client_dark"
-                    android:fontFamily="@font/lucida_handwriting_italic"
+                    android:fontFamily="@font/futura_medium"
                     android:onClick="onClickBanCook"
                     android:text="perm ban"
                     android:textColor="@color/off_grey" />
@@ -220,7 +220,8 @@
                     android:layout_height="match_parent"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
-                    android:fontFamily="@font/lucida_handwriting_italic"
+                    android:fontFamily="@font/futura_medium"
+                    android:padding="5dp"
                     android:scrollbars="vertical"
                     android:text="TextView"
                     android:textSize="16dp" />

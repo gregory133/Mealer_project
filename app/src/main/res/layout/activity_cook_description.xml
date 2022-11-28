@@ -90,7 +90,7 @@
                 android:layout_height="80dp"
                 android:layout_margin="20dp"
                 android:background="@drawable/outline_client_dark"
-                android:fontFamily="@font/lucida_handwriting_italic"
+                android:fontFamily="@font/futura_medium"
                 android:gravity="center"
                 android:onClick="onClickFinishClientRegButton"
                 android:text="Next"

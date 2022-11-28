@@ -49,7 +49,7 @@
         <Space
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="1.15"/>
+            android:layout_weight="1.15" />
 
         <LinearLayout
             android:id="@+id/rowTitle"
@@ -61,15 +61,15 @@
 
             <TextView
                 android:id="@+id/Title"
-                android:layout_width="wrap_content"
+                android:layout_width="228dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/mistral2"
                 android:lineSpacingExtra="8sp"
-                android:text="Mealer"
                 android:shadowColor="@color/client_dark"
+                android:text="Mealer"
                 android:textAllCaps="true"
                 android:textColor="@color/cook_light"
-                android:textSize="70dp"
+                android:textSize="75dp"
                 android:textStyle="bold"
                 android:typeface="normal"
                 tools:ignore="TouchTargetSizeCheck" />
@@ -104,13 +104,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/outline_off_white"
+                    android:fontFamily="@font/futura_medium"
                     android:gravity="center"
-                    android:hint="Enter Username"
 
+                    android:hint="Enter Username"
                     android:inputType="textMultiLine"
                     android:singleLine="true"
                     android:translationX="-3dp"
-                    android:translationY="3dp" />
+                    android:translationY="3dp"
+                    tools:layout_editor_absoluteY="3dp" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
@@ -138,13 +140,15 @@
 
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:translationX="-3dp"
-                    android:translationY="3dp"
                     android:background="@drawable/outline_off_white"
+                    android:fontFamily="@font/futura_medium"
                     android:gravity="center"
                     android:hint="Enter Password"
+                    android:inputType="textPassword"
                     android:singleLine="true"
-                    android:inputType="textPassword" />
+                    android:translationX="-3dp"
+                    android:translationY="3dp"
+                    tools:layout_editor_absoluteY="3dp" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
@@ -173,14 +177,15 @@
 
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@drawable/outline_off_white"
+                    android:fontFamily="@font/futura_medium"
+                    android:onClick="onClickLoginButton"
+
+                    android:text="Login"
+                    android:textSize="30dp"
                     android:translationX="-3dp"
                     android:translationY="3dp"
-                    android:background="@drawable/outline_off_white"
-
-                    android:fontFamily="@font/mistral2"
-                    android:onClick="onClickLoginButton"
-                    android:text="Login"
-                    android:textSize="30dp" />
+                    tools:layout_editor_absoluteY="3dp" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
@@ -198,11 +203,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:fontFamily="@font/mistral2"
+                android:fontFamily="@font/futura_medium"
                 android:onClick="onClickRegister"
                 android:text="Don't Have\nAn Account?"
                 android:textColor="@color/off_black"
-                android:textSize="30dp"
+                android:textSize="25dp"
                 tools:ignore="TouchTargetSizeCheck" />
         </LinearLayout>
 

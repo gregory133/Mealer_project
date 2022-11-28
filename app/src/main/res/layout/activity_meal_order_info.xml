@@ -80,7 +80,7 @@
                 android:id="@+id/mealNamePrompt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/lucida_handwriting_italic"
+                android:fontFamily="@font/futura_medium"
                 android:text="Meal: "
                 android:textSize="18sp" />
 
@@ -89,7 +89,7 @@
                 android:id="@+id/orderMealName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/lucida_handwriting_italic"
+                android:fontFamily="@font/futura_medium"
                 android:text="mealName"
                 android:textSize="18sp" />
 
@@ -107,7 +107,7 @@
                 android:id="@+id/otherPartyPrompt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/lucida_handwriting_italic"
+                android:fontFamily="@font/futura_medium"
                 android:text="Meal: "
                 android:textSize="18sp" />
 
@@ -116,7 +116,7 @@
                 android:id="@+id/otherParty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/lucida_handwriting_italic"
+                android:fontFamily="@font/futura_medium"
                 android:text="otherParty"
                 android:textSize="18sp" />
 
@@ -176,9 +176,9 @@
                 android:id="@+id/ratingPrompt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:fontFamily="@font/lucida_handwriting_italic"
+                android:fontFamily="@font/futura_medium"
                 android:text="Your Rating:  "
+                android:textAlignment="center"
                 android:textSize="18sp" />
 
             <LinearLayout
@@ -245,7 +245,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:background="@drawable/outline_off_grey"
-                android:fontFamily="@font/lucida_handwriting_italic"
+                android:fontFamily="@font/futura_medium"
                 android:onClick="onClickWriteComplaintButton"
                 android:paddingHorizontal="10dp"
                 android:text="Write Complaint"

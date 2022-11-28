@@ -45,8 +45,7 @@
                 android:shadowColor="#000000"
                 android:text="Burtrons's Crazy Pasta"
                 android:textColor="@color/off_black"
-                android:textSize="16dp">
-            </TextView>
+                android:textSize="16dp"></TextView>
 
             <LinearLayout
                 android:layout_width="fill_parent"
