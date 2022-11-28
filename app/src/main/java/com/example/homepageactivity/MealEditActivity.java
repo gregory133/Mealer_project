@@ -49,7 +49,7 @@ public class MealEditActivity extends AppCompatActivity {
     }
 
     public void setupCuisineOrTypeSpinner(Spinner spinner, final List<String> options){
-        chosenCuisine = "";
+//        chosenCuisine = "";
         ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(),
                 R.layout.dropdown_layout,
                 options);
@@ -59,7 +59,7 @@ public class MealEditActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                chosenCuisine = options.get(i);
+//                chosenCuisine = options.get(i);
                 switch (options.get(0)){
                     case "Cuisine":
                         chosenCuisine = options.get(i);
