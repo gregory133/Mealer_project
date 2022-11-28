@@ -60,7 +60,7 @@ public class InboxWriteMessageActivity extends AppCompatActivity {
     private boolean validateSubject(String subject) {
         Validator val = new Validator();
 
-        if (!val.isPhrase(subject)){
+        if (!val.isAlphanumericPhrase(subject)){
             Toast.makeText(this, "The Subject May Only Contain Alphanumeric Characters, Apostrophes, and Spaces", Toast.LENGTH_LONG).show();
             return false;
         }
