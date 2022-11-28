@@ -45,7 +45,7 @@
             android:layout_height="0dp"
             android:layout_margin="20dp"
             android:layout_weight="0.1"
-            android:background="@drawable/outline_off_white"
+            android:background="@drawable/edittext_custom_2"
             android:fontFamily="@font/futura_medium"
             android:onClick="onClickAddMealButton"
             android:text="Add Meal"

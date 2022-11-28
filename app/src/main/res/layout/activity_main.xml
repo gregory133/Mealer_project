@@ -23,6 +23,7 @@
         android:scaleType="centerCrop"
         android:src="@drawable/yinyang_menu_offsetb"/>
 
+
     <ImageView
         android:id="@+id/bg"
         android:layout_width="0dp"
@@ -93,7 +94,6 @@
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="20dp"
                 android:layout_weight="1"
-                android:background="@drawable/outline_off_grey"
                 android:clipToOutline="true"
                 android:translationX="3dp"
                 android:translationY="-3dp">
@@ -103,15 +103,13 @@
 
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/outline_off_white"
+                    android:background="@drawable/edittext_custom_1"
                     android:fontFamily="@font/futura_medium"
                     android:gravity="center"
 
                     android:hint="Enter Username"
                     android:inputType="textMultiLine"
                     android:singleLine="true"
-                    android:translationX="-3dp"
-                    android:translationY="3dp"
                     tools:layout_editor_absoluteY="3dp" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -128,26 +126,23 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="500dp"
                 android:layout_height="50dp"
-                android:layout_weight="1"
-                android:translationX="3dp"
-                android:translationY="-3dp"
                 android:layout_marginHorizontal="20dp"
+                android:layout_weight="1"
                 android:clipToOutline="true"
-                android:background="@drawable/outline_off_grey">
+                android:translationX="3dp"
+                android:translationY="-3dp">
 
                 <EditText
                     android:id="@+id/editTextPassword"
 
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/outline_off_white"
+                    android:background="@drawable/edittext_custom_1"
                     android:fontFamily="@font/futura_medium"
                     android:gravity="center"
                     android:hint="Enter Password"
                     android:inputType="textPassword"
                     android:singleLine="true"
-                    android:translationX="-3dp"
-                    android:translationY="3dp"
                     tools:layout_editor_absoluteY="3dp" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -166,25 +161,22 @@
                 android:id="@+id/buttonBG"
                 android:layout_width="200dp"
                 android:layout_height="50dp"
-                android:translationX="3dp"
-                android:translationY="-3dp"
                 android:layout_margin="20dp"
                 android:clipToOutline="true"
-                android:background="@drawable/outline_off_grey">
+                android:translationX="3dp"
+                android:translationY="-3dp">
 
                 <Button
                     android:id="@+id/button"
 
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/outline_off_white"
+                    android:background="@drawable/edittext_custom_2"
                     android:fontFamily="@font/futura_medium"
                     android:onClick="onClickLoginButton"
 
                     android:text="Login"
-                    android:textSize="30dp"
-                    android:translationX="-3dp"
-                    android:translationY="3dp"
+                    android:textSize="20dp"
                     tools:layout_editor_absoluteY="3dp" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

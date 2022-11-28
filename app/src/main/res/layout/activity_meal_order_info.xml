@@ -135,9 +135,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/lucida_handwriting_italic"
+                android:fontFamily="@font/futura_medium"
                 android:text="Status: "
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
             <Spinner
                 android:id="@+id/approvedSpinner"
