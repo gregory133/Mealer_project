@@ -124,7 +124,7 @@ public class Validator {
         int i = 0;
 
         while(i < chars.length){
-            if("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', ".indexOf(chars[i]) >= 0){
+            if("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz', -".indexOf(chars[i]) >= 0){
                 i++;
                 continue;
             }else{

@@ -86,20 +86,20 @@ public class MakeUserActivity extends AppCompatActivity {
      */
     private boolean validate(String firstName, String lastName, String email, String address, String password, String confirmPassword){
         Validator val = new Validator();
-        if (!val.isAlphabetic(firstName)){
-            Toast.makeText(this, "First Name Field Invalid (Empty)", Toast.LENGTH_LONG).show();
+        if (!val.isPhrase(firstName)){
+            Toast.makeText(this, "First Name Field Invalid", Toast.LENGTH_LONG).show();
             return false;
         }
-        if (!val.isAlphabetic(lastName)){
-            Toast.makeText(this, "Last Name Field Invalid (Empty)", Toast.LENGTH_LONG).show();
+        if (!val.isPhrase(lastName)){
+            Toast.makeText(this, "Last Name Field Invalid", Toast.LENGTH_LONG).show();
             return false;
         }
         if (!val.checkValidEmail(email)){
-            Toast.makeText(this, "Email Field Invalid (Empty)", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Email Field Invalid", Toast.LENGTH_LONG).show();
             return false;
         }
         if (!val.checkValidPassword(password)){
-            Toast.makeText(this, "Password Field Invalid (Empty)", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Password Field Invalid", Toast.LENGTH_LONG).show();
             return false;
         }
         if (confirmPassword.equals("")){
