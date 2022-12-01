@@ -36,20 +36,21 @@ public class MealEditActivity extends AppCompatActivity {
     private DocumentReference docRef;
     private DocumentSnapshot document;
     private FirebaseUser currentUser;
+    private int numRatings;
+    private int ratingsTotal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_meal);
 
-        setupCuisineOrTypeSpinner((Spinner) findViewById(R.id.cuisineType), cuisineOptions);
-        setupCuisineOrTypeSpinner((Spinner) findViewById(R.id.mealType), mealTypeOptions);
+        setupCuisineOrTypeSpinner(findViewById(R.id.cuisineTypeSpinner), cuisineOptions);
+        setupCuisineOrTypeSpinner(findViewById(R.id.mealTypeSpinner), mealTypeOptions);
         getMealInfo();
 
     }
 
     public void setupCuisineOrTypeSpinner(Spinner spinner, final List<String> options){
-//        chosenCuisine = "";
         ArrayAdapter adapter = new ArrayAdapter(getApplicationContext(),
                 R.layout.dropdown_layout,
                 options);
@@ -108,22 +109,26 @@ public class MealEditActivity extends AppCompatActivity {
     }
 
     private void SetupMealInfo(){
-        ((EditText) findViewById(R.id.mealName)).setText(document.getString("mealName"));
-        ((EditText) findViewById(R.id.description)).setText(document.getString("description"));
-        ((EditText) findViewById(R.id.price)).setText(document.getDouble("price").toString());
-        ((EditText) findViewById(R.id.listOfIngredients)).setText(document.getString("ingredients"));
-        ((EditText) findViewById(R.id.allergens)).setText(document.getString("allergens"));
-        ((CheckBox)findViewById(R.id.offerMealCheckbox)).setChecked(document.getBoolean("offered"));
+        Meal meal = document.toObject(Meal.class);
+        ((EditText) findViewById(R.id.mealName)).setText(meal.getMealName());
+        ((EditText) findViewById(R.id.description)).setText(meal.getDescription());
+        ((EditText) findViewById(R.id.price)).setText(Double.toString(meal.getPrice()));
+        ((EditText) findViewById(R.id.listOfIngredients)).setText(meal.getIngredients());
+        ((EditText) findViewById(R.id.allergens)).setText(meal.getAllergens());
+        ((CheckBox)findViewById(R.id.offerMealCheckbox)).setChecked(meal.getOffered());
+
+        numRatings = meal.getNumRatings();
+        ratingsTotal = meal.getRatingTotal();
 
         //Finds and display current cuisine type
-        Spinner spinny = (Spinner) findViewById(R.id.cuisineType);
-        ArrayAdapter myAdap = (ArrayAdapter) spinny.getAdapter();
-        spinny.setSelection(myAdap.getPosition(document.getString("cuisineType")));
+        Spinner spinner = (Spinner) findViewById(R.id.cuisineTypeSpinner);
+        ArrayAdapter myAdap = (ArrayAdapter) spinner.getAdapter();
+        spinner.setSelection(myAdap.getPosition(document.getString("cuisineType")));
 
         //Finds and display current meal type
-        spinny = (Spinner) findViewById(R.id.cuisineType);
-        myAdap = (ArrayAdapter) spinny.getAdapter();
-        spinny.setSelection(myAdap.getPosition(document.getString("mealType")));
+        spinner = (Spinner) findViewById(R.id.cuisineTypeSpinner);
+        myAdap = (ArrayAdapter) spinner.getAdapter();
+        spinner.setSelection(myAdap.getPosition(document.getString("mealType")));
     }
 
     public void onClickApplyChangesButton(View view) {
@@ -152,6 +157,8 @@ public class MealEditActivity extends AppCompatActivity {
 
         Meal updatedMeal = new Meal(mealName, description, chosenCuisine, chosenMealType,
                 ingredients, allergens, price, currentUser.getUid(), offered);
+        updatedMeal.setRatingTotal(ratingsTotal);
+        updatedMeal.setNumRatings(numRatings);
         docRef.set(updatedMeal)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

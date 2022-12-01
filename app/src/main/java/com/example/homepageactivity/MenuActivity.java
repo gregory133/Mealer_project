@@ -37,6 +37,7 @@ public class MenuActivity extends AppCompatActivity {
         add(new PageIconInfo("Inbox", InboxActivity.class, R.drawable.inbox_icon_2));
         add(new PageIconInfo("Menu", MenuActivity.class, R.drawable.menu));
         add(new PageIconInfo("MealOrders", MealOrdersActivity.class, R.drawable.orders));
+        add(new PageIconInfo("Profile", CookProfileActivity.class, R.drawable.profile));
         add(new PageIconInfo(logoutText, null, R.drawable.door_icon));
     }};
 

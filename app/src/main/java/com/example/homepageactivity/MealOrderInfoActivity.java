@@ -42,9 +42,11 @@ public class MealOrderInfoActivity extends AppCompatActivity {
     int lastRating;
     int rating;
     int ratingDif;
+    int recieved;
     int[] stars;
     int spinnerNum;
     int spinnerIndex;
+    boolean firstRating;
     DocumentReference docRef;
     DocumentSnapshot orderDoc;
     private final List<String> approvedOptions = Arrays.asList("Pending Approval", "Request Approved", "Request Declined");
@@ -84,6 +86,7 @@ public class MealOrderInfoActivity extends AppCompatActivity {
 
     private void SetupOrderInfo(){
         rating = lastRating = orderDoc.getDouble("rating").intValue();
+        recieved = orderDoc.toObject(MealOrder.class).getReceived();
 
         ((TextView) findViewById(R.id.orderMealName)).setText(orderDoc.getString("mealName"));
 
@@ -103,18 +106,22 @@ public class MealOrderInfoActivity extends AppCompatActivity {
         setupStars();
 
         //initialize spinner values
+        Spinner spinner = null;
         if(orderDoc.getDouble("delivered").intValue() == 1  && orderDoc.getDouble("received").intValue() == 0 && userClass == Client.class){        //only Clients can update received status and only if is has been delivered
-            findViewById(R.id.receivedSpinner).setEnabled(true);
-            findViewById(R.id.receivedSpinner).getBackground().setColorFilter(getResources().getColor(R.color.cook_light), PorterDuff.Mode.SRC_ATOP);
+            spinner = findViewById(R.id.receivedSpinner);
             spinnerNum = 3;
         }else if(orderDoc.getDouble("approved").intValue() == 1 && orderDoc.getDouble("delivered").intValue() == 0 && userClass == Cook.class){       //only cooks can update delivered status and only if it is approved
-            findViewById(R.id.deliveredSpinner).setEnabled(true);
-            findViewById(R.id.deliveredSpinner).getBackground().setColorFilter(getResources().getColor(R.color.cook_light), PorterDuff.Mode.SRC_ATOP);
+            spinner = findViewById(R.id.deliveredSpinner);
             spinnerNum = 2;
         }else if(orderDoc.getDouble("approved").intValue() == 0 && userClass == Cook.class){       //only cooks can update approved status and only if a status is not set
-            findViewById(R.id.approvedSpinner).setEnabled(true);
-            findViewById(R.id.approvedSpinner).getBackground().setColorFilter(getResources().getColor(R.color.cook_light), PorterDuff.Mode.SRC_ATOP);
+            spinner= findViewById(R.id.approvedSpinner);
             spinnerNum = 1;
+        }
+
+        if(spinner != null){
+            spinner.setEnabled(true);
+            spinner.setBackground(getDrawable(R.drawable.outline_off_white));
+            spinner.getBackground().setColorFilter(getResources().getColor(R.color.off_white), PorterDuff.Mode.SRC_ATOP);
         }
     }
 
@@ -135,6 +142,7 @@ public class MealOrderInfoActivity extends AppCompatActivity {
         spinner.setAdapter(adapter);
         spinner.setSelection(orderDoc.getDouble(field).intValue());
         if(orderDoc.getDouble(field).intValue() == 2){
+            spinner.setBackgroundColor(getResources().getColor(R.color.cook_dark));
             spinner.getBackground().setColorFilter(getResources().getColor(R.color.cook_dark), PorterDuff.Mode.SRC_ATOP);
         }
         spinner.getBackground().setColorFilter(getResources().getColor(R.color.off_grey), PorterDuff.Mode.SRC_ATOP);
@@ -144,11 +152,25 @@ public class MealOrderInfoActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 spinnerIndex = i;
-                onClickApplyChangesButton(null);
+                if(spinnerNum == 1 && spinnerIndex == 1){
+                    updateCookSpinners();
+                }
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
+    }
+
+    private void updateCookSpinners(){
+        Spinner spinner = findViewById(R.id.approvedSpinner);
+        spinner.getBackground().setColorFilter(getResources().getColor(R.color.off_grey), PorterDuff.Mode.SRC_ATOP);
+        spinner.setEnabled(false);
+
+        spinner = findViewById(R.id.deliveredSpinner);
+        spinnerNum = 2;
+        spinner.setEnabled(true);
+        spinner.setBackground(getDrawable(R.drawable.outline_off_white));
+        spinner.getBackground().setColorFilter(getResources().getColor(R.color.off_white), PorterDuff.Mode.SRC_ATOP);
     }
 
     private void setupStars(){
@@ -168,67 +190,18 @@ public class MealOrderInfoActivity extends AppCompatActivity {
                     });
         }
     }
+
     public void onClickStar(int newRating){
         Class hold = currentAccount.getClass();
-        MealOrder order = orderDoc.toObject(MealOrder.class);
         if (hold != Client.class){
             return;
         }
-        if (order.getReceived() != 1 ){
+        if (recieved != 1 ){
             throwToast("Order must be Received before you can rate it");
             return;
         }
         rating = newRating;
-        ratingDif = rating-lastRating;
         setRating();
-
-        //rate meal and cook
-        updateRating("meals", orderDoc.getString("mealUID"));
-        updateRating("users", orderDoc.getString("cookUID"));
-
-        order.setRating(rating);
-        docRef.set(order)
-                .addOnSuccessListener(e -> throwToast("Rating Updated"))
-                .addOnFailureListener(e -> throwToast("Could not Update Order"));
-    }
-
-    private void updateRating(String collection, String UID){
-        DocumentReference ratingDocRef = firestoreDB.collection(collection).document(UID);
-        ratingDocRef.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot rateableDoc = task.getResult();
-                if (rateableDoc.exists()) {
-                    rate(collection, ratingDocRef, rateableDoc);
-                    return;
-                }
-            }
-            throwToast("Meal Order Failed To Load");
-        });
-    }
-    private void rate(String collection, DocumentReference ratingDocRef, DocumentSnapshot rateableDoc){
-        switch (collection){
-            case "users":
-                Cook cook = rateableDoc.toObject(Cook.class);
-                if(lastRating == 0 ){
-                    cook.setNumRatings(cook.getNumRatings()+1);
-                }
-                cook.setRatingTotal(cook.getRatingTotal()+ratingDif);
-                cook.setRole("Cook");
-                ratingDocRef.set(cook)
-                        .addOnFailureListener(e -> throwToast("Could not Update Order"));
-                break;
-            case "meals":
-                Meal meal = rateableDoc.toObject(Meal.class);
-                if(lastRating == 0){
-                    meal.setNumRatings(meal.getNumRatings()+1);
-                }
-                meal.setRatingTotal(meal.getRatingTotal()+ratingDif);
-                ratingDocRef.set(meal)
-                        .addOnFailureListener(e -> throwToast("Could not Update Order"));
-                break;
-            default:
-                return;
-        }
     }
 
     private void setRating(){
@@ -266,7 +239,7 @@ public class MealOrderInfoActivity extends AppCompatActivity {
     }
 
     private void collapseRating(){
-        if (orderDoc.toObject(MealOrder.class).getReceived() != 1){
+        if (recieved != 1){
             LinearLayout row=findViewById(R.id.ratingLayout);
             LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
@@ -274,13 +247,20 @@ public class MealOrderInfoActivity extends AppCompatActivity {
                     0);
             row.setLayoutParams(param);
         } else{
-            LinearLayout row=findViewById(R.id.ratingLayout);
-            LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    1);
-            row.setLayoutParams(param);
+            expandRating(1);
         }
+    }
+    private void expandRating(int recieved){
+        if(recieved != 1){
+            collapseRating();
+            return;
+        }
+        LinearLayout row=findViewById(R.id.ratingLayout);
+        LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                1);
+        row.setLayoutParams(param);
     }
 
 
@@ -289,18 +269,67 @@ public class MealOrderInfoActivity extends AppCompatActivity {
         MealOrder updatedOrder = orderDoc.toObject(MealOrder.class);
 
 
-        int recieved = ((Spinner) findViewById(R.id.deliveredSpinner)).getSelectedItemPosition();
+        recieved = ((Spinner) findViewById(R.id.receivedSpinner)).getSelectedItemPosition();
         updatedOrder.setApproved(((Spinner) findViewById(R.id.approvedSpinner)).getSelectedItemPosition());
-        updatedOrder.setDelivered(recieved);
-        updatedOrder.setReceived(((Spinner) findViewById(R.id.receivedSpinner)).getSelectedItemPosition());
+        updatedOrder.setDelivered(((Spinner) findViewById(R.id.deliveredSpinner)).getSelectedItemPosition());
+        updatedOrder.setReceived(recieved);
+        updatedOrder.setRating(rating);
 
         docRef.set(updatedOrder)
-                .addOnSuccessListener(aVoid -> getOrderInfo(), aVoid -> throwToast("Order Updated"))
+                .addOnSuccessListener(aVoid -> expandRating(recieved))
                 .addOnFailureListener(e -> throwToast("Could not Update Order"));
 
+        throwToast("Changes Saved");
+
+        //rate meal and cook if the meal was recieved by the client
         Class hold = currentAccount.getClass();
         if(recieved != 1 || hold != Client.class){
             return;
+        }
+        ratingDif = rating-lastRating;
+        firstRating = lastRating == 0;
+        lastRating = rating;
+        updateRating("meals", orderDoc.getString("mealUID"));
+        updateRating("users", orderDoc.getString("cookUID"));
+    }
+
+    private void updateRating(String collection, String UID){
+        DocumentReference ratingDocRef = firestoreDB.collection(collection).document(UID);
+        ratingDocRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot rateableDoc = task.getResult();
+                if (rateableDoc.exists()) {
+                    rate(collection, ratingDocRef, rateableDoc);
+                    return;
+                }
+            }
+            throwToast("Meal Order Failed To Load");
+        });
+    }
+
+    private void rate(String collection, DocumentReference ratingDocRef, DocumentSnapshot rateableDoc){
+        switch (collection){
+            case "users":
+                Cook cook = rateableDoc.toObject(Cook.class);
+                if(firstRating){
+                    cook.setNumRatings(cook.getNumRatings()+1);
+                }
+                cook.setRatingTotal(cook.getRatingTotal()+ratingDif);
+                cook.setRole("Cook");
+                ratingDocRef.set(cook)
+                        .addOnFailureListener(e -> throwToast("Could not Update Order"));
+                break;
+            case "meals":
+                Meal meal = rateableDoc.toObject(Meal.class);
+                if(firstRating){
+                    meal.setNumRatings(meal.getNumRatings()+1);
+                }
+                meal.setRatingTotal(meal.getRatingTotal()+ratingDif);
+                ratingDocRef.set(meal)
+                        .addOnFailureListener(e -> throwToast("Could not Update Order"));
+                break;
+            default:
+                return;
         }
     }
 
