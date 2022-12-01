@@ -252,6 +252,26 @@
                 android:textSize="16sp" />
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/changesLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/applyChangesButton"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:background="@drawable/outline_client_dark"
+                android:fontFamily="@font/futura_medium"
+                android:onClick="onClickApplyChangesButton"
+                android:paddingHorizontal="10dp"
+                android:text="Apply Changes"
+                android:textSize="20sp" />
+        </LinearLayout>
+
 
     </LinearLayout>
 

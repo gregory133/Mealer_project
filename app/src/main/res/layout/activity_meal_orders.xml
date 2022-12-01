@@ -47,17 +47,16 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <EditText
+            <TextView
                 android:id="@+id/searchByNameField"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:background="@drawable/outline_off_white"
-                android:ems="10"
                 android:gravity="center"
-                android:hint="Search Meals"
-                android:inputType="textMultiLine"
-                tools:ignore="TouchTargetSizeCheck" />
+                android:background="@drawable/outline_off_white"
+                android:hint="Orders"
+                android:textSize="24sp"
+                android:textColor="@color/off_black"/>
         </LinearLayout>
 
         <GridView

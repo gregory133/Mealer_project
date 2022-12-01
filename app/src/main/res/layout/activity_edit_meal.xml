@@ -95,7 +95,7 @@
                 android:background="@drawable/outline_off_white">
 
                 <Spinner
-                    android:id="@+id/mealType"
+                    android:id="@+id/mealTypeSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="50dp" />
             </RelativeLayout>
@@ -112,7 +112,7 @@
                 android:background="@drawable/outline_off_white">
 
                 <Spinner
-                    android:id="@+id/cuisineType"
+                    android:id="@+id/cuisineTypeSpinner"
                     android:layout_width="match_parent"
                     android:layout_height="50dp" />
             </RelativeLayout>
