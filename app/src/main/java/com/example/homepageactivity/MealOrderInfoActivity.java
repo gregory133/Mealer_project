@@ -42,9 +42,11 @@ public class MealOrderInfoActivity extends AppCompatActivity {
     int lastRating;
     int rating;
     int ratingDif;
+    int recieved;
     int[] stars;
     int spinnerNum;
     int spinnerIndex;
+    boolean firstRating;
     DocumentReference docRef;
     DocumentSnapshot orderDoc;
     private final List<String> approvedOptions = Arrays.asList("Pending Approval", "Request Approved", "Request Declined");
@@ -84,6 +86,7 @@ public class MealOrderInfoActivity extends AppCompatActivity {
 
     private void SetupOrderInfo(){
         rating = lastRating = orderDoc.getDouble("rating").intValue();
+        recieved = orderDoc.toObject(MealOrder.class).getReceived();
 
         ((TextView) findViewById(R.id.orderMealName)).setText(orderDoc.getString("mealName"));
 
@@ -149,10 +152,25 @@ public class MealOrderInfoActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 spinnerIndex = i;
+                if(spinnerNum == 1 && spinnerIndex == 1){
+                    updateCookSpinners();
+                }
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
+    }
+
+    private void updateCookSpinners(){
+        Spinner spinner = findViewById(R.id.approvedSpinner);
+        spinner.getBackground().setColorFilter(getResources().getColor(R.color.off_grey), PorterDuff.Mode.SRC_ATOP);
+        spinner.setEnabled(false);
+
+        spinner = findViewById(R.id.deliveredSpinner);
+        spinnerNum = 2;
+        spinner.setEnabled(true);
+        spinner.setBackground(getDrawable(R.drawable.outline_off_white));
+        spinner.getBackground().setColorFilter(getResources().getColor(R.color.off_white), PorterDuff.Mode.SRC_ATOP);
     }
 
     private void setupStars(){
@@ -175,11 +193,10 @@ public class MealOrderInfoActivity extends AppCompatActivity {
 
     public void onClickStar(int newRating){
         Class hold = currentAccount.getClass();
-        MealOrder order = orderDoc.toObject(MealOrder.class);
         if (hold != Client.class){
             return;
         }
-        if (order.getReceived() != 1 ){
+        if (recieved != 1 ){
             throwToast("Order must be Received before you can rate it");
             return;
         }
@@ -222,7 +239,7 @@ public class MealOrderInfoActivity extends AppCompatActivity {
     }
 
     private void collapseRating(){
-        if (orderDoc.toObject(MealOrder.class).getReceived() != 1){
+        if (recieved != 1){
             LinearLayout row=findViewById(R.id.ratingLayout);
             LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
                     LinearLayout.LayoutParams.MATCH_PARENT,
@@ -230,13 +247,20 @@ public class MealOrderInfoActivity extends AppCompatActivity {
                     0);
             row.setLayoutParams(param);
         } else{
-            LinearLayout row=findViewById(R.id.ratingLayout);
-            LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    1);
-            row.setLayoutParams(param);
+            expandRating(1);
         }
+    }
+    private void expandRating(int recieved){
+        if(recieved != 1){
+            collapseRating();
+            return;
+        }
+        LinearLayout row=findViewById(R.id.ratingLayout);
+        LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                1);
+        row.setLayoutParams(param);
     }
 
 
@@ -245,23 +269,25 @@ public class MealOrderInfoActivity extends AppCompatActivity {
         MealOrder updatedOrder = orderDoc.toObject(MealOrder.class);
 
 
-        int recieved = ((Spinner) findViewById(R.id.deliveredSpinner)).getSelectedItemPosition();
+        recieved = ((Spinner) findViewById(R.id.receivedSpinner)).getSelectedItemPosition();
         updatedOrder.setApproved(((Spinner) findViewById(R.id.approvedSpinner)).getSelectedItemPosition());
-        updatedOrder.setDelivered(recieved);
-        updatedOrder.setReceived(((Spinner) findViewById(R.id.receivedSpinner)).getSelectedItemPosition());
+        updatedOrder.setDelivered(((Spinner) findViewById(R.id.deliveredSpinner)).getSelectedItemPosition());
+        updatedOrder.setReceived(recieved);
         updatedOrder.setRating(rating);
 
         docRef.set(updatedOrder)
-                .addOnSuccessListener(aVoid -> throwToast("Order Updated"))
+                .addOnSuccessListener(aVoid -> expandRating(recieved))
                 .addOnFailureListener(e -> throwToast("Could not Update Order"));
 
+        throwToast("Changes Saved");
+
+        //rate meal and cook if the meal was recieved by the client
         Class hold = currentAccount.getClass();
         if(recieved != 1 || hold != Client.class){
             return;
         }
-
-        //rate meal and cook
         ratingDif = rating-lastRating;
+        firstRating = lastRating == 0;
         lastRating = rating;
         updateRating("meals", orderDoc.getString("mealUID"));
         updateRating("users", orderDoc.getString("cookUID"));
@@ -285,7 +311,7 @@ public class MealOrderInfoActivity extends AppCompatActivity {
         switch (collection){
             case "users":
                 Cook cook = rateableDoc.toObject(Cook.class);
-                if(orderDoc.toObject(MealOrder.class).getRating() == 0 ){
+                if(firstRating){
                     cook.setNumRatings(cook.getNumRatings()+1);
                 }
                 cook.setRatingTotal(cook.getRatingTotal()+ratingDif);
@@ -295,7 +321,7 @@ public class MealOrderInfoActivity extends AppCompatActivity {
                 break;
             case "meals":
                 Meal meal = rateableDoc.toObject(Meal.class);
-                if(orderDoc.toObject(MealOrder.class).getRating() == 0){
+                if(firstRating){
                     meal.setNumRatings(meal.getNumRatings()+1);
                 }
                 meal.setRatingTotal(meal.getRatingTotal()+ratingDif);

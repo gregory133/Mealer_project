@@ -42,13 +42,13 @@ public class MealInfoActivity extends AppCompatActivity {
     }
 
     private void setupUI(){
-        String mealName ="Meal: "+meal.getMealName();
-        String mealType = "type: "+meal.getMealType();
-        String cuisineType = "cuisine: "+meal.getCuisineType();
-        String ingredients = "ingredients: "+meal.getIngredients();
-        String allergens = "allergens"+meal.getAllergens();
-        String price = "price"+meal.getPrice();
-        String description = "description"+meal.getDescription();
+        String mealName =meal.getMealName();
+        String mealType = "Type:\n"+meal.getMealType();
+        String cuisineType = "Cuisine:\n"+meal.getCuisineType();
+        String ingredients = "Ingredients: "+meal.getIngredients();
+        String allergens = "Allergens: "+meal.getAllergens();
+        String price = "Price: "+meal.getPrice();
+        String description = ""+meal.getDescription();
 
         ((TextView) findViewById(R.id.mealName)).setText(mealName);
         ((TextView) findViewById(R.id.mealType)).setText(mealType);
