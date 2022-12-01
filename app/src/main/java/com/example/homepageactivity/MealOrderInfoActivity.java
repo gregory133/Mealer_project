@@ -1,6 +1,7 @@
 package com.example.homepageactivity;
 
 import static com.example.homepageactivity.MainActivity.currentAccount;
+import static com.example.homepageactivity.MainActivity.firebaseAuth;
 import static com.example.homepageactivity.MainActivity.firestoreDB;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -25,6 +27,7 @@ import com.example.homepageactivity.domain.Client;
 import com.example.homepageactivity.domain.Cook;
 import com.example.homepageactivity.domain.Meal;
 import com.example.homepageactivity.domain.MealOrder;
+import com.example.homepageactivity.domain.Message;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
@@ -266,6 +269,7 @@ public class MealOrderInfoActivity extends AppCompatActivity {
 
 
     public void onClickApplyChangesButton(View view){
+        MealOrder originalOrder = orderDoc.toObject(MealOrder.class);
         MealOrder updatedOrder = orderDoc.toObject(MealOrder.class);
 
 
@@ -280,6 +284,10 @@ public class MealOrderInfoActivity extends AppCompatActivity {
                 .addOnFailureListener(e -> throwToast("Could not Update Order"));
 
         throwToast("Changes Saved");
+
+        if(originalOrder.getApproved() != updatedOrder.getApproved()){
+            sendStatusUpdateMessage(updatedOrder.getClientUID(), 1, updatedOrder.getApproved());       //only the cook can change approved status, so this is fine
+        }
 
         //rate meal and cook if the meal was recieved by the client
         Class hold = currentAccount.getClass();
@@ -331,6 +339,39 @@ public class MealOrderInfoActivity extends AppCompatActivity {
             default:
                 return;
         }
+    }
+
+    private void sendStatusUpdateMessage(String recipientUID, int statusType, int newValue){
+        String[] statusList;
+        MealOrder order = orderDoc.toObject(MealOrder.class);
+        int oldValue;
+        switch (statusType){
+            case 1:
+                statusList = (String[])approvedOptions.toArray();
+                oldValue = order.getApproved();
+                break;
+            case 2:
+                statusList = (String[])deliveredOptions.toArray();
+                oldValue = order.getDelivered();
+                break;
+            case 3:
+                statusList = (String[])receivedOptions.toArray();
+                oldValue = order.getReceived();
+                break;
+            default:
+                return;
+        }
+
+
+        String subject = "Your order status has been updated.";
+        String bodyText = "Your order of "+order.getMealName()+" has had its status updated from \""+statusList[oldValue]+"\" to \""+statusList[newValue]+"\".";
+        String senderUID = firebaseAuth.getCurrentUser().getUid();
+        String senderEmail = firebaseAuth.getCurrentUser().getEmail();
+
+        Message newMessage = new Message(senderUID, senderEmail, recipientUID, subject, bodyText);
+
+        firestoreDB.collection("messages").add(newMessage)
+                .addOnFailureListener(e -> Toast.makeText(getApplicationContext(), "Problem sending automatic status update notification\nPlease send your customer a message to let them know their order has been approved.", Toast.LENGTH_LONG));
     }
 
     public void onCLickReturn(View view){
