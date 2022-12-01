@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HomepageActivity</string>
+    <string name="app_name">Mealer</string>
     <string name="register_string"><![CDATA[Don\'t Have An Account Yet?]]></string>
     <string-array name="clientPages">
         <item>Menu</item>
