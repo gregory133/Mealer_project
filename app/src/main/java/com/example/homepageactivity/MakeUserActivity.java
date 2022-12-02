@@ -45,7 +45,7 @@ public class MakeUserActivity extends AppCompatActivity {
         String password = (((EditText) findViewById(R.id.passwordEdit)).getText()).toString();
         String confirmPassword = (((EditText) findViewById(R.id.confirmPasswordEdit)).getText()).toString();
 
-        if (!validate(firstName, lastName, email, address, password, confirmPassword)) return;
+        if (!validateUserInfo(firstName, lastName, email, address, password, confirmPassword)) return;
 
         Bundle extras=getIntent().getExtras();
         String userType=extras.getString("TYPE");
@@ -84,7 +84,7 @@ public class MakeUserActivity extends AppCompatActivity {
      * @param confirmPassword
      * @return
      */
-    private boolean validate(String firstName, String lastName, String email, String address, String password, String confirmPassword){
+    public boolean validateUserInfo(String firstName, String lastName, String email, String address, String password, String confirmPassword){
         Validator val = new Validator();
         if (!val.isPhrase(firstName)){
             Toast.makeText(this, "First Name Field Invalid", Toast.LENGTH_LONG).show();
