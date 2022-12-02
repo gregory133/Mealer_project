@@ -62,4 +62,9 @@ public class TestValidator {
         assertEquals("not a phrase", true, val.isPhrase("A phrase has some symbols and, it's"));
         //assertEquals("invalid password", 3, val.getIntLength(3434));      //not 3 numbers long
     }
+    @Test
+    public void validateGetLongLength() {
+        Validator val = new Validator();
+        assertEquals("Incorrect long length", 16, val.getLongLength(1234567890123456L));
+    }
 }
