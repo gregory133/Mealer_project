@@ -130,6 +130,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+
+    }
+
     private void openHomePage(DocumentSnapshot document){
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 
