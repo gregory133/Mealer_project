@@ -178,11 +178,11 @@ public class ClientPaymentActivity extends AppCompatActivity {
             Toast.makeText(this, "Invalid Credit Card Number", Toast.LENGTH_LONG).show();
             return false;
         }
-        if (month > 12){
+        if (!val.checkValidExpMonth(month)){
             Toast.makeText(this, "Invalid Expiry Month", Toast.LENGTH_LONG).show();
             return false;
         }
-        if (year < 1910 || 2030 < year){
+        if (!val.checkValidExpYear(year)){
             Toast.makeText(this, "Invalid Expiry Year", Toast.LENGTH_LONG).show();
             return false;
         }

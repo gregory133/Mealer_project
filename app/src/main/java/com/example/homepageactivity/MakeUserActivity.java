@@ -106,7 +106,7 @@ public class MakeUserActivity extends AppCompatActivity {
             Toast.makeText(this, "Confirm Password Field Invalid (Empty)", Toast.LENGTH_LONG).show();
             return false;
         }
-        if (!password.equals(confirmPassword)){
+        if (!val.checkMatchingFields(password, confirmPassword)){
             Toast.makeText(this, "Confirm Password does not match Password", Toast.LENGTH_LONG).show();
             return false;
         }

@@ -153,4 +153,16 @@ public class Validator {
     public int getStringIndex(List<String> options, String selection){
         return options.indexOf(selection);
     }
+
+    public boolean checkValidExpYear(int expiryYear){
+        return !(expiryYear < 2022 || 2030 < expiryYear);
+    }
+
+    public boolean checkValidExpMonth(int expiryMonth) {
+        return !(expiryMonth > 12 || expiryMonth < 1);
+    }
+
+    public boolean checkMatchingFields(String field1, String field2){
+        return field1.equals(field2);
+    }
 }
