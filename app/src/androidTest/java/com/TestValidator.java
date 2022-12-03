@@ -2,6 +2,7 @@ package com;
 
 import static org.junit.Assert.*;
 
+import com.example.homepageactivity.ClientPaymentActivity;
 import com.example.homepageactivity.domain.Validator;
 
 import org.junit.Test;
@@ -27,8 +28,8 @@ public class TestValidator {
     @Test
     public void validateEmail() {
         Validator val = new Validator();
-        assertEquals("invalid password", true, val.checkValidEmail("45@eo.ere.e"));
-        assertEquals("invalid password", true, val.checkValidEmail("45\"][\"45@eo.ere.e"));
+        assertEquals("invalid email", true, val.checkValidEmail("45@eo.ere.e"));
+        assertEquals("invalid email", true, val.checkValidEmail("45\"][\"45@eo.ere.e"));
         //assertEquals("invalid password", true, val.checkValidEmail("]45@eo.ere.e"));      // has ] outside of ""
     }
     @Test
@@ -65,6 +66,21 @@ public class TestValidator {
     @Test
     public void validateGetLongLength() {
         Validator val = new Validator();
-        assertEquals("Incorrect long length", 16, val.getLongLength(1234567890123456L));
+        assertEquals("incorrect long length", 16, val.getLongLength(1234567890123456L));
+    }
+    @Test
+    public void validateExpiryYear() {
+        Validator val = new Validator();
+        assertEquals("invalid expiry year", false, val.checkValidExpYear(2014));
+    }
+    @Test
+    public void validateExpiryMonth() {
+        Validator val = new Validator();
+        assertEquals("invalid expiry month", false, val.checkValidExpMonth(13));
+    }
+    @Test
+    public void validateMatchingFields(){
+        Validator val = new Validator();
+        assertEquals("fields do not match", false, val.checkMatchingFields("password", "passwor"));
     }
 }
