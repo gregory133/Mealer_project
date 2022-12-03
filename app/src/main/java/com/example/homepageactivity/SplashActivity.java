@@ -15,7 +15,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private final long frameTimeMilli=20;
     private final long waitMilli=2000;
-    private final int deltaAngle=10;
+    private final int deltaAngle=8;
 
 
     private ImageView yinYangLoad;
@@ -26,7 +26,6 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         yinYangLoad=findViewById(R.id.yinyang);
-
 
         Timer totalTimer=new Timer();
         Timer frameTimer=new Timer();
