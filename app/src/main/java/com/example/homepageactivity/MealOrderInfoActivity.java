@@ -53,7 +53,7 @@ public class MealOrderInfoActivity extends AppCompatActivity {
     DocumentReference docRef;
     DocumentSnapshot orderDoc;
     private final List<String> approvedOptions = Arrays.asList("Pending Approval", "Request Approved", "Request Declined");
-    private final List<String> deliveredOptions = Arrays.asList("Delivery Status", "Order Delivered", "Order Canceled");
+    private final List<String> deliveredOptions = Arrays.asList("Pickup Status", "Available for Pickup", "Order Canceled");
     private final List<String> receivedOptions = Arrays.asList("Received Status", "Order Received", "Order Lost");
 
     @SuppressLint("MissingInflatedId")

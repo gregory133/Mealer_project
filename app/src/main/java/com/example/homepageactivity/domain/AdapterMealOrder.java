@@ -47,7 +47,7 @@ public class AdapterMealOrder extends BaseAdapter {
 
         String status;
         List<String> approvedOptions = Arrays.asList("Pending Approval", "Request Approved", "Request Declined");
-        List<String> deliveredOptions = Arrays.asList("Delivery Status", "Order Delivered", "Order Canceled");
+        List<String> deliveredOptions = Arrays.asList("Pickup Status", "Available for Pickup", "Order Canceled");
         List<String> receivedOptions = Arrays.asList("Received Status", "Order Received", "Order Lost");
 
         if(order.getReceived() != 0){
