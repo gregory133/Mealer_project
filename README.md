@@ -1,8 +1,6 @@
 # Mealer project
 
 ## Names
-Last, 	  First, 	StudentNumber
-
 Eaton,	  Eric, 	300260795
 Marcelin, Jean-Damien, 	300277019
 Matyiku,  Victor, 	300174358
