@@ -13,25 +13,25 @@ Link to the github repository:
 https://github.com/gregory133/Mealer_project
 
 
-## Admin creditials
+## Admin credentials
 
 email: admin@mealer.ca
 
 password: password
 
 
-## A Cook creditials
+## A Cook credentials
 
-email: cook@mealer.ca
+all have the password: password
+
+tester cook: cook@mealer.ca
+
+permanently banned cook: permabanned@tester.ca
+
+temporarily banned cook: tempbanned@tester.ca
+
+## A Client credentials
+
+email: client@mealer.ca
 
 password: password
-## Some testers
-
-emails:
-- test1@mealer.ca
-- test2@mealer.ca
-- test3@mealer.ca
-
-password: all their passwords are "password"
-
-Note: creating a cook automatically creates a complaint associated to them if you'd like to generate more
