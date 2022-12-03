@@ -9,14 +9,14 @@ import java.util.Date;
 
 public class Cook extends User{
     private final static String role = "Cook";
-    private Image voidChequePicture;
+    private String voidChequePicture;
     private String shortDescription;
     private int ratingTotal;
     private int numRatings;
 
     public Cook() {}
 
-    public Cook(String firstName, String lastName, String address, String emailAddress, Image voidChequePicture, String shortDescription) {
+    public Cook(String firstName, String lastName, String address, String emailAddress, String voidChequePicture, String shortDescription) {
         super(firstName, lastName, address, emailAddress, role);
         this.voidChequePicture = voidChequePicture;
         this.shortDescription = shortDescription;
@@ -24,7 +24,7 @@ public class Cook extends User{
         this.numRatings = 0;
     }
 
-    public Image getVoidChequePicture() {
+    public String getVoidChequePicture() {
         return voidChequePicture;
     }
     public String getShortDescription() {
