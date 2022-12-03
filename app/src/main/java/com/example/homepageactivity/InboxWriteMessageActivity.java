@@ -57,7 +57,7 @@ public class InboxWriteMessageActivity extends AppCompatActivity {
         finish();
     }
 
-    private boolean validateSubject(String subject) {
+    public boolean validateSubject(String subject) {
         Validator val = new Validator();
 
         if (!val.isAlphanumericPhrase(subject)){
