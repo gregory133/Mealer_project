@@ -13,6 +13,7 @@ public class Cook extends User{
     private String shortDescription;
     private int ratingTotal;
     private int numRatings;
+    private int mealsSold;
 
     public Cook() {}
 
@@ -22,6 +23,7 @@ public class Cook extends User{
         this.shortDescription = shortDescription;
         this.ratingTotal = 0;
         this.numRatings = 0;
+        this. mealsSold = 0;
     }
 
     public String getVoidChequePicture() {
@@ -35,6 +37,9 @@ public class Cook extends User{
     }
     public int getRatingTotal() {
         return ratingTotal;
+    }
+    public int getMealsSold() {
+        return mealsSold;
     }
 
     public void setRatingTotal(int ratingTotal) {
