@@ -138,6 +138,30 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/pickupTimeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_weight=".1"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/pickupTimeEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                android:background="@drawable/outline_off_grey"
+                android:ems="10"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:hint="Input Pickup Time"
+                android:inputType="textMultiLine"
+                tools:ignore="TouchTargetSizeCheck" />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/row5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
