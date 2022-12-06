@@ -4,42 +4,33 @@ import static com.example.homepageactivity.MainActivity.currentAccount;
 import static com.example.homepageactivity.MainActivity.firebaseAuth;
 import static com.example.homepageactivity.MainActivity.firestoreDB;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.homepageactivity.R;
-import com.example.homepageactivity.domain.Admin;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.homepageactivity.domain.Client;
 import com.example.homepageactivity.domain.Cook;
 import com.example.homepageactivity.domain.Meal;
 import com.example.homepageactivity.domain.MealOrder;
 import com.example.homepageactivity.domain.Message;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firestore.v1.WriteResult;
+import com.google.firebase.firestore.FieldValue;
 
 import java.util.Arrays;
-import java.util.Dictionary;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 public class MealOrderInfoActivity extends AppCompatActivity {
     int lastRating;
@@ -258,6 +249,7 @@ public class MealOrderInfoActivity extends AppCompatActivity {
             collapseRating();
             return;
         }
+
         LinearLayout row=findViewById(R.id.ratingLayout);
         LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -287,6 +279,13 @@ public class MealOrderInfoActivity extends AppCompatActivity {
 
         if(originalOrder.getApproved() != updatedOrder.getApproved()){
             sendStatusUpdateMessage(updatedOrder.getClientUID(), 1, updatedOrder.getApproved());       //only the cook can change approved status, so this is fine
+        }
+        if (originalOrder.getReceived() != 1 && updatedOrder.getReceived() == 1) {
+            String cookUID = orderDoc.getString("cookUID");
+            DocumentReference cookRef = firestoreDB.collection("users").document(cookUID);
+            cookRef.update("mealsSold", FieldValue.increment(1))
+                    .addOnSuccessListener(aVoid -> Log.d("updating mealsSold", "SUCCESS"))
+                    .addOnFailureListener(e -> Log.d("updating mealsSold", "FAILURE"));
         }
 
         //rate meal and cook if the meal was recieved by the client
