@@ -10,11 +10,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.homepageactivity.domain.Client;
 import com.example.homepageactivity.domain.MealOrder;
+import com.example.homepageactivity.domain.Validator;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -23,6 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class PlaceOrderActivity extends AppCompatActivity {
     private Client orderingClient;
     private DocumentSnapshot cookDoc;
+    private String pickupTime;
     private static final String TAG = "PlaceOrderActivity";
 
     @Override
@@ -77,8 +80,22 @@ public class PlaceOrderActivity extends AppCompatActivity {
     }
 
     public void onClickConfirmOrderButton(View view){
+        pickupTime = (((EditText) findViewById(R.id.pickupTimeEdit)).getText()).toString();
+        if (!validatePlaceOrder(pickupTime)) return;
+
         String cookUID = getIntent().getStringExtra("cookUID");
         getFirebaseObjectByUID(cookUID);
+    }
+
+    private boolean validatePlaceOrder(String pickupTime) {
+        Validator val = new Validator();
+
+        if (!val.isAlphanumericPhrase(pickupTime)) {
+            Toast.makeText(this, "Pickup Time Field Invalid", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        return true;
     }
 
     private void getFirebaseObjectByUID(String UID){
@@ -111,7 +128,7 @@ public class PlaceOrderActivity extends AppCompatActivity {
         String mealUID = intent.getStringExtra("mealUID");
         String mealName = intent.getStringExtra("mealName");
 
-        MealOrder mealOrder = new MealOrder(cookUID, cookEmail, clientUID, clientEmail, mealUID, mealName);
+        MealOrder mealOrder = new MealOrder(cookUID, cookEmail, clientUID, clientEmail, mealUID, mealName, pickupTime);
 
         firestoreDB.collection("orders").add(mealOrder)
                 .addOnSuccessListener(documentReference -> {

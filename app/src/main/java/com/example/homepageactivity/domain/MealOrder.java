@@ -11,15 +11,17 @@ public class MealOrder {
     String mealUID;
     String mealName;
     int rating;
+    String pickupTime;
 
     public MealOrder(){}
-    public MealOrder(String cookUID, String cookEmail, String clientUID, String clientEmail, String mealUID, String mealName){
+    public MealOrder(String cookUID, String cookEmail, String clientUID, String clientEmail, String mealUID, String mealName, String pickupTime){
         this.cookUID=cookUID;
         this.cookEmail=cookEmail;
         this.clientUID=clientUID;
         this.clientEmail=clientEmail;
         this.mealUID=mealUID;
         this.mealName=mealName;
+        this.pickupTime=pickupTime;
         this.approved=0;
         this.delivered=0;
         this.received=0;
@@ -56,6 +58,10 @@ public class MealOrder {
     }
     public String getMealName() {
         return mealName;
+    }
+
+    public String getPickupTime() {
+        return pickupTime;
     }
 
     public int getRating() {
