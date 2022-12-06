@@ -62,9 +62,6 @@ public class MealSearchActivity extends AppCompatActivity {
         startTime = System.currentTimeMillis();
 
         setupUserPages(R.id.pagesGrid);
-        setupCuisineOrTypeSpinner((Spinner) findViewById(R.id.cuisineType), cuisineOptions);
-        setupCuisineOrTypeSpinner((Spinner) findViewById(R.id.mealType), mealTypeOptions);
-        onSearchByNameFieldChange();
         getMealsForMealGrid();
     }
 
@@ -125,6 +122,9 @@ public class MealSearchActivity extends AppCompatActivity {
                             allValidMeals.add(msg);
                             relevantMeals.add(msg);
                         }
+                        setupCuisineOrTypeSpinner((Spinner) findViewById(R.id.cuisineType), cuisineOptions);
+                        setupCuisineOrTypeSpinner((Spinner) findViewById(R.id.mealType), mealTypeOptions);
+                        onSearchByNameFieldChange();
                         setUpMealsGrid();
                     }
                 });
