@@ -83,6 +83,7 @@ public class MealOrderInfoActivity extends AppCompatActivity {
         recieved = orderDoc.toObject(MealOrder.class).getReceived();
 
         ((TextView) findViewById(R.id.orderMealName)).setText(orderDoc.getString("mealName"));
+        ((TextView) findViewById(R.id.pickupTime)).setText(orderDoc.getString("pickupTime"));
 
         Class userClass = currentAccount.getClass();
         if (userClass == Cook.class){
