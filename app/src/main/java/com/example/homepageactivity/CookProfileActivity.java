@@ -131,6 +131,7 @@ public class CookProfileActivity extends AppCompatActivity {
         ((TextView)findViewById(R.id.email)).setText(cook.getEmailAddress());
         ((TextView)findViewById(R.id.description)).setText(cook.getDesc());
         ((TextView)findViewById(R.id.address)).setText(cook.getAddress());
+        ((TextView)findViewById(R.id.mealsSold)).setText(String.valueOf(cook.getMealsSold())+" meal(s) sold");
         if(cook.getNumRatings() != 0){
             setupStars(cook.getRatingTotal()/cook.getNumRatings());
         }
