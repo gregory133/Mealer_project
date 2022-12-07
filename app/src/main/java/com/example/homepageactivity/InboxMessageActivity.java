@@ -35,7 +35,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class InboxMessageActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
-    DocumentSnapshot docRef;
+    String msgId;
+    ComplaintMessage currentMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +70,8 @@ public class InboxMessageActivity extends AppCompatActivity implements DatePicke
     private void getMessageInfo(){
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         if (currentUser == null) {
-            throwToast("Could not load meal");
+            throwToast("No user signed in");
+            return;
         }
 
         Bundle extras=getIntent().getExtras();
@@ -79,8 +81,10 @@ public class InboxMessageActivity extends AppCompatActivity implements DatePicke
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
-                    InboxMessageActivity.this.docRef = task.getResult();
-                    if (InboxMessageActivity.this.docRef.exists()) {
+                    DocumentSnapshot result = task.getResult();
+                    if (result.exists()) {
+                        currentMessage = result.toObject(ComplaintMessage.class);
+                        msgId = result.getId();
                         SetupMessageInfo();
                     } else {
                         throwToast("Meal doesn't exist");
@@ -94,9 +98,9 @@ public class InboxMessageActivity extends AppCompatActivity implements DatePicke
         });
     }
     private void SetupMessageInfo(){
-        ((TextView) findViewById(R.id.mealName)).setText(docRef.toObject(Message.class).getSubject());
-        ((TextView) findViewById(R.id.cuisineType)).setText(docRef.toObject(Message.class).getSenderEmail());
-        ((TextView) findViewById(R.id.messageText)).setText(docRef.toObject(Message.class).getBodyText());
+        ((TextView) findViewById(R.id.mealName)).setText(currentMessage.getSubject());
+        ((TextView) findViewById(R.id.cuisineType)).setText(currentMessage.getSenderEmail());
+        ((TextView) findViewById(R.id.messageText)).setText(currentMessage.getBodyText());
     }
 
     public void onCLickReturnToInbox(View view){
@@ -106,18 +110,14 @@ public class InboxMessageActivity extends AppCompatActivity implements DatePicke
         archiveMessage();
     }
     public void onCLickReplyToMessage(View view){
-//        throwToast("Disabled due to bugs");
-//        if(true){return;}
         Intent intent=new Intent(this, InboxWriteMessageActivity.class);
-        intent.putExtra("senderEmail", docRef.getString("senderEmail"));
+        intent.putExtra("senderEmail", currentMessage.getSenderEmail());
 
-        int requestCode=1;
-        //startActivityForResult(intent, requestCode);
         startActivity(intent);
     }
 
     public void onClickBanCook(View view) {
-        String cookUID = docRef.toObject(ComplaintMessage.class).getCookUID();
+        String cookUID = currentMessage.getCookUID();
         if (cookUID != null) {
             Map<String, Boolean> change = new HashMap<>(1);
             change.put("banned", true);
@@ -142,7 +142,7 @@ public class InboxMessageActivity extends AppCompatActivity implements DatePicke
 
         Timestamp timestamp = new Timestamp(new Date(year-1900, month, day));
 
-        String cookUID = docRef.toObject(ComplaintMessage.class).getCookUID();
+        String cookUID = currentMessage.getCookUID();
         if (cookUID != null) {
             Map<String, Timestamp> change = new HashMap<>(1);
             change.put("bannedUntil", timestamp);
@@ -156,10 +156,8 @@ public class InboxMessageActivity extends AppCompatActivity implements DatePicke
     private void archiveMessage(){
         Map<String, Boolean> change = new HashMap<>(1);
         change.put("archived", true);
-        String msgID = docRef.getId();
-        firestoreDB.collection("messages").document(msgID).set(change, SetOptions.merge());
+        firestoreDB.collection("messages").document(msgId).set(change, SetOptions.merge());
 
-        throwToast(docRef.toObject(ComplaintMessage.class).getCookUID()+"");
         finish();
     }
 
