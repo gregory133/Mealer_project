@@ -167,6 +167,11 @@ public class PlaceOrderActivity extends AppCompatActivity implements DatePickerD
         String cookUID = cookDoc.getId();
         String cookEmail = cookDoc.getString("emailAddress");
 
+        if (pickupTime == null) {
+            Toast.makeText(getApplicationContext(), "Please choose a pickup time", Toast.LENGTH_LONG).show();
+            return;
+        }
+
         String clientUID;
         try{
             clientUID = FirebaseAuth.getInstance().getCurrentUser().getUid();
