@@ -30,6 +30,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class MealOrderInfoActivity extends AppCompatActivity {
@@ -79,11 +82,20 @@ public class MealOrderInfoActivity extends AppCompatActivity {
     }
 
     private void SetupOrderInfo(){
-        rating = lastRating = orderDoc.getDouble("rating").intValue();
-        recieved = orderDoc.toObject(MealOrder.class).getReceived();
+        MealOrder currentOrder = orderDoc.toObject(MealOrder.class);
+        rating = lastRating = currentOrder.getRating();
+        recieved = currentOrder.getReceived();
+
+        Date pickupDate = currentOrder.getPickupTime();
+        String pickupText = "ERROR";
+        if (pickupDate != null) {
+            GregorianCalendar pickupTime = new GregorianCalendar();
+            pickupTime.setTime(pickupDate);
+            pickupText = PlaceOrderActivity.formatPickupTime(pickupTime);
+        }
 
         ((TextView) findViewById(R.id.orderMealName)).setText(orderDoc.getString("mealName"));
-        ((TextView) findViewById(R.id.pickupTime)).setText(orderDoc.getString("pickupTime"));
+        ((TextView) findViewById(R.id.pickupTime)).setText(pickupText);
 
         Class userClass = currentAccount.getClass();
         if (userClass == Cook.class){
