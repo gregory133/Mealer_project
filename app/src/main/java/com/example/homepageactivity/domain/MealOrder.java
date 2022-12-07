@@ -1,5 +1,7 @@
 package com.example.homepageactivity.domain;
 
+import java.util.Date;
+
 public class MealOrder {
     int approved;   //0 = default, -1 = rejected, 1 = approved
     int delivered;  //0 = default, -1 = canceled, 1 = delivered //can only set delivered if approved == 1
@@ -11,10 +13,10 @@ public class MealOrder {
     String mealUID;
     String mealName;
     int rating;
-    String pickupTime;
+    Date pickupTime;
 
     public MealOrder(){}
-    public MealOrder(String cookUID, String cookEmail, String clientUID, String clientEmail, String mealUID, String mealName, String pickupTime){
+    public MealOrder(String cookUID, String cookEmail, String clientUID, String clientEmail, String mealUID, String mealName, Date pickupTime){
         this.cookUID=cookUID;
         this.cookEmail=cookEmail;
         this.clientUID=clientUID;
@@ -60,7 +62,7 @@ public class MealOrder {
         return mealName;
     }
 
-    public String getPickupTime() {
+    public Date getPickupTime() {
         return pickupTime;
     }
 

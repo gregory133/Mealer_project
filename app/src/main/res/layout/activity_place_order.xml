@@ -141,24 +141,23 @@
             android:id="@+id/pickupTimeLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
             android:layout_weight=".1"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/pickupTimeEdit"
+
+
+            <Button
+                android:id="@+id/pickupTimeButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_weight="1"
-                android:background="@drawable/outline_off_grey"
-                android:ems="10"
-                android:gravity="center"
                 android:layout_gravity="center"
-                android:hint="Input Pickup Time"
-                android:inputType="textMultiLine"
-                tools:ignore="TouchTargetSizeCheck" />
+                android:background="@drawable/outline_off_grey"
+                android:onClick="onClickSetPickupTime"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="Choose pickup time"
+                android:textSize="20sp" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -178,7 +177,7 @@
                 android:fontFamily="@font/futura_medium"
                 android:paddingHorizontal="10dp"
                 android:text="Confirm Order!"
-                android:textSize="20dp" />
+                android:textSize="24dp" />
         </LinearLayout>
 
     </LinearLayout>
