@@ -39,10 +39,10 @@ public class InboxWriteMessageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inbox_write_message);
 
-//        Bundle extras=getIntent().getExtras();
-//        if(extras.getString("senderEmail") != null){
-//            ((TextView) findViewById(R.id.recipientEmailEdit)).setText(extras.getString("senderEmail"));
-//        }
+        Bundle extras=getIntent().getExtras();
+        if(extras.getString("senderEmail") != null){
+            ((TextView) findViewById(R.id.recipientEmailEdit)).setText(extras.getString("senderEmail"));
+        }
     }
 
     public void onClickSendMessageButton(View view) {

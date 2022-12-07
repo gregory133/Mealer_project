@@ -106,14 +106,14 @@ public class InboxMessageActivity extends AppCompatActivity implements DatePicke
         archiveMessage();
     }
     public void onCLickReplyToMessage(View view){
-        throwToast("Disabled due to bugs");
-        if(true){return;}
-        Intent intent=new Intent(this, InboxMessageActivity.class);
-        intent.putExtra("senderEmail", docRef.toObject(Message.class).getSenderEmail());
+//        throwToast("Disabled due to bugs");
+//        if(true){return;}
+        Intent intent=new Intent(this, InboxWriteMessageActivity.class);
+        intent.putExtra("senderEmail", docRef.getString("senderEmail"));
 
         int requestCode=1;
-        startActivityForResult(intent, requestCode);
-        startActivity(new Intent(this, InboxWriteMessageActivity.class));
+        //startActivityForResult(intent, requestCode);
+        startActivity(intent);
     }
 
     public void onClickBanCook(View view) {

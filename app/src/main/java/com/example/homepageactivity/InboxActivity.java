@@ -177,7 +177,10 @@ public class InboxActivity extends AppCompatActivity {
         }
     }
     public void onCLickNewMessage(View view){
-        startActivity(new Intent(this, InboxWriteMessageActivity.class));
+
+        Intent intent=new Intent(this, InboxWriteMessageActivity.class);
+        intent.putExtra("senderEmail", (String) null);
+        startActivity(intent);
     }
 
     private void OpenMessage(int i) {
