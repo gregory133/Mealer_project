@@ -140,7 +140,7 @@ public class Validator {
         int i = 0;
 
         while(i < chars.length){
-            if("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,:' #".indexOf(chars[i]) >= 0){
+            if("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789,:' .@#".indexOf(chars[i]) >= 0){
                 i++;
                 continue;
             }else{
