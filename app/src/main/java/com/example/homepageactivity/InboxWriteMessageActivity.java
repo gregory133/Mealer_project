@@ -42,6 +42,7 @@ public class InboxWriteMessageActivity extends AppCompatActivity {
         Bundle extras=getIntent().getExtras();
         if(extras.getString("senderEmail") != null){
             ((TextView) findViewById(R.id.recipientEmailEdit)).setText(extras.getString("senderEmail"));
+            ((TextView) findViewById(R.id.subjectEdit)).setText("Re: "+extras.getString("subjectReply"));
         }
     }
 

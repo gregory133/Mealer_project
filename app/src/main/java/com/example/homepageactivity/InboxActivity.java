@@ -180,6 +180,7 @@ public class InboxActivity extends AppCompatActivity {
 
         Intent intent=new Intent(this, InboxWriteMessageActivity.class);
         intent.putExtra("senderEmail", (String) null);
+        intent.putExtra("subjectReply", (String) null);
         startActivity(intent);
     }
 

@@ -112,6 +112,7 @@ public class InboxMessageActivity extends AppCompatActivity implements DatePicke
     public void onCLickReplyToMessage(View view){
         Intent intent=new Intent(this, InboxWriteMessageActivity.class);
         intent.putExtra("senderEmail", currentMessage.getSenderEmail());
+        intent.putExtra("subjectReply", currentMessage.getSubject());
 
         startActivity(intent);
     }
