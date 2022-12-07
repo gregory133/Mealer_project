@@ -49,13 +49,22 @@ public class CookProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cook_profile);
 
         setupUserPages(R.id.pagesGridCookProfile);
+        setThemeColors();
         getCookFromFirebase();
     }
 
+    private void setThemeColors(){
+        Class hold = currentAccount.getClass();
+        if (hold == Cook.class){
+            ((ImageView) findViewById(R.id.midground)).setColorFilter(getResources().getColor(R.color.cook_light));
+        } else {
+            ((ImageView) findViewById(R.id.midground)).setColorFilter(getResources().getColor(R.color.client_light));
+        }
+    }
+
     private void setupUserPages(int viewID){
-        Class<? extends User> aClass = currentAccount.getClass();       //only Cook gets set up here
-        if (!Cook.class.equals(aClass)) {
-            findViewById(viewID).setBackgroundColor(getResources().getColor(R.color.cook_light));
+        Class hold = currentAccount.getClass();       //only Cook gets set up here
+        if (!(Cook.class == hold)) {
             return;
         }
 

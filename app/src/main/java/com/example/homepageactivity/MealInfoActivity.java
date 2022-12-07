@@ -1,13 +1,17 @@
 package com.example.homepageactivity;
 
+import static com.example.homepageactivity.MainActivity.currentAccount;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.homepageactivity.domain.Cook;
 import com.example.homepageactivity.domain.Meal;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -21,7 +25,17 @@ public class MealInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meal_info);
+        setThemeColors();
         getMealFromFirebase();
+    }
+
+    private void setThemeColors(){
+        Class hold = currentAccount.getClass();
+        if (hold == Cook.class){
+            ((ImageView) findViewById(R.id.midground)).setColorFilter(getResources().getColor(R.color.cook_light));
+        } else {
+            ((ImageView) findViewById(R.id.midground)).setColorFilter(getResources().getColor(R.color.client_light));
+        }
     }
 
     private void getMealFromFirebase(){

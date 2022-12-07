@@ -1,6 +1,7 @@
 package com.example.homepageactivity;
 
 import static android.content.ContentValues.TAG;
+import static com.example.homepageactivity.MainActivity.currentAccount;
 import static com.example.homepageactivity.MainActivity.firebaseAuth;
 import static com.example.homepageactivity.MainActivity.firestoreDB;
 
@@ -12,9 +13,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.homepageactivity.domain.Cook;
 import com.example.homepageactivity.domain.Message;
 import com.example.homepageactivity.domain.Validator;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,10 +42,21 @@ public class InboxWriteMessageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inbox_write_message);
 
+        setThemeColors();
+
         Bundle extras=getIntent().getExtras();
         if(extras.getString("senderEmail") != null){
             ((TextView) findViewById(R.id.recipientEmailEdit)).setText(extras.getString("senderEmail"));
             ((TextView) findViewById(R.id.subjectEdit)).setText("Re: "+extras.getString("subjectReply"));
+        }
+    }
+
+    private void setThemeColors(){
+        Class hold = currentAccount.getClass();
+        if (hold == Cook.class){
+            ((ImageView) findViewById(R.id.midground)).setColorFilter(getResources().getColor(R.color.cook_light));
+        } else {
+            ((ImageView) findViewById(R.id.midground)).setColorFilter(getResources().getColor(R.color.client_light));
         }
     }
 
