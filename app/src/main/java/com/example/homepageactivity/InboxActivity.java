@@ -189,8 +189,6 @@ public class InboxActivity extends AppCompatActivity {
 
         Intent intent=new Intent(this, InboxMessageActivity.class);
         intent.putExtra("messageUID", items.get(i).getId());
-        intent.putExtra("senderName", ((TextView)((ListView)findViewById(R.id.messagesList)).getChildAt(i).findViewById(R.id.cuisineType)).getText());
-
         int requestCode=1;
         startActivityForResult(intent, requestCode);
     }
