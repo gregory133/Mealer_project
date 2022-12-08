@@ -31,7 +31,9 @@ permanently banned cook: permabanned@tester.ca
 
 temporarily banned cook: tempbanned@tester.ca
 
-another cook: cookingWithTim@hotmail.com
+two cooks that have complaints against them: 
+ - cookingWithTim@hotmail.com
+ - cookerson@gmail.ca
 
 ## A Client credentials
 
