@@ -307,10 +307,14 @@ public class MealOrderInfoActivity extends AppCompatActivity {
             return;
         }
         ratingDif = rating-lastRating;
-        firstRating = lastRating == 0;
+        firstRating = (lastRating == 0);
         lastRating = rating;
-        updateRating("meals", orderDoc.getString("mealUID"));
-        updateRating("users", orderDoc.getString("cookUID"));
+        if (originalOrder.getReceived() == 1) {
+            updateRating("meals", orderDoc.getString("mealUID"));
+            updateRating("users", orderDoc.getString("cookUID"));
+        }
+
+        getOrderInfo();
     }
 
     private void updateRating(String collection, String UID){
