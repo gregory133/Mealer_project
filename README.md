@@ -21,7 +21,7 @@ email: admin@mealer.ca
 password: password
 
 
-## A Cook credentials
+## Cook credentials
 
 all have the password: password
 
@@ -30,6 +30,8 @@ tester cook: cook@mealer.ca
 permanently banned cook: permabanned@tester.ca
 
 temporarily banned cook: tempbanned@tester.ca
+
+another cook: cookingWithTim@hotmail.com
 
 ## A Client credentials
 
