@@ -4,6 +4,8 @@ import static java.sql.DriverManager.println;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 //String firstName, String lastName, String email, String address, String password, String confirmPassword
@@ -160,6 +162,13 @@ public class Validator {
 
     public boolean checkValidExpMonth(int expiryMonth) {
         return !(expiryMonth > 12 || expiryMonth < 1);
+    }
+
+    public boolean checkValidExpDate(int expiryYear, int expiryMonth) {
+        GregorianCalendar expDate = new GregorianCalendar(expiryYear, expiryMonth-1, 1);
+        expDate.set(Calendar.DAY_OF_MONTH, expDate.getActualMaximum(Calendar.DAY_OF_MONTH));
+        GregorianCalendar currentDate = new GregorianCalendar();
+        return expDate.after(currentDate);
     }
 
     public boolean checkMatchingFields(String field1, String field2){

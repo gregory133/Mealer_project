@@ -170,20 +170,8 @@ public class ClientPaymentActivity extends AppCompatActivity {
             Toast.makeText(this, "Invalid CVV", Toast.LENGTH_LONG).show();
             return false;
         }
-        if (cardholderName.equals("")){
-            Toast.makeText(this, "Cardholder Name Field Invalid (Empty)", Toast.LENGTH_LONG).show();
-            return false;
-        }
-        if (val.getLongLength(cardNum) != 16) {
-            Toast.makeText(this, "Invalid Credit Card Number", Toast.LENGTH_LONG).show();
-            return false;
-        }
-        if (!val.checkValidExpMonth(month)){
-            Toast.makeText(this, "Invalid Expiry Month", Toast.LENGTH_LONG).show();
-            return false;
-        }
-        if (!val.checkValidExpYear(year)){
-            Toast.makeText(this, "Invalid Expiry Year", Toast.LENGTH_LONG).show();
+        if (!val.checkValidExpDate(year, month)){
+            Toast.makeText(this, "Card is Expired", Toast.LENGTH_LONG).show();
             return false;
         }
 
